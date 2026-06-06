@@ -43,7 +43,7 @@ function App() {
         <Route path="/products" element={<DummyPage title="Products" />} />
         <Route path="/technologies" element={<DummyPage title="Technologies" />} />
         <Route path="/portfolio" element={<DummyPage title="Portfolio" />} />
-        <Route path="/career" element={<DummyPage title="Career" />} />
+        <Route path="/careers" element={<Careerpage />} />
         <Route path="/contact" element={<Contact/>} />
       </Routes>
       <Footer />
