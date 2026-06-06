@@ -1,0 +1,68 @@
+@import "tailwindcss";
+
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap');
+
+/* Floating Animation */
+
+@keyframes floating {
+  0% {
+    transform: translateY(0px);
+  }
+
+  50% {
+    transform: translateY(-15px);
+  }
+
+  100% {
+    transform: translateY(0px);
+  }
+}
+
+.floating {
+  animation: floating 4s ease-in-out infinite;
+}
+
+/* Moving Gradient Line */
+
+.animated-line {
+  height: 100%;
+  width: 30%;
+  border-radius: 999px;
+  background: linear-gradient(
+    90deg,
+    #06b6d4,
+    #3b82f6,
+    #06b6d4
+  );
+  background-size: 300% 300%;
+  animation:
+    moveLine 5s linear infinite,
+    gradientMove 3s ease infinite;
+}
+
+@keyframes moveLine {
+  from {
+    transform: translateX(0%);
+  }
+
+  to {
+    transform: translateX(230%);
+  }
+}
+
+@keyframes gradientMove {
+  0% {
+    background-position: 0%;
+  }
+
+  50% {
+    background-position: 100%;
+  }
+
+  100% {
+    background-position: 0%;
+  }
+}
+
+
+
