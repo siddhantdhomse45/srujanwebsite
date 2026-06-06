@@ -1,9 +1,9 @@
-import CaseStudies from '../../component/case/CaseStudies'
+import Casestudies from '../../component/case/Casestudies'
 
 function CasePage() {
   return (
     <div>
-        <CaseStudies />
+        <Casestudies />
     </div>
   )
 }
