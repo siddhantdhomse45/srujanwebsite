@@ -32,7 +32,7 @@ function App() {
         <Route path="/case-studies" element={<CasePage /> } />
         <Route path="/team" element={<TeamPage />} />
         <Route path="/careers" element={<Careerpage />} />
-        <Route path="/contacts" element={<DummyPage title="Contacts" />} />
+         <Route path="/contact" element={<Contact/>} />
 
         <Route path="/custom-software" element={<DummyPage title="Custom Software Development" />} />
         <Route path="/mobile-app" element={<DummyPage title="Mobile App Development" />} />

@@ -308,7 +308,7 @@ const Navbar = () => {
                           <div className="space-y-5">
                             <NavLink onClick={() => setAboutOpen(false)} to="/careers" className="block text-[16px] text-gray-700 hover:text-[#006CB7] transition">Careers</NavLink>
                             <NavLink onClick={() => setAboutOpen(false)} to="/social-responsibility" className="block text-[16px] text-gray-700 hover:text-[#006CB7] transition">Social Responsibility</NavLink>
-                            <NavLink onClick={() => setAboutOpen(false)} to="/contacts" className="block text-[16px] text-gray-700 hover:text-[#006CB7] transition">Contacts</NavLink>
+                            <NavLink onClick={() => setAboutOpen(false)} to="/contact" className="block text-[16px] text-gray-700 hover:text-[#006CB7] transition">Contacts</NavLink>
                           </div>
                         </div>
                       </div>
@@ -457,7 +457,7 @@ const Navbar = () => {
                     { to: "/team", label: "Team" },
                     { to: "/careers", label: "Careers" },
                     { to: "/social-responsibility", label: "Social Responsibility" },
-                    { to: "/contacts", label: "Contacts" },
+                    { to: "/contact", label: "Contacts" },
                   ].map(({ to, label }) => (
                     <li key={to}>
                       <NavLink
