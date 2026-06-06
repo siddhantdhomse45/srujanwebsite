@@ -4,7 +4,7 @@ import Contact from "./pages/contact/Contact";
 import Home from "./pages/home/Home";
 import Footer from "./component/footer/Footer"; 
 import AboutUs from "./pages/about/AboutUs";
-import CareerPage from "./pages/careerPage/CareerPage";
+import Careerpage from "./pages/careerPage/Careerpage";
 import ClientPage from "./pages/clientPage/ClientPage";
 import SocialPage from "./pages/socialPage/SocialPage";
 import TeamPage from "./pages/teamPage/TeamPage";
@@ -31,7 +31,7 @@ function App() {
         <Route path="/social-responsibility" element={<SocialPage />} />
         <Route path="/case-studies" element={<CasePage /> } />
         <Route path="/team" element={<TeamPage />} />
-        <Route path="/careers" element={<CareerPage />} />
+        <Route path="/careers" element={<Careerpage />} />
         <Route path="/contacts" element={<DummyPage title="Contacts" />} />
 
         <Route path="/custom-software" element={<DummyPage title="Custom Software Development" />} />
