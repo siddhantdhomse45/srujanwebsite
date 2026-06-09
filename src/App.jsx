@@ -9,6 +9,7 @@ import ClientPage from "./pages/clientPage/ClientPage";
 import SocialPage from "./pages/socialPage/SocialPage";
 import TeamPage from "./pages/teamPage/TeamPage";
 import CasePage from "./pages/casePage/CasePage";
+import CustomPage from "./pages/customPage/CustomPage";
 
 function DummyPage({ title }) {
   return (
@@ -34,7 +35,7 @@ function App() {
         <Route path="/careers" element={<Careerpage />} />
          <Route path="/contact" element={<Contact/>} />
 
-        <Route path="/custom-software" element={<DummyPage title="Custom Software Development" />} />
+        <Route path="/custom-software" element={<CustomPage />} />
         <Route path="/mobile-app" element={<DummyPage title="Mobile App Development" />} />
         <Route path="/web-development" element={<DummyPage title="Web Development" />} />
         <Route path="/design-lab" element={<DummyPage title="Design Lab" />} />
