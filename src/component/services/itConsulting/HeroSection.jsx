@@ -3,7 +3,7 @@ import { useState } from "react";
 export default function HeroSection() {
   const [hovBtn1, setHovBtn1] = useState(false);
   const [hovBtn2, setHovBtn2] = useState(false);
-
+  
   return (
     <section
       style={{
