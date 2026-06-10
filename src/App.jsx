@@ -14,6 +14,7 @@ import WebDev from "./pages/webDevPage/WebDev";
 import MobileApp from "./pages/mobileDeve/MobileApp";
 import DesignLab from "./pages/designLabPage/DesignLab";
 import DedicatedTeam from "./pages/dedicatedTeams/DedicatedTeam";
+import DataLab from "./pages/dataLabPage/DataLab";
 
 function DummyPage({ title }) {
   return (
@@ -44,7 +45,7 @@ function App() {
         <Route path="/web-development" element={<WebDev />} />
         <Route path="/design-lab" element={<DesignLab />} />
          <Route path="/dedicated-team" element={<DedicatedTeam />} />
-        <Route path="/data-lab" element={<DummyPage title="Data Lab" />} />
+        <Route path="/data-lab" element={<DataLab />} />
 
         <Route path="/products" element={<DummyPage title="Products" />} />
         <Route path="/technologies" element={<DummyPage title="Technologies" />} />

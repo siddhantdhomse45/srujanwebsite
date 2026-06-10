@@ -5,15 +5,20 @@ import Areasofresponsibility from '../../component/services/dedicatedTeam/Areaso
 import Benefitsdedicatedteam from '../../component/services/dedicatedTeam/Benefitsdedicatedteam'
 import Technologiesweuse from '../../component/services/dedicatedTeam/Technologiesweuse'
 import Dedicatedteammodel from '../../component/services/dedicatedTeam/Dedicatedteammodel'
+import Engagementmodels from '../../component/services/dedicatedTeam/Engagementmodels'
+import Hqlocations from '../../component/services/dedicatedTeam/Hqlocations'
+
 function DedicatedTeam() {
   return (
     <div>
         <Dedicatedteambanner />
         <Dedicatedteamoverview />
         <Areasofresponsibility />
+        <Hqlocations />
         <Benefitsdedicatedteam />
         <Technologiesweuse />
         <Dedicatedteammodel />
+        <Engagementmodels />
     </div>
   )
 }
