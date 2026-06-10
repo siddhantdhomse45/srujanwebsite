@@ -10,6 +10,10 @@ import SocialPage from "./pages/socialPage/SocialPage";
 import TeamPage from "./pages/teamPage/TeamPage";
 import CasePage from "./pages/casePage/CasePage";
 import CustomPage from "./pages/customPage/CustomPage";
+import WebDev from "./pages/webDevPage/WebDev";
+import MobileApp from "./pages/mobileDeve/MobileApp";
+import DesignLab from "./pages/designLabPage/DesignLab";
+import DedicatedTeam from "./pages/dedicatedTeams/DedicatedTeam";
 
 function DummyPage({ title }) {
   return (
@@ -36,9 +40,10 @@ function App() {
          <Route path="/contact" element={<Contact/>} />
 
         <Route path="/custom-software" element={<CustomPage />} />
-        <Route path="/mobile-app" element={<DummyPage title="Mobile App Development" />} />
-        <Route path="/web-development" element={<DummyPage title="Web Development" />} />
-        <Route path="/design-lab" element={<DummyPage title="Design Lab" />} />
+        <Route path="/mobile-app" element={<MobileApp />} />
+        <Route path="/web-development" element={<WebDev />} />
+        <Route path="/design-lab" element={<DesignLab />} />
+         <Route path="/dedicated-team" element={<DedicatedTeam />} />
         <Route path="/data-lab" element={<DummyPage title="Data Lab" />} />
 
         <Route path="/products" element={<DummyPage title="Products" />} />
