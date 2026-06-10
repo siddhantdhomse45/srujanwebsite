@@ -15,7 +15,7 @@ import MobileApp from "./pages/mobileDeve/MobileApp";
 import DesignLab from "./pages/designLabPage/DesignLab";
 import DedicatedTeam from "./pages/dedicatedTeams/DedicatedTeam";
 import DataLab from "./pages/dataLabPage/DataLab";
-import ITConsulting from "./pages/itConsultant/ITConsulting";
+// import ITConsulting from "./pages/itConsultant/ITConsulting";
 
 function DummyPage({ title }) {
   return (
@@ -47,7 +47,7 @@ function App() {
         <Route path="/design-lab" element={<DesignLab />} />
          <Route path="/dedicated-team" element={<DedicatedTeam />} />
         <Route path="/data-lab" element={<DataLab />} />
-        <Route path="/it-consulting" element={<ITConsulting />} />
+        {/* <Route path="/it-consulting" element={<ITConsulting />} /> */}
         <Route path="/products" element={<DummyPage title="Products" />} />
         <Route path="/technologies" element={<DummyPage title="Technologies" />} />
         <Route path="/portfolio" element={<DummyPage title="Portfolio" />} />
