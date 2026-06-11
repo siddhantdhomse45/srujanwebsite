@@ -3,6 +3,7 @@ import InsuranceSection from '../../component/industries/insurance/InsuranceSect
 import InsuranceSoftwareServices from '../../component/industries/insurance/InsuranceSoftwareServices'
 import TechnologyExpertise from '../../component/industries/insurance/TechnologyExpertise'
 import ProjectDevelopmentProcess from '../../component/industries/insurance/ProjectDevelopmentProcess'
+import OurClients from '../../component/industries/insurance/OurClients'
 function Insurance() {
   return (
     <div>
@@ -11,6 +12,7 @@ function Insurance() {
         <InsuranceSection />
         <TechnologyExpertise />
         <ProjectDevelopmentProcess />
+        <OurClients />
     </div>
   )
 }

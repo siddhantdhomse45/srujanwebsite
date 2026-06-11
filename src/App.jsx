@@ -86,6 +86,10 @@ import ConstructionPage from "./pages/constructionPage/ConstructionPage";
 import Retail from "./pages/retailPage/Retail";
 import Financial from "./pages/financialPage/Financial";
 import Insurance from "./pages/insurancePage/Insurance";
+import ScrollToTopButton from "./component/ScrollToTopButton";
+import HealthCare from './pages/health/HealthCare'
+import Logistics from "./pages/logisticsPage/Logistics";
+import Hospility from "./pages/hospilityPage/Hospility";
 // import ITConsulting from "./pages/itConsultant/ITConsulting";
 
 function DummyPage({ title }) {
@@ -127,9 +131,9 @@ function App() {
         <Route path="/industries/retail-ecommerce" element={<Retail />} />
         <Route path="/industries/fintech" element={<Financial />} />
         <Route path="/industries/insurance" element={<Insurance />} />
-        <Route path="/industries/healthcare" element={<DummyPage title="Healthcare" />} />
-        <Route path="/industries/transportation-logistics" element={<DummyPage title="Transportation & Logistics" />} />
-        <Route path="/industries/travel-hospitality" element={<DummyPage title="Travel & Hospitality" />} />
+        <Route path="/industries/healthcare" element={<HealthCare />} />
+        <Route path="/industries/transportation-logistics" element={<Logistics />} />
+        <Route path="/industries/travel-hospitality" element={<Hospility />} />
 
         {/* Contact (already implemented) */}
         <Route path="/contact" element={<Contact />} />
@@ -139,6 +143,7 @@ function App() {
         <Route path="/technologies" element={<DummyPage title="Technologies" />} />
         <Route path="/portfolio" element={<DummyPage title="Portfolio" />} />
       </Routes>
+            <ScrollToTopButton />
 
       <Footer />
     </BrowserRouter>
