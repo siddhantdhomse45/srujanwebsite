@@ -15,9 +15,11 @@ const Footer = () => {
           {/* Company Info */}
 
           <div>
-            <h2 className="text-2xl font-bold mb-6">
-              Srujan Infotech
-            </h2>
+            <img
+                src="https://srujaninfotech.in/images/logo11.png"
+                alt="Logo"
+                className="h-15 w-auto object-contain"
+              />
 
             <p className="text-gray-300 leading-7">
               We provide innovative software solutions,

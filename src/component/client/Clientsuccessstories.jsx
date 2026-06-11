@@ -59,6 +59,20 @@ const stories = [
   },
 ];
 
+const ACCENT = "#60a5fa";
+const ACCENT_DARK = "#378ADD";
+
+// ---------- Decorative circles (same as other components) ----------
+function DecorativeCircles() {
+  return (
+    <div style={{ position: "absolute", top: "50%", left: "50%", transform: "translate(-50%,-50%)", pointerEvents: "none", zIndex: 0 }}>
+      {[400, 600, 800].map((size, i) => (
+        <div key={i} style={{ position: "absolute", width: size, height: size, borderRadius: "50%", border: "1px solid rgba(59,130,246,0.05)", top: "50%", left: "50%", transform: "translate(-50%,-50%)" }} />
+      ))}
+    </div>
+  );
+}
+
 /* ─── MAIN ─── */
 const ClientSuccessStories = () => {
   const [active, setActive] = useState(0);
@@ -106,32 +120,32 @@ const ClientSuccessStories = () => {
   return (
     <>
       <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@400;500;600;700;800;900&family=Space+Mono:wght@400;700&display=swap');
         *, *::before, *::after { box-sizing: border-box; }
 
-        .css-wrap { font-family: 'Plus Jakarta Sans', sans-serif; background: #f8f9fc; }
+        .css-wrap { font-family: 'DM Sans', sans-serif; position: relative; }
         .css-serif { font-family: 'DM Serif Display', serif; }
         .css-mono  { font-family: 'Space Mono', monospace; }
 
         .css-all-link {
           display: inline-flex; align-items: center; gap: 8px;
           font-size: 12px; font-weight: 700; letter-spacing: 0.16em;
-          text-transform: uppercase; color: #1a56db;
+          text-transform: uppercase; color: ${ACCENT};
           text-decoration: none; font-family: 'Space Mono', monospace;
           transition: gap .25s ease;
         }
-        .css-all-link:hover { gap: 12px; }
+        .css-all-link:hover { gap: 12px; color: white; }
         .css-all-link svg { transition: transform .25s ease; }
         .css-all-link:hover svg { transform: translateX(3px); }
 
         .css-nav-btn {
           width: 42px; height: 42px; border-radius: 50%;
-          background: transparent; border: 1.5px solid #d1d5db;
+          background: rgba(0,0,0,0.5); border: 1.5px solid rgba(255,255,255,0.2);
           cursor: pointer; display: flex; align-items: center; justify-content: center;
-          color: #6b7280; transition: all .25s ease;
-          flex-shrink: 0;
+          color: rgba(255,255,255,0.7); transition: all .25s ease;
+          backdrop-filter: blur(8px);
         }
-        .css-nav-btn:hover { background: #1a56db; border-color: #1a56db; color: #fff; }
+        .css-nav-btn:hover { background: ${ACCENT}; border-color: ${ACCENT}; color: #0a0f1c; }
 
         /* ── Story panel: side-by-side on desktop ── */
         .css-story-grid {
@@ -148,20 +162,23 @@ const ClientSuccessStories = () => {
           min-height: 300px;
         }
 
-        /* Text side */
+        /* Text side – dark card */
         .css-text-side {
           padding: 48px 44px;
           display: flex;
           flex-direction: column;
           justify-content: center;
-          background: #fff;
+          background: rgba(4,21,48,0.65);
+          backdrop-filter: blur(12px);
+          border-left: 1px solid rgba(59,130,246,0.2);
         }
 
-        /* ── Tabs row ── */
+        /* ── Tabs row (dark) ── */
         .css-tabs {
           display: flex;
-          border-top: 1px solid #e5e7eb;
-          background: #f9fafb;
+          border-top: 1px solid rgba(59,130,246,0.2);
+          background: rgba(4,21,48,0.4);
+          backdrop-filter: blur(8px);
           position: relative;
           overflow-x: auto;
           scrollbar-width: none;
@@ -182,24 +199,26 @@ const ClientSuccessStories = () => {
           border-top: 3px solid transparent;
           transition: all .25s ease;
           position: relative;
-          font-family: 'Plus Jakarta Sans', sans-serif;
+          font-family: 'DM Sans', sans-serif;
           white-space: nowrap;
         }
-        .css-tab.active { border-top-color: #1a56db; background: #fff; }
-        .css-tab:hover:not(.active) { background: #f1f5f9; }
+        .css-tab.active { border-top-color: ${ACCENT}; background: rgba(96,165,250,0.08); }
+        .css-tab:hover:not(.active) { background: rgba(96,165,250,0.05); }
 
         .css-result-chip {
           font-size: 11px; font-family: 'Space Mono', monospace;
           padding: 5px 12px; border-radius: 999px;
-          background: #eff6ff; border: 1px solid #bfdbfe;
-          color: #1d4ed8; white-space: nowrap;
+          background: rgba(96,165,250,0.12);
+          border: 1px solid rgba(96,165,250,0.3);
+          color: ${ACCENT};
+          white-space: nowrap;
           transition: all .25s ease;
         }
-        .css-result-chip:hover { background: #dbeafe; }
+        .css-result-chip:hover { background: rgba(96,165,250,0.25); }
 
         .css-progress {
           position: absolute; bottom: 0; left: 0; height: 3px;
-          background: #1a56db; border-radius: 0 2px 2px 0;
+          background: ${ACCENT}; border-radius: 0 2px 2px 0;
           transform-origin: left;
         }
 
@@ -234,8 +253,9 @@ const ClientSuccessStories = () => {
           }
           .css-text-side {
             padding: 24px 20px 28px;
+            border-left: none;
+            border-top: 1px solid rgba(59,130,246,0.2);
           }
-          /* Tabs: show abbr instead of full client name on very small screens */
           .css-tab {
             min-width: 68px;
             padding: 14px 8px;
@@ -262,9 +282,33 @@ const ClientSuccessStories = () => {
         }
       `}</style>
 
-      <section className="css-wrap" style={{ padding: "clamp(56px, 8vw, 96px) 0 0" }}>
-        <div style={{ maxWidth: 1160, margin: "0 auto", padding: "0 clamp(16px, 4vw, 60px)" }}>
+      <section className="css-wrap" style={{ 
+        position: "relative",
+        background: "linear-gradient(135deg,#040d1a 0%,#071428 40%,#091e3a 70%,#0a1f3d 100%)",
+        padding: "clamp(56px, 8vw, 96px) 0 0",
+        overflow: "hidden",
+      }}>
+        {/* Blueprint grid */}
+        <svg style={{ position: "absolute", inset: 0, width: "100%", height: "100%", opacity: 0.05, pointerEvents: "none" }} xmlns="http://www.w3.org/2000/svg">
+          <defs><pattern id="storygrid" width="60" height="60" patternUnits="userSpaceOnUse"><path d="M 60 0 L 0 0 0 60" fill="none" stroke="white" strokeWidth="0.5" /></pattern></defs>
+          <rect width="100%" height="100%" fill="url(#storygrid)" />
+        </svg>
 
+        {/* Animated orbs */}
+        <motion.div
+          animate={{ scale: [1, 1.08, 1], opacity: [0.08, 0.15, 0.08] }}
+          transition={{ duration: 12, repeat: Infinity, ease: "easeInOut" }}
+          style={{ position: "absolute", top: -80, left: -40, width: 300, height: 300, borderRadius: "50%", background: "radial-gradient(circle,#1d4ed8,#2563eb,transparent 70%)", filter: "blur(60px)", pointerEvents: "none" }}
+        />
+        <motion.div
+          animate={{ scale: [1, 1.05, 1], opacity: [0.06, 0.12, 0.06] }}
+          transition={{ duration: 15, repeat: Infinity, ease: "easeInOut", delay: 3 }}
+          style={{ position: "absolute", bottom: -60, right: -20, width: 260, height: 260, borderRadius: "50%", background: "radial-gradient(circle,#4f46e5,#818cf8,transparent 70%)", filter: "blur(70px)", pointerEvents: "none" }}
+        />
+
+        <DecorativeCircles />
+
+        <div style={{ maxWidth: 1160, margin: "0 auto", padding: "0 clamp(16px, 4vw, 60px)", position: "relative", zIndex: 10 }}>
           {/* ── HEADER ── */}
           <div style={{ textAlign: "center", marginBottom: "clamp(28px, 4vw, 44px)" }}>
             <motion.h2
@@ -275,7 +319,7 @@ const ClientSuccessStories = () => {
               transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
               style={{
                 fontSize: "clamp(1.4rem, 3.5vw, 2.4rem)",
-                fontWeight: 400, color: "#111827",
+                fontWeight: 400, color: "#ffffff",
                 margin: "0 0 20px", letterSpacing: "-0.01em",
                 textTransform: "uppercase", lineHeight: 1.2,
               }}
@@ -304,20 +348,19 @@ const ClientSuccessStories = () => {
             viewport={{ once: true }}
             transition={{ duration: 0.8, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
             style={{
-              background: "#fff",
+              background: "transparent",
               borderRadius: "16px 16px 0 0",
-              boxShadow: "0 4px 40px rgba(0,0,0,0.08)",
+              boxShadow: "0 4px 40px rgba(0,0,0,0.3)",
               overflow: "hidden",
+              border: "1px solid rgba(59,130,246,0.2)",
             }}
             onMouseEnter={() => setIsPaused(true)}
             onMouseLeave={() => setIsPaused(false)}
             onTouchStart={() => setIsPaused(true)}
             onTouchEnd={() => setTimeout(() => setIsPaused(false), 1200)}
           >
-
             {/* Content row */}
             <div className="css-story-grid">
-
               {/* ── IMAGE SIDE ── */}
               <div className="css-img-side">
                 <AnimatePresence custom={direction} mode="wait">
@@ -343,7 +386,7 @@ const ClientSuccessStories = () => {
                 {/* Gradient overlay */}
                 <div style={{
                   position: "absolute", inset: 0,
-                  background: "linear-gradient(to right, rgba(0,0,0,0.15) 0%, rgba(0,0,0,0.05) 100%)",
+                  background: "linear-gradient(to right, rgba(0,0,0,0.25) 0%, rgba(0,0,0,0.05) 100%)",
                   zIndex: 1,
                 }} />
 
@@ -397,7 +440,7 @@ const ClientSuccessStories = () => {
                 </div>
               </div>
 
-              {/* ── TEXT SIDE ── */}
+              {/* ── TEXT SIDE (dark) ── */}
               <div className="css-text-side">
                 <AnimatePresence custom={direction} mode="wait">
                   <motion.div
@@ -427,7 +470,7 @@ const ClientSuccessStories = () => {
                         className="css-serif"
                         style={{
                           fontSize: "clamp(1.2rem, 2.5vw, 1.9rem)",
-                          fontWeight: 400, color: "#111827",
+                          fontWeight: 400, color: "#ffffff",
                           margin: 0, lineHeight: 1.1,
                         }}
                       >
@@ -438,7 +481,7 @@ const ClientSuccessStories = () => {
                     {/* Description */}
                     <p style={{
                       fontSize: "clamp(13px, 1.3vw, 15px)",
-                      color: "#6b7280", lineHeight: 1.85,
+                      color: "rgba(255,255,255,0.7)", lineHeight: 1.85,
                       marginBottom: 22, maxWidth: 360,
                     }}>
                       {story.description}
@@ -458,7 +501,7 @@ const ClientSuccessStories = () => {
                         display: "inline-flex", alignItems: "center", gap: 8,
                         fontSize: 12, fontWeight: 700,
                         letterSpacing: "0.14em", textTransform: "uppercase",
-                        color: "#1a56db", textDecoration: "none",
+                        color: ACCENT, textDecoration: "none",
                         fontFamily: "'Space Mono', monospace",
                         transition: "gap .2s ease",
                       }}
@@ -475,7 +518,7 @@ const ClientSuccessStories = () => {
               </div>
             </div>
 
-            {/* ── LOGO TABS ── */}
+            {/* ── LOGO TABS (dark) ── */}
             <div className="css-tabs">
               {stories.map((s, i) => (
                 <button
@@ -483,7 +526,7 @@ const ClientSuccessStories = () => {
                   className={`css-tab ${i === active ? "active" : ""}`}
                   onClick={() => go(i)}
                   aria-label={s.client}
-                  style={{ borderTop: `3px solid ${i === active ? "#1a56db" : "transparent"}` }}
+                  style={{ borderTop: `3px solid ${i === active ? ACCENT : "transparent"}` }}
                 >
                   {/* Active progress bar */}
                   {i === active && !isPaused && (
@@ -499,7 +542,7 @@ const ClientSuccessStories = () => {
                         fontSize: i === 0 ? 14 : 12,
                         fontWeight: i === 0 ? 700 : 600,
                         fontStyle: i === 2 ? "italic" : "normal",
-                        color: i === active ? "#111827" : "#9ca3af",
+                        color: i === active ? "#ffffff" : "rgba(255,255,255,0.5)",
                         letterSpacing: i === 0 ? "0.06em" : "0.04em",
                         textTransform: "uppercase",
                         lineHeight: 1.2,
@@ -516,7 +559,7 @@ const ClientSuccessStories = () => {
                         fontFamily: "'Space Mono', monospace",
                         fontSize: 10,
                         fontWeight: 700,
-                        color: i === active ? "#111827" : "#9ca3af",
+                        color: i === active ? "#ffffff" : "rgba(255,255,255,0.5)",
                         letterSpacing: "0.06em",
                         textTransform: "uppercase",
                         lineHeight: 1.2,
@@ -527,14 +570,13 @@ const ClientSuccessStories = () => {
                     </div>
 
                     {i === active && (
-                      <div style={{ width: 24, height: 1.5, background: "#1a56db", borderRadius: 1, marginTop: 2 }} />
+                      <div style={{ width: 24, height: 1.5, background: ACCENT, borderRadius: 1, marginTop: 2 }} />
                     )}
                   </div>
                 </button>
               ))}
             </div>
           </motion.div>
-
         </div>
       </section>
     </>

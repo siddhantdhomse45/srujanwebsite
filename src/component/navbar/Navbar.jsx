@@ -466,7 +466,7 @@ const Navbar = () => {
               <img
                 src="https://srujaninfotech.in/images/logo11.png"
                 alt="Logo"
-                className="h-9 w-auto object-contain"
+                className="h-13 w-auto object-contain"
               />
             </NavLink>
 
