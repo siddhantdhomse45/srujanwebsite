@@ -359,8 +359,6 @@
 
 
 
-
-
 import { useState, useRef, useEffect } from "react";
 import { NavLink } from "react-router-dom";
 import { ChevronDown, Menu, X } from "lucide-react";
@@ -378,24 +376,38 @@ const INDUSTRIES_LIST = [
 const firstIndustriesColumn = INDUSTRIES_LIST.slice(0, 4);
 const secondIndustriesColumn = INDUSTRIES_LIST.slice(4);
 
+// Resources links
+const RESOURCES_LIST = [
+  { name: "News", path: "/news" },
+  { name: "Blog", path: "/blog" },
+  // { name: "Insights", path: "/insights" },
+];
+
+const firstResourcesColumn = RESOURCES_LIST.slice(0, 2);
+const secondResourcesColumn = RESOURCES_LIST.slice(2);
+
 const Navbar = () => {
   const [aboutOpen, setAboutOpen] = useState(false);
   const [servicesOpen, setServicesOpen] = useState(false);
   const [industriesOpen, setIndustriesOpen] = useState(false);
+  const [resourcesOpen, setResourcesOpen] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [mobileAboutOpen, setMobileAboutOpen] = useState(false);
   const [mobileServicesOpen, setMobileServicesOpen] = useState(false);
   const [mobileIndustriesOpen, setMobileIndustriesOpen] = useState(false);
+  const [mobileResourcesOpen, setMobileResourcesOpen] = useState(false);
 
   const aboutRef = useRef(null);
   const servicesRef = useRef(null);
   const industriesRef = useRef(null);
+  const resourcesRef = useRef(null);
 
   useEffect(() => {
     const handleClickOutside = (e) => {
       if (aboutRef.current && !aboutRef.current.contains(e.target)) setAboutOpen(false);
       if (servicesRef.current && !servicesRef.current.contains(e.target)) setServicesOpen(false);
       if (industriesRef.current && !industriesRef.current.contains(e.target)) setIndustriesOpen(false);
+      if (resourcesRef.current && !resourcesRef.current.contains(e.target)) setResourcesOpen(false);
     };
     document.addEventListener("mousedown", handleClickOutside);
     return () => document.removeEventListener("mousedown", handleClickOutside);
@@ -410,18 +422,28 @@ const Navbar = () => {
     setAboutOpen(prev => !prev);
     setServicesOpen(false);
     setIndustriesOpen(false);
+    setResourcesOpen(false);
   };
 
   const toggleServices = () => {
     setServicesOpen(prev => !prev);
     setAboutOpen(false);
     setIndustriesOpen(false);
+    setResourcesOpen(false);
   };
 
   const toggleIndustries = () => {
     setIndustriesOpen(prev => !prev);
     setAboutOpen(false);
     setServicesOpen(false);
+    setResourcesOpen(false);
+  };
+
+  const toggleResources = () => {
+    setResourcesOpen(prev => !prev);
+    setAboutOpen(false);
+    setServicesOpen(false);
+    setIndustriesOpen(false);
   };
 
   const closeMobile = () => {
@@ -429,6 +451,7 @@ const Navbar = () => {
     setMobileAboutOpen(false);
     setMobileServicesOpen(false);
     setMobileIndustriesOpen(false);
+    setMobileResourcesOpen(false);
   };
 
   return (
@@ -553,7 +576,39 @@ const Navbar = () => {
                   )}
                 </li>
 
-                {/* CONTACT — top level */}
+                {/* RESOURCES - new dropdown */}
+                <li ref={resourcesRef} className="relative">
+                  <button onClick={toggleResources} className={`flex items-center gap-1 transition ${resourcesOpen ? "text-orange-400" : "hover:text-orange-400"}`}>
+                    INSIGHTS <ChevronDown size={14} className={`transition-transform duration-200 ${resourcesOpen ? "rotate-180" : ""}`} />
+                  </button>
+                  {resourcesOpen && (
+                    <div className="fixed left-1/2 -translate-x-1/2 bg-white shadow-2xl z-[200]" style={{ top: "64px", width: "min(1150px, 100vw)" }}>
+                      <div className="grid grid-cols-2">
+                        <div className="relative h-[260px]">
+                          <img src="https://images.unsplash.com/photo-1434030216411-0b793f4c4170" alt="Resources" className="w-full h-full object-cover" />
+                          <div className="absolute inset-0 bg-black/40" />
+                          <div className="absolute inset-0 flex items-center px-10">
+                            <h3 className="text-white text-[18px] leading-8 font-medium">Stay ahead with expert insights, industry news, and in-depth blogs from our team.</h3>
+                          </div>
+                        </div>
+                        <div className="grid grid-cols-2 p-10 gap-10">
+                          <div className="space-y-5">
+                            {firstResourcesColumn.map(res => (
+                              <NavLink key={res.path} onClick={() => setResourcesOpen(false)} to={res.path} className="block text-[16px] text-gray-700 hover:text-[#006CB7] transition">{res.name}</NavLink>
+                            ))}
+                          </div>
+                          <div className="space-y-5">
+                            {secondResourcesColumn.map(res => (
+                              <NavLink key={res.path} onClick={() => setResourcesOpen(false)} to={res.path} className="block text-[16px] text-gray-700 hover:text-[#006CB7] transition">{res.name}</NavLink>
+                            ))}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  )}
+                </li>
+
+                {/* CONTACT */}
                 <li>
                   <NavLink to="/contact" className={({ isActive }) => isActive ? "text-orange-400" : "hover:text-orange-400 transition"}>
                     CONTACT
@@ -647,6 +702,22 @@ const Navbar = () => {
                   {INDUSTRIES_LIST.map(industry => (
                     <li key={industry.path}>
                       <NavLink to={industry.path} onClick={closeMobile} className="block px-8 py-3 text-[13px] font-normal normal-case text-gray-300 hover:text-orange-400 hover:bg-white/5 transition">{industry.name}</NavLink>
+                    </li>
+                  ))}
+                </ul>
+              )}
+            </li>
+
+            {/* Mobile RESOURCES */}
+            <li>
+              <button onClick={() => setMobileResourcesOpen(prev => !prev)} className={`w-full flex items-center justify-between px-5 py-3.5 transition hover:bg-white/5 ${mobileResourcesOpen ? "text-orange-400 bg-white/5" : "hover:text-orange-400"}`}>
+                RESOURCES <ChevronDown size={16} className={`transition-transform duration-200 ${mobileResourcesOpen ? "rotate-180" : ""}`} />
+              </button>
+              {mobileResourcesOpen && (
+                <ul className="bg-[#07172e] border-t border-b border-white/10">
+                  {RESOURCES_LIST.map(res => (
+                    <li key={res.path}>
+                      <NavLink to={res.path} onClick={closeMobile} className="block px-8 py-3 text-[13px] font-normal normal-case text-gray-300 hover:text-orange-400 hover:bg-white/5 transition">{res.name}</NavLink>
                     </li>
                   ))}
                 </ul>

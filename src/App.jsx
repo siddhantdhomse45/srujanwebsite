@@ -90,6 +90,8 @@ import ScrollToTopButton from "./component/ScrollToTopButton";
 import HealthCare from './pages/health/HealthCare'
 import Logistics from "./pages/logisticsPage/Logistics";
 import Hospility from "./pages/hospilityPage/Hospility";
+import News from "./pages/newsPage/News";
+import Blog from "./pages/blogPage/Blog";
 // import ITConsulting from "./pages/itConsultant/ITConsulting";
 
 function DummyPage({ title }) {
@@ -134,6 +136,9 @@ function App() {
         <Route path="/industries/healthcare" element={<HealthCare />} />
         <Route path="/industries/transportation-logistics" element={<Logistics />} />
         <Route path="/industries/travel-hospitality" element={<Hospility />} />
+        
+        <Route path="/news" element={<News />} />
+        <Route path="/blog" element={<Blog />} />
 
         {/* Contact (already implemented) */}
         <Route path="/contact" element={<Contact />} />
