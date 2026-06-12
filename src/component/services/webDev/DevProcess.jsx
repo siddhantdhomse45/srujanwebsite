@@ -71,15 +71,15 @@ function StepPanel({ step, index, isActive, onClick }) {
       transition={{ duration: 0.6, delay: index * 0.1, ease: [0.22, 1, 0.36, 1] }}
       onClick={onClick}
       style={{
-        flex: 1,
-        minWidth: "clamp(140px,20vw,220px)",
+        flex: "0 0 auto",
+        width: "clamp(100px, 25vw, 140px)",
         display: "flex", flexDirection: "column", alignItems: "center",
         cursor: "pointer", position: "relative",
       }}
     >
-      {/* connector line (not after last) */}
+      {/* connector line (only on desktop, hidden on mobile through CSS) */}
       {index < steps.length - 1 && (
-        <div style={{
+        <div className="connector-line" style={{
           position: "absolute",
           top: 28, left: "calc(50% + 28px)",
           right: "calc(-50% + 28px)",
@@ -90,7 +90,6 @@ function StepPanel({ step, index, isActive, onClick }) {
           transition: "background 0.5s",
           overflow: "hidden",
         }}>
-          {/* animated dash */}
           <motion.div
             animate={isActive ? { x: ["0%", "100%"] } : { x: "0%" }}
             transition={{ duration: 1.8, repeat: isActive ? Infinity : 0, ease: "linear" }}
@@ -103,7 +102,6 @@ function StepPanel({ step, index, isActive, onClick }) {
         </div>
       )}
 
-      {/* number circle */}
       <motion.div
         whileHover={{ scale: 1.08 }}
         style={{
@@ -118,7 +116,6 @@ function StepPanel({ step, index, isActive, onClick }) {
           transition: "all 0.4s cubic-bezier(0.22,1,0.36,1)",
         }}
       >
-        {/* pulse ring */}
         {isActive && (
           <motion.div
             animate={{ scale: [1, 1.6, 1], opacity: [0.5, 0, 0.5] }}
@@ -140,7 +137,6 @@ function StepPanel({ step, index, isActive, onClick }) {
         </span>
       </motion.div>
 
-      {/* label */}
       <span style={{
         marginTop: 14,
         fontFamily: "'DM Sans',sans-serif",
@@ -175,7 +171,94 @@ export default function DevProcess() {
     }}>
       <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
 
-      {/* grid */}
+      <style>{`
+        /* responsive step selector: horizontal scroll on mobile */
+        @media (max-width: 768px) {
+          .step-selector {
+            display: flex !important;
+            flex-direction: row !important;
+            flex-wrap: nowrap !important;
+            overflow-x: auto !important;
+            gap: 16px !important;
+            justify-content: flex-start !important;
+            padding-bottom: 16px;
+            margin-bottom: 32px;
+            scrollbar-width: thin;
+            -webkit-overflow-scrolling: touch;
+          }
+          .step-selector::-webkit-scrollbar {
+            height: 3px;
+          }
+          .step-selector::-webkit-scrollbar-track {
+            background: rgba(255,255,255,0.05);
+            border-radius: 4px;
+          }
+          .step-selector::-webkit-scrollbar-thumb {
+            background: rgba(59,130,246,0.5);
+            border-radius: 4px;
+          }
+          .connector-line {
+            display: none !important;
+          }
+          .step-selector > div {
+            width: 100px !important;
+          }
+        }
+
+        /* content panel responsive stacking */
+        @media (max-width: 640px) {
+          .content-wrapper {
+            flex-direction: column !important;
+            gap: 24px !important;
+            padding: 24px 20px !important;
+          }
+          .content-left {
+            min-width: auto !important;
+            width: 100%;
+            align-items: center !important;
+            text-align: center;
+          }
+          .content-left .icon-pill {
+            align-self: center !important;
+          }
+          .content-right {
+            width: 100%;
+          }
+          .nav-buttons {
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 10px;
+          }
+          .step-dots {
+            order: -1;
+            width: 100%;
+            justify-content: center;
+            margin-bottom: 8px;
+          }
+        }
+
+        @media (max-width: 480px) {
+          .step-selector > div {
+            width: 85px !important;
+          }
+          .step-selector > div .step-number-circle {
+            width: 44px !important;
+            height: 44px !important;
+          }
+          .step-selector > div .step-number-circle span {
+            font-size: 14px !important;
+          }
+          .step-selector > div span:last-child {
+            font-size: 10px !important;
+          }
+          .content-left .giant-number {
+            font-size: 60px !important;
+            letter-spacing: -3px !important;
+          }
+        }
+      `}</style>
+
+      {/* grid background */}
       <svg style={{ position:"absolute",inset:0,width:"100%",height:"100%",opacity:0.05,pointerEvents:"none" }} xmlns="http://www.w3.org/2000/svg">
         <defs>
           <pattern id="dpgrid" width="60" height="60" patternUnits="userSpaceOnUse">
@@ -193,7 +276,7 @@ export default function DevProcess() {
 
       <div style={{ maxWidth:1200,margin:"0 auto",padding:"0 clamp(16px,5vw,48px)",position:"relative",zIndex:10 }}>
 
-        {/* ── header ── */}
+        {/* header */}
         <motion.div
           ref={headRef}
           initial={{ opacity:0,y:30 }}
@@ -234,11 +317,12 @@ export default function DevProcess() {
           </p>
         </motion.div>
 
-        {/* ── step selector ── */}
-        <div style={{
-          display:"flex",alignItems:"flex-start",gap:0,
+        {/* step selector - responsive scroll */}
+        <div className="step-selector" style={{
+          display: "flex", alignItems: "flex-start", gap: 0,
+          justifyContent: "space-between",
           marginBottom: "clamp(32px,5vw,52px)",
-          position:"relative",
+          position: "relative",
         }}>
           {steps.map((step, i) => (
             <StepPanel
@@ -250,7 +334,7 @@ export default function DevProcess() {
           ))}
         </div>
 
-        {/* ── content panel ── */}
+        {/* content panel */}
         <AnimatePresence mode="wait">
           <motion.div
             key={active}
@@ -267,20 +351,17 @@ export default function DevProcess() {
               position:"relative",
             }}
           >
-            {/* top gradient bar */}
             <div style={{ height:3,background:cur.grad,width:"100%" }}/>
 
-            <div style={{
+            <div className="content-wrapper" style={{
               display:"flex",gap:"clamp(24px,4vw,56px)",
               padding:"clamp(28px,4vw,48px)",
               flexWrap:"wrap",alignItems:"flex-start",
             }}>
-
-              {/* left: big number + icon + label */}
-              <div style={{ flexShrink:0,display:"flex",flexDirection:"column",gap:16,minWidth:180 }}>
-                {/* giant ghost number */}
-                <div style={{
-                  fontSize:"clamp(80px,12vw,140px)",fontWeight:900,lineHeight:1,
+              {/* left side */}
+              <div className="content-left" style={{ flexShrink:0,display:"flex",flexDirection:"column",gap:16,minWidth:180 }}>
+                <div className="giant-number" style={{
+                  fontSize:"clamp(60px,12vw,140px)",fontWeight:900,lineHeight:1,
                   background:`linear-gradient(135deg,${cur.accent}30,transparent)`,
                   WebkitBackgroundClip:"text",WebkitTextFillColor:"transparent",
                   letterSpacing:"-6px",userSelect:"none",
@@ -290,8 +371,7 @@ export default function DevProcess() {
                   {cur.number}
                 </div>
 
-                {/* icon pill */}
-                <div style={{
+                <div className="icon-pill" style={{
                   display:"inline-flex",alignItems:"center",gap:10,
                   background:cur.grad,
                   borderRadius:14,padding:"12px 18px",
@@ -300,17 +380,14 @@ export default function DevProcess() {
                   color:"white",
                 }}>
                   {cur.icon}
-                  <span style={{
-                    fontSize:14,fontWeight:700,color:"white",
-                    fontFamily:"'DM Sans',sans-serif",letterSpacing:"-0.2px",
-                  }}>
+                  <span style={{ fontSize:14,fontWeight:700,color:"white",fontFamily:"'DM Sans',sans-serif",letterSpacing:"-0.2px" }}>
                     {cur.label}
                   </span>
                 </div>
               </div>
 
-              {/* right: description + tags */}
-              <div style={{ flex:1,minWidth:"clamp(200px,40%,500px)",display:"flex",flexDirection:"column",gap:24 }}>
+              {/* right side */}
+              <div className="content-right" style={{ flex:1,minWidth:"clamp(200px,40%,500px)",display:"flex",flexDirection:"column",gap:24 }}>
 
                 <p style={{
                   margin:0,
@@ -321,7 +398,6 @@ export default function DevProcess() {
                   {cur.desc}
                 </p>
 
-                {/* highlight chips */}
                 <div style={{ display:"flex",flexWrap:"wrap",gap:10 }}>
                   {cur.highlights.map((h, i) => (
                     <motion.div
@@ -349,8 +425,8 @@ export default function DevProcess() {
                   ))}
                 </div>
 
-                {/* step navigation */}
-                <div style={{ display:"flex",gap:10,marginTop:4,alignItems:"center" }}>
+                {/* navigation */}
+                <div className="nav-buttons" style={{ display:"flex",gap:10,marginTop:4,alignItems:"center",flexWrap:"wrap" }}>
                   <motion.button
                     disabled={active === 0}
                     onClick={() => setActive(a => Math.max(0,a-1))}
@@ -373,8 +449,7 @@ export default function DevProcess() {
                     Previous
                   </motion.button>
 
-                  {/* step dots */}
-                  <div style={{ display:"flex",gap:6,flex:1,justifyContent:"center" }}>
+                  <div className="step-dots" style={{ display:"flex",gap:6,flex:1,justifyContent:"center" }}>
                     {steps.map((_,i) => (
                       <motion.div
                         key={i}
@@ -409,7 +484,6 @@ export default function DevProcess() {
                   </motion.button>
                 </div>
               </div>
-
             </div>
           </motion.div>
         </AnimatePresence>

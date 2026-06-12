@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 
 const categories = [
   {
@@ -127,7 +127,7 @@ const categories = [
 
 export default function ClientSuccess() {
   const [activeCategory, setActiveCategory] = useState(0);
-  const [slide, setSlide] = useState(0);
+  const tabsContainerRef = useRef(null);
 
   const cat = categories[activeCategory];
   const cs = cat.case;
@@ -135,12 +135,22 @@ export default function ClientSuccess() {
   const prev = () => setActiveCategory((p) => (p - 1 + categories.length) % categories.length);
   const next = () => setActiveCategory((p) => (p + 1) % categories.length);
 
+  // Scroll active tab into view on mobile
+  useEffect(() => {
+    if (tabsContainerRef.current) {
+      const activeTab = tabsContainerRef.current.children[activeCategory];
+      if (activeTab) {
+        activeTab.scrollIntoView({ behavior: "smooth", block: "nearest", inline: "center" });
+      }
+    }
+  }, [activeCategory]);
+
   return (
     <section
       style={{
         background: "linear-gradient(135deg,#020b18 0%,#041530 45%,#061d42 75%,#020e24 100%)",
         minHeight: "100vh",
-        padding: "90px 40px 110px",
+        padding: "clamp(60px, 10vw, 90px) clamp(20px, 5vw, 40px) clamp(80px, 10vw, 110px)",
         fontFamily: "'DM Sans','Segoe UI',sans-serif",
         position: "relative",
         overflow: "hidden",
@@ -155,8 +165,8 @@ export default function ClientSuccess() {
 
       <div style={{ maxWidth:"1200px", margin:"0 auto", position:"relative", zIndex:1 }}>
 
-        {/* ── Header ── */}
-        <div style={{ textAlign:"center", marginBottom:"60px" }}>
+        {/* Header */}
+        <div style={{ textAlign:"center", marginBottom:"clamp(48px, 8vw, 60px)" }}>
           <span style={{
             display:"inline-flex", alignItems:"center", gap:"8px",
             padding:"6px 18px", borderRadius:"100px",
@@ -185,13 +195,25 @@ export default function ClientSuccess() {
             <div style={{ height:"1px", width:"80px", background:"linear-gradient(to left,transparent,rgba(59,130,246,0.6))" }} />
           </div>
 
-          <p style={{ maxWidth:"740px", margin:"0 auto", fontSize:"16px", lineHeight:"1.85", color:"rgba(148,163,184,0.85)" }}>
+          <p style={{ maxWidth:"740px", margin:"0 auto", fontSize:"clamp(14px, 2.5vw, 16px)", lineHeight:"1.85", color:"rgba(148,163,184,0.85)" }}>
             Navigating through our extensive portfolio of healthcare IT solutions unveils the depth of our experience in servicing various domains within the healthcare industry. Our projects range from creating a healthcare IT infrastructure to implementing RFID systems and developing AI engines for treatment.
           </p>
         </div>
 
-        {/* ── Category Tabs ── */}
-        <div style={{ display:"grid", gridTemplateColumns:"repeat(6,1fr)", gap:"10px", marginBottom:"28px" }}>
+        {/* Category Tabs – horizontally scrollable on mobile */}
+        <div
+          ref={tabsContainerRef}
+          style={{
+            display: "flex",
+            overflowX: "auto",
+            scrollbarWidth: "thin",
+            gap: "10px",
+            marginBottom: "28px",
+            paddingBottom: "8px",
+            WebkitOverflowScrolling: "touch",
+          }}
+          className="tabs-scroll"
+        >
           {categories.map((c, i) => {
             const isAct = activeCategory === i;
             return (
@@ -204,6 +226,8 @@ export default function ClientSuccess() {
                   padding:"22px 10px 18px",
                   borderRadius:"16px",
                   cursor:"pointer",
+                  minWidth: "110px",
+                  flex: "0 0 auto",
                   border: isAct ? "1.5px solid rgba(96,165,250,0.6)" : "1px solid rgba(255,255,255,0.07)",
                   background: isAct
                     ? "linear-gradient(145deg,rgba(29,78,216,0.3),rgba(99,102,241,0.15))"
@@ -228,7 +252,7 @@ export default function ClientSuccess() {
                   {c.icon}
                 </div>
                 <span style={{
-                  fontSize:"11px", fontWeight: isAct ? "800" : "600",
+                  fontSize:"clamp(10px, 2.5vw, 11px)", fontWeight: isAct ? "800" : "600",
                   color: isAct ? "#93c5fd" : "rgba(100,116,139,0.7)",
                   textAlign:"center", lineHeight:1.3, letterSpacing:"0.01em",
                   transition:"color 0.3s",
@@ -240,22 +264,28 @@ export default function ClientSuccess() {
           })}
         </div>
 
-        {/* ── Case Study Panel ── */}
+        {/* Case Study Panel - responsive (stack on mobile) */}
         <div style={{
-          display:"grid", gridTemplateColumns:"1fr 1fr", gap:"0",
-          borderRadius:"20px", overflow:"hidden",
+          display:"grid",
+          gridTemplateColumns: "1fr 1fr",
+          gap:"0",
+          borderRadius:"20px",
+          overflow:"hidden",
           border:"1px solid rgba(59,130,246,0.15)",
           boxShadow:"0 24px 80px -16px rgba(0,0,0,0.6)",
           position:"relative",
-        }}>
+        }}
+        className="case-panel-grid"
+        >
           {/* Prev arrow */}
           <button
             onClick={prev}
+            className="case-arrow case-arrow-left"
             style={{
-              position:"absolute", left:"-20px", top:"50%", transform:"translateY(-50%)",
-              width:"40px", height:"40px", borderRadius:"50%",
+              position:"absolute", left:"clamp(-12px, -2vw, -20px)", top:"50%", transform:"translateY(-50%)",
+              width:"clamp(36px, 6vw, 40px)", height:"clamp(36px, 6vw, 40px)", borderRadius:"50%",
               background:"linear-gradient(135deg,#1d4ed8,#4f46e5)",
-              border:"none", cursor:"pointer", zIndex:10,
+              border:"none", cursor:"pointer", zIndex:20,
               display:"flex", alignItems:"center", justifyContent:"center",
               boxShadow:"0 4px 16px rgba(37,99,235,0.5)",
               transition:"all 0.3s",
@@ -271,11 +301,12 @@ export default function ClientSuccess() {
           {/* Next arrow */}
           <button
             onClick={next}
+            className="case-arrow case-arrow-right"
             style={{
-              position:"absolute", right:"-20px", top:"50%", transform:"translateY(-50%)",
-              width:"40px", height:"40px", borderRadius:"50%",
+              position:"absolute", right:"clamp(-12px, -2vw, -20px)", top:"50%", transform:"translateY(-50%)",
+              width:"clamp(36px, 6vw, 40px)", height:"clamp(36px, 6vw, 40px)", borderRadius:"50%",
               background:"linear-gradient(135deg,#1d4ed8,#4f46e5)",
-              border:"none", cursor:"pointer", zIndex:10,
+              border:"none", cursor:"pointer", zIndex:20,
               display:"flex", alignItems:"center", justifyContent:"center",
               boxShadow:"0 4px 16px rgba(37,99,235,0.5)",
               transition:"all 0.3s",
@@ -288,9 +319,9 @@ export default function ClientSuccess() {
             </svg>
           </button>
 
-          {/* Left visual */}
+          {/* Left visual side */}
           <div style={{
-            position:"relative", minHeight:"460px",
+            position:"relative", minHeight:"clamp(380px, 60vh, 460px)",
             background: cs.gradientBg,
             display:"flex", alignItems:"center", justifyContent:"center",
             overflow:"hidden",
@@ -298,36 +329,33 @@ export default function ClientSuccess() {
             <div style={{ position:"absolute", inset:0, backgroundImage:"linear-gradient(rgba(59,130,246,0.07) 1px,transparent 1px),linear-gradient(90deg,rgba(59,130,246,0.07) 1px,transparent 1px)", backgroundSize:"40px 40px" }} />
             <div style={{ position:"absolute", inset:0, background:"radial-gradient(ellipse at center,rgba(37,99,235,0.2),transparent 70%)" }} />
             <div style={{ position:"relative", zIndex:2, textAlign:"center" }}>
-              <div style={{ fontSize:"100px", lineHeight:1, marginBottom:"28px", filter:"drop-shadow(0 0 30px rgba(59,130,246,0.5))" }}>
+              <div style={{ fontSize:"clamp(64px, 15vw, 100px)", lineHeight:1, marginBottom:"28px", filter:"drop-shadow(0 0 30px rgba(59,130,246,0.5))" }}>
                 {cs.emoji}
               </div>
               <div style={{
                 display:"inline-flex", alignItems:"center", gap:"8px",
                 padding:"8px 20px", borderRadius:"100px",
                 background:"rgba(37,99,235,0.2)", border:"1px solid rgba(59,130,246,0.35)",
-                color:"#93c5fd", fontSize:"12px", fontWeight:"700", letterSpacing:"0.1em",
+                color:"#93c5fd", fontSize:"clamp(10px, 2.5vw, 12px)", fontWeight:"700", letterSpacing:"0.1em",
               }}>
                 <span style={{ width:6, height:6, borderRadius:"50%", background:"#3b82f6", display:"inline-block" }} />
                 {cat.label}
               </div>
             </div>
-            {/* Corner brackets */}
             <div style={{ position:"absolute", top:"16px", left:"16px", width:"32px", height:"32px", borderTop:"2px solid rgba(59,130,246,0.5)", borderLeft:"2px solid rgba(59,130,246,0.5)" }} />
             <div style={{ position:"absolute", bottom:"16px", right:"16px", width:"32px", height:"32px", borderBottom:"2px solid rgba(59,130,246,0.5)", borderRight:"2px solid rgba(59,130,246,0.5)" }} />
-            {/* Case number */}
             <div style={{ position:"absolute", bottom:"20px", left:"24px", fontSize:"11px", fontWeight:"700", letterSpacing:"0.15em", color:"rgba(96,165,250,0.4)", textTransform:"uppercase" }}>
               0{activeCategory + 1} / 0{categories.length}
             </div>
           </div>
 
-          {/* Right content */}
+          {/* Right content side */}
           <div style={{
-            padding:"48px 44px",
+            padding:"clamp(32px, 5vw, 48px) clamp(28px, 5vw, 44px)",
             background:"linear-gradient(145deg,rgba(6,18,42,0.97),rgba(4,15,38,0.99))",
             display:"flex", flexDirection:"column", justifyContent:"space-between",
           }}>
             <div>
-              {/* Badge */}
               <div style={{
                 display:"inline-flex", alignItems:"center", gap:"8px",
                 padding:"5px 14px", borderRadius:"8px",
@@ -338,8 +366,7 @@ export default function ClientSuccess() {
                 Case Study
               </div>
 
-              {/* Title */}
-              <h3 style={{ fontSize:"22px", fontWeight:"900", color:"#f1f5f9", marginBottom:"32px", lineHeight:1.3 }}>
+              <h3 style={{ fontSize:"clamp(20px, 4vw, 22px)", fontWeight:"900", color:"#f1f5f9", marginBottom:"32px", lineHeight:1.3 }}>
                 {cs.title}
               </h3>
 
@@ -358,7 +385,7 @@ export default function ClientSuccess() {
                   </div>
                   <span style={{ fontSize:"14px", fontWeight:"800", color:"#f1f5f9", letterSpacing:"0.04em" }}>Challenge</span>
                 </div>
-                <p style={{ fontSize:"14px", lineHeight:"1.85", color:"rgba(148,163,184,0.85)", margin:0, paddingLeft:"38px" }}>
+                <p style={{ fontSize:"clamp(13px, 2.5vw, 14px)", lineHeight:"1.85", color:"rgba(148,163,184,0.85)", margin:0, paddingLeft:"38px" }}>
                   {cs.challenge}
                 </p>
               </div>
@@ -378,7 +405,7 @@ export default function ClientSuccess() {
                   </div>
                   <span style={{ fontSize:"14px", fontWeight:"800", color:"#f1f5f9", letterSpacing:"0.04em" }}>Solution</span>
                 </div>
-                <p style={{ fontSize:"14px", lineHeight:"1.85", color:"rgba(148,163,184,0.85)", margin:0, paddingLeft:"38px", whiteSpace:"pre-line" }}>
+                <p style={{ fontSize:"clamp(13px, 2.5vw, 14px)", lineHeight:"1.85", color:"rgba(148,163,184,0.85)", margin:0, paddingLeft:"38px", whiteSpace:"pre-line" }}>
                   {cs.solution}
                 </p>
               </div>
@@ -388,19 +415,18 @@ export default function ClientSuccess() {
                 {cs.tags.map((tag, i) => (
                   <span key={i} style={{
                     padding:"5px 12px", borderRadius:"8px",
-                    fontSize:"11px", fontWeight:"700", letterSpacing:"0.1em", textTransform:"uppercase",
+                    fontSize:"clamp(10px, 2vw, 11px)", fontWeight:"700", letterSpacing:"0.1em", textTransform:"uppercase",
                     color:"#60a5fa", background:"rgba(37,99,235,0.12)", border:"1px solid rgba(59,130,246,0.2)",
                   }}>{tag}</span>
                 ))}
               </div>
             </div>
 
-            {/* CTA */}
             <button style={{
               display:"inline-flex", alignItems:"center", gap:"10px",
-              padding:"14px 28px", borderRadius:"12px", border:"none",
+              padding:"clamp(12px, 2vw, 14px) clamp(24px, 4vw, 28px)", borderRadius:"12px", border:"none",
               background:"linear-gradient(135deg,#1d4ed8,#2563eb)",
-              color:"white", fontSize:"13px", fontWeight:"800",
+              color:"white", fontSize:"clamp(12px, 2.5vw, 13px)", fontWeight:"800",
               letterSpacing:"0.1em", textTransform:"uppercase", cursor:"pointer",
               boxShadow:"0 6px 20px -4px rgba(37,99,235,0.45)",
               transition:"all 0.3s ease", alignSelf:"flex-start",
@@ -429,6 +455,64 @@ export default function ClientSuccess() {
         </div>
 
       </div>
+
+      {/* Responsive CSS overrides */}
+      <style>{`
+        @media (max-width: 900px) {
+          .case-panel-grid {
+            grid-template-columns: 1fr !important;
+          }
+          .case-panel-grid > div:first-child {
+            min-height: 320px !important;
+          }
+          .case-arrow-left {
+            left: 8px !important;
+          }
+          .case-arrow-right {
+            right: 8px !important;
+          }
+          .tabs-scroll {
+            scrollbar-width: thin;
+          }
+        }
+        @media (max-width: 640px) {
+          .tabs-scroll {
+            gap: 8px !important;
+          }
+          .tabs-scroll > div {
+            min-width: 95px !important;
+            padding: 16px 6px !important;
+            gap: 10px !important;
+          }
+          .tabs-scroll > div svg {
+            width: 36px !important;
+            height: 36px !important;
+          }
+          .case-panel-grid > div:first-child {
+            min-height: 280px !important;
+          }
+          .case-panel-grid > div:first-child .case-emoji {
+            font-size: 60px !important;
+          }
+          .case-panel-grid > div:last-child {
+            padding: 28px 24px !important;
+          }
+        }
+        @media (max-width: 480px) {
+          .tabs-scroll > div {
+            min-width: 85px !important;
+            padding: 12px 5px !important;
+          }
+          .tabs-scroll > div svg {
+            width: 30px !important;
+            height: 30px !important;
+          }
+          .case-arrow-left, .case-arrow-right {
+            width: 32px !important;
+            height: 32px !important;
+          }
+        }
+      `}</style>
     </section>
   );
 }

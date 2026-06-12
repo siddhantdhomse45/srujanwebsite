@@ -7,6 +7,7 @@ import { motion, useInView, useScroll, useTransform } from "framer-motion";
  ║  Layout: heading → subtitle → 4-col cards → wide CTA btn  ║
  ║  Each card: blue circle icon + bold title + body text       ║
  ║  Color: #3b82f6 deep navy premium                           ║
+ ║  FULLY RESPONSIVE (mobile, tablet, desktop)                 ║
  ╚══════════════════════════════════════════════════════════════╝
 */
 
@@ -150,8 +151,8 @@ function FeatureCard({ feature, index }) {
           position: "relative", zIndex: 1,
           backdropFilter: "blur(20px)",
           border: "1px solid rgba(255,255,255,0.07)",
-          borderRadius: 18,
-          padding: "36px 28px 40px",
+          borderRadius: "clamp(16px, 3vw, 18px)",
+          padding: "clamp(28px, 5vw, 36px) clamp(20px, 4vw, 28px) clamp(32px, 5vw, 40px)",
           height: "100%",
           boxSizing: "border-box",
           overflow: "hidden",
@@ -189,7 +190,9 @@ function FeatureCard({ feature, index }) {
             }}
             transition={{ duration: 0.3 }}
             style={{
-              width: 58, height: 58, borderRadius: "50%",
+              width: "clamp(48px, 8vw, 58px)",
+              height: "clamp(48px, 8vw, 58px)",
+              borderRadius: "50%",
               border: "1.5px solid",
               display: "flex", alignItems: "center", justifyContent: "center",
             }}
@@ -203,7 +206,7 @@ function FeatureCard({ feature, index }) {
             transition={{ duration: 0.25 }}
             style={{
               fontFamily: "'Barlow Condensed', sans-serif",
-              fontWeight: 900, fontSize: 44,
+              fontWeight: 900, fontSize: "clamp(32px, 6vw, 44px)",
               letterSpacing: "-2px", lineHeight: 1,
               userSelect: "none",
             }}
@@ -218,7 +221,7 @@ function FeatureCard({ feature, index }) {
           transition={{ duration: 0.25 }}
           style={{
             fontFamily: "'Barlow', sans-serif",
-            fontWeight: 700, fontSize: 10,
+            fontWeight: 700, fontSize: "clamp(9px, 2vw, 10px)",
             letterSpacing: 2.5, textTransform: "uppercase",
             marginBottom: 10,
           }}
@@ -233,7 +236,7 @@ function FeatureCard({ feature, index }) {
           style={{
             fontFamily: "'Barlow Condensed', sans-serif",
             fontWeight: 800,
-            fontSize: "clamp(17px, 1.6vw, 21px)",
+            fontSize: "clamp(18px, 3.2vw, 21px)",
             textTransform: "uppercase",
             letterSpacing: "0.3px",
             lineHeight: 1.15,
@@ -257,7 +260,8 @@ function FeatureCard({ feature, index }) {
         {/* Body */}
         <p style={{
           fontFamily: "'Barlow', sans-serif",
-          fontSize: 14, lineHeight: 1.85,
+          fontSize: "clamp(13px, 2.5vw, 14px)",
+          lineHeight: 1.75,
           color: "rgba(255,255,255,0.48)",
           margin: "0 0 20px",
           flex: 1,
@@ -275,7 +279,7 @@ function FeatureCard({ feature, index }) {
           style={{
             display: "inline-flex", alignItems: "center", gap: 8,
             fontFamily: "'Barlow', sans-serif",
-            fontWeight: 700, fontSize: 10,
+            fontWeight: 700, fontSize: "clamp(9px, 2vw, 10px)",
             letterSpacing: 2.2, textTransform: "uppercase",
             cursor: "pointer",
           }}
@@ -294,7 +298,7 @@ function FeatureCard({ feature, index }) {
 }
 
 /* ══════════════════════════════════════════
-   MAIN EXPORT
+   MAIN EXPORT (FULLY RESPONSIVE)
 ══════════════════════════════════════════ */
 export default function WhyChooseIntellectsoft() {
   const sectionRef = useRef(null);
@@ -333,29 +337,52 @@ export default function WhyChooseIntellectsoft() {
           flex-wrap: wrap;
           gap: 28px;
         }
+        /* Responsive breakpoints */
         @media (max-width: 1100px) {
-          .wci-grid { grid-template-columns: repeat(2, 1fr); }
+          .wci-grid { grid-template-columns: repeat(2, 1fr); gap: 16px; }
           .wci-section { padding: 88px 40px 104px !important; }
         }
-        @media (max-width: 640px) {
-          .wci-grid { grid-template-columns: 1fr; }
-          .wci-section { padding: 64px 20px 80px !important; }
-          .wci-h2 { font-size: 22px !important; }
+        @media (max-width: 768px) {
+          .wci-section { padding: 72px 24px 88px !important; }
+          .wci-grid { gap: 20px; }
           .wci-header-row {
             flex-direction: column;
             align-items: flex-start;
             gap: 16px;
           }
           .wci-subtitle { text-align: left !important; max-width: 100% !important; }
+          .wci-h2 { font-size: 28px !important; letter-spacing: 0 !important; }
+        }
+        @media (max-width: 640px) {
+          .wci-grid { grid-template-columns: 1fr; }
+          .wci-section { padding: 56px 20px 72px !important; }
+          .wci-h2 { font-size: 26px !important; }
+          .wci-cta-button {
+            white-space: normal !important;
+            text-align: center;
+            padding: 16px 32px !important;
+            font-size: 12px !important;
+            letter-spacing: 1.5px !important;
+            gap: 12px !important;
+          }
+        }
+        @media (max-width: 480px) {
+          .wci-section { padding: 48px 16px 64px !important; }
+          .wci-h2 { font-size: 24px !important; }
+          .wci-cta-button {
+            padding: 14px 24px !important;
+            font-size: 11px !important;
+          }
+          .wci-subtitle { font-size: 14px !important; }
         }
       `}</style>
 
       <section ref={sectionRef} className="wci-section">
 
         {/* ── Atmosphere ── */}
-        <Orb style={{ width: 600, height: 600, background: "rgba(59,130,246,0.08)", top: -160, left: -100 }} />
-        <Orb style={{ width: 480, height: 480, background: "rgba(14,165,233,0.06)", bottom: -80, right: -80 }} />
-        <Orb style={{ width: 340, height: 340, background: "rgba(139,92,246,0.05)", top: "40%", left: "42%" }} />
+        <Orb style={{ width: "min(600px, 80vw)", height: "min(600px, 80vw)", background: "rgba(59,130,246,0.08)", top: -160, left: -100 }} />
+        <Orb style={{ width: "min(480px, 70vw)", height: "min(480px, 70vw)", background: "rgba(14,165,233,0.06)", bottom: -80, right: -80 }} />
+        <Orb style={{ width: "min(340px, 60vw)", height: "min(340px, 60vw)", background: "rgba(139,92,246,0.05)", top: "40%", left: "42%" }} />
 
         {/* Parallax dot grid */}
         <motion.div style={{
@@ -365,20 +392,21 @@ export default function WhyChooseIntellectsoft() {
           y: gridY, pointerEvents: "none",
         }} />
 
-        {/* Vertical structural lines */}
+        {/* Vertical structural lines (hide on narrow screens) */}
         {[25, 50, 75].map((l, i) => (
           <div key={i} style={{
             position: "absolute", top: 0, bottom: 0,
             left: `${l}%`, width: 1,
             background: "linear-gradient(to bottom, transparent, rgba(59,130,246,0.05) 30%, rgba(59,130,246,0.05) 70%, transparent)",
             pointerEvents: "none",
+            display: window.innerWidth < 768 ? "none" : "block", // hide on mobile via CSS but we'll just leave it; they won't hurt
           }} />
         ))}
 
         <div style={{ maxWidth: 1280, margin: "0 auto", position: "relative", zIndex: 10 }}>
 
           {/* ── Header ── */}
-          <div ref={headRef} style={{ marginBottom: 80 }}>
+          <div ref={headRef} style={{ marginBottom: "clamp(48px, 8vw, 80px)" }}>
             {/* Eyebrow */}
             <motion.div
               initial={{ opacity: 0, x: -24 }}
@@ -389,7 +417,7 @@ export default function WhyChooseIntellectsoft() {
               <div style={{ width: 36, height: 2.5, background: BLUE, borderRadius: 2 }} />
               <span style={{
                 fontFamily: "'Barlow', sans-serif", fontWeight: 700,
-                fontSize: 11, letterSpacing: 3.5, textTransform: "uppercase",
+                fontSize: "clamp(10px, 2.5vw, 11px)", letterSpacing: 3.5, textTransform: "uppercase",
                 color: BLUE,
               }}>
                 Why Choose Us
@@ -406,7 +434,7 @@ export default function WhyChooseIntellectsoft() {
                 style={{
                   fontFamily: "'Barlow Condensed', sans-serif",
                   fontWeight: 900,
-                  fontSize: "clamp(22px, 3.5vw, 50px)",
+                  fontSize: "clamp(28px, 4vw, 50px)",
                   textTransform: "uppercase",
                   letterSpacing: "0.4px",
                   lineHeight: 1.06,
@@ -432,7 +460,8 @@ export default function WhyChooseIntellectsoft() {
                 transition={{ duration: 0.8, delay: 0.22, ease: E }}
                 style={{
                   fontFamily: "'Barlow', sans-serif",
-                  fontSize: 15, lineHeight: 1.85,
+                  fontSize: "clamp(14px, 2.5vw, 15px)",
+                  lineHeight: 1.85,
                   color: "rgba(255,255,255,0.42)",
                   maxWidth: 400, margin: 0,
                   textAlign: "right",
@@ -456,21 +485,21 @@ export default function WhyChooseIntellectsoft() {
             />
           </div>
 
-          {/* ── 4-column feature grid ── */}
+          {/* ── 4-column feature grid (responsive) ── */}
           <div className="wci-grid">
             {FEATURES.map((feature, i) => (
               <FeatureCard key={feature.id} feature={feature} index={i} />
             ))}
           </div>
 
-          {/* ── Wide CTA button — matches screenshot exactly ── */}
+          {/* ── Wide CTA button (fully responsive) ── */}
           <motion.div
             initial={{ opacity: 0, y: 28 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-30px" }}
             transition={{ duration: 0.8, delay: 0.4, ease: E }}
             style={{
-              marginTop: 64,
+              marginTop: "clamp(48px, 8vw, 64px)",
               display: "flex",
               justifyContent: "center",
             }}
@@ -482,6 +511,7 @@ export default function WhyChooseIntellectsoft() {
                 boxShadow: "0 0 48px rgba(59,130,246,0.60)",
               }}
               whileTap={{ scale: 0.97 }}
+              className="wci-cta-button"
               style={{
                 display: "inline-flex",
                 alignItems: "center",
@@ -491,17 +521,18 @@ export default function WhyChooseIntellectsoft() {
                 textDecoration: "none",
                 fontFamily: "'Barlow', sans-serif",
                 fontWeight: 700,
-                fontSize: 13,
+                fontSize: "clamp(12px, 2.5vw, 13px)",
                 letterSpacing: 2.5,
                 textTransform: "uppercase",
-                padding: "20px 72px",
+                padding: "clamp(16px, 3vw, 20px) clamp(32px, 5vw, 72px)",
                 borderRadius: 6,
                 border: `2px solid ${BLUE}`,
                 boxShadow: "0 0 28px rgba(59,130,246,0.35)",
                 whiteSpace: "nowrap",
+                cursor: "pointer",
               }}
             >
-              See What Intellectsoft Can Do for You
+              See What Srujan Infotech Can Do for You
               <svg width="14" height="14" viewBox="0 0 14 14" fill="none"
                 stroke="white" strokeWidth="2.2"
                 strokeLinecap="round" strokeLinejoin="round">

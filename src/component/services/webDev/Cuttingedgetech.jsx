@@ -96,7 +96,98 @@ export default function CuttingEdgeTech() {
     }}>
       <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
 
-      {/* grid */}
+      <style>{`
+        /* Force horizontal scroll on mobile for tabs */
+        @media (max-width: 768px) {
+          .tab-bar {
+            display: flex !important;
+            flex-wrap: nowrap !important;
+            overflow-x: auto !important;
+            overflow-y: hidden !important;
+            -webkit-overflow-scrolling: touch;
+            scroll-snap-type: x mandatory;
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.07);
+            border-radius: 20px;
+            margin-bottom: 0;
+            scrollbar-width: thin;
+          }
+          .tab-bar::-webkit-scrollbar {
+            height: 3px;
+          }
+          .tab-bar::-webkit-scrollbar-track {
+            background: rgba(255,255,255,0.05);
+            border-radius: 4px;
+          }
+          .tab-bar::-webkit-scrollbar-thumb {
+            background: rgba(59,130,246,0.5);
+            border-radius: 4px;
+          }
+          .tab-item {
+            flex: 0 0 auto;
+            scroll-snap-align: start;
+            min-width: 140px;
+            border-right: 1px solid rgba(255,255,255,0.06);
+            border-bottom: none !important;
+          }
+          .tab-item:last-child {
+            border-right: none;
+          }
+          .tab-item svg {
+            width: 36px !important;
+            height: 36px !important;
+          }
+          .tab-item span {
+            white-space: normal !important;
+            word-break: keep-all;
+            font-size: 12px !important;
+            line-height: 1.3;
+          }
+          .tab-item {
+            padding: 16px 12px !important;
+            gap: 8px !important;
+          }
+        }
+
+        /* Content panel stacking on mobile */
+        @media (max-width: 640px) {
+          .content-panel {
+            flex-direction: column !important;
+            align-items: flex-start !important;
+            gap: 24px !important;
+            padding: 28px 20px !important;
+          }
+          .content-left {
+            width: 100%;
+            min-width: auto !important;
+          }
+          .content-desc {
+            width: 100%;
+            font-size: 14px !important;
+            line-height: 1.7 !important;
+          }
+        }
+
+        /* Extra small devices */
+        @media (max-width: 480px) {
+          .tab-item {
+            min-width: 120px;
+            padding: 12px 10px !important;
+          }
+          .tab-item svg {
+            width: 32px !important;
+            height: 32px !important;
+          }
+          .content-panel {
+            padding: 24px 16px !important;
+          }
+          .content-left h3 {
+            font-size: 18px !important;
+          }
+        }
+      `}</style>
+
+      {/* grid background */}
       <svg style={{ position:"absolute",inset:0,width:"100%",height:"100%",opacity:0.05,pointerEvents:"none" }} xmlns="http://www.w3.org/2000/svg">
         <defs>
           <pattern id="cetgrid" width="60" height="60" patternUnits="userSpaceOnUse">
@@ -116,7 +207,7 @@ export default function CuttingEdgeTech() {
 
       <div style={{ maxWidth:1200,margin:"0 auto",padding:"0 clamp(16px,5vw,48px)",position:"relative",zIndex:10 }}>
 
-        {/* ── header ── */}
+        {/* header */}
         <motion.div
           ref={headRef}
           initial={{ opacity:0,y:30 }}
@@ -157,17 +248,17 @@ export default function CuttingEdgeTech() {
           </p>
         </motion.div>
 
-        {/* ── tab bar ── */}
+        {/* tab bar - responsive (grid by default, flex scroll on mobile) */}
         <motion.div
           ref={tabsRef}
           initial={{ opacity:0,y:24 }}
           animate={tabsInView ? { opacity:1,y:0 } : {}}
           transition={{ duration:0.65,delay:0.1 }}
+          className="tab-bar"
           style={{
             display:"grid",
             gridTemplateColumns:`repeat(${tabs.length},1fr)`,
             gap:0,
-            marginBottom:0,
             background:"rgba(255,255,255,0.03)",
             border:"1px solid rgba(255,255,255,0.07)",
             borderRadius:20,
@@ -179,6 +270,7 @@ export default function CuttingEdgeTech() {
             return (
               <motion.button
                 key={tab.title}
+                className="tab-item"
                 onClick={() => setActive(i)}
                 whileHover={{ background: isActive ? undefined : "rgba(255,255,255,0.05)" }}
                 style={{
@@ -196,7 +288,6 @@ export default function CuttingEdgeTech() {
                   outline:"none",
                 }}
               >
-                {/* active glow behind icon */}
                 {isActive && (
                   <motion.div
                     layoutId="activeGlow"
@@ -209,17 +300,17 @@ export default function CuttingEdgeTech() {
                   />
                 )}
 
-                {/* icon */}
                 <div style={{
                   color: isActive ? tab.accent : "rgba(255,255,255,0.3)",
                   transition:"color 0.35s",
                   filter: isActive ? `drop-shadow(0 0 8px ${tab.accent}60)` : "none",
                   position:"relative",zIndex:1,
+                  display:"flex",
+                  justifyContent:"center",
                 }}>
                   {tab.icon}
                 </div>
 
-                {/* label */}
                 <span style={{
                   fontSize:"clamp(11px,1.4vw,14px)",fontWeight:isActive ? 700 : 500,
                   color: isActive ? "white" : "rgba(255,255,255,0.45)",
@@ -235,7 +326,7 @@ export default function CuttingEdgeTech() {
           })}
         </motion.div>
 
-        {/* ── content panel ── */}
+        {/* content panel */}
         <AnimatePresence mode="wait">
           <motion.div
             key={active}
@@ -243,6 +334,7 @@ export default function CuttingEdgeTech() {
             animate={{ opacity:1,y:0 }}
             exit={{ opacity:0,y:-10 }}
             transition={{ duration:0.45,ease:[0.22,1,0.36,1] }}
+            className="content-panel"
             style={{
               marginTop:2,
               background:`linear-gradient(145deg,${current.accent}0a,rgba(255,255,255,0.03))`,
@@ -262,8 +354,8 @@ export default function CuttingEdgeTech() {
               background:current.grad,borderRadius:"0 0 0 20px",
             }}/>
 
-            {/* label column */}
-            <div style={{ minWidth:"clamp(140px,20%,220px)", paddingTop:4 }}>
+            {/* left column */}
+            <div className="content-left" style={{ minWidth:"clamp(140px,20%,220px)", paddingTop:4 }}>
               <div style={{
                 display:"inline-flex",alignItems:"center",gap:8,
                 background:`${current.accent}15`,border:`1px solid ${current.accent}35`,
@@ -285,7 +377,7 @@ export default function CuttingEdgeTech() {
             </div>
 
             {/* description */}
-            <p style={{
+            <p className="content-desc" style={{
               margin:0,flex:1,
               color:"rgba(255,255,255,0.6)",
               fontSize:"clamp(14px,1.6vw,17px)",
@@ -294,9 +386,6 @@ export default function CuttingEdgeTech() {
             }}>
               {current.desc}
             </p>
-
-           
-           
           </motion.div>
         </AnimatePresence>
 

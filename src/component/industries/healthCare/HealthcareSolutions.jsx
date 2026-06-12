@@ -1,426 +1,370 @@
-import { useState, useRef } from "react";
-import { motion, useInView } from "framer-motion";
-import {
-  FiActivity, FiDatabase, FiWifi, FiMonitor,
-  FiHeart, FiFileText, FiShield, FiArrowRight,
-} from "react-icons/fi";
+import { useState, useEffect } from "react";
 
-const features = [
+const services = [
   {
-    id: "his",
-    label: "Comprehensive Hospital Information Systems",
-    icon: <FiActivity size={20} strokeWidth={1.6} />,
-    accent: "#22d3ee",
-    grad: "linear-gradient(135deg,#0891b2,#22d3ee)",
-    active: true,
-    desc: "End-to-end HIS platforms covering patient registration, billing, scheduling, lab, pharmacy and reporting in one unified system.",
+    id: 1, number: "01", title: "Big Data Services",
+    description: "Unlock the potential of big data with tailored analytics services to process and analyze massive datasets. Turn complex information into actionable intelligence.",
+    icon: (<svg viewBox="0 0 56 56" fill="none" stroke="currentColor" strokeWidth="1.5" width="44" height="44"><ellipse cx="28" cy="12" rx="16" ry="5"/><path d="M12 12v10c0 2.8 7.2 5 16 5s16-2.2 16-5V12"/><path d="M12 22v10c0 2.8 7.2 5 16 5s16-2.2 16-5V22"/><path d="M12 32v10c0 2.8 7.2 5 16 5s16-2.2 16-5V32"/></svg>),
   },
   {
-    id: "data",
-    label: "Robust Data Engines",
-    icon: <FiDatabase size={20} strokeWidth={1.6} />,
-    accent: "#38bdf8",
-    grad: "linear-gradient(135deg,#1d4ed8,#38bdf8)",
-    active: false,
-    desc: "High-performance clinical data pipelines with real-time analytics, HL7/FHIR compliance and AI-powered diagnostic insights.",
+    id: 2, number: "02", title: "Business Analytics Services",
+    description: "Leverage advanced data analytics to uncover trends and optimize performance. Drive your organization forward with confident, insight-based decision-making.",
+    icon: (<svg viewBox="0 0 56 56" fill="none" stroke="currentColor" strokeWidth="1.5" width="44" height="44"><rect x="8" y="32" width="8" height="16" rx="2"/><rect x="22" y="22" width="8" height="26" rx="2"/><rect x="36" y="14" width="8" height="34" rx="2"/><circle cx="40" cy="10" r="5"/><path d="M35 13l-10 6M23 18l-10 12" strokeLinecap="round"/></svg>),
   },
   {
-    id: "iomt",
-    label: "Internet of Medical Things (IoMT)",
-    icon: <FiWifi size={20} strokeWidth={1.6} />,
-    accent: "#818cf8",
-    grad: "linear-gradient(135deg,#6366f1,#818cf8)",
-    active: false,
-    desc: "Seamless integration of wearables, smart devices and sensors with secure cloud infrastructure for continuous patient monitoring.",
+    id: 3, number: "03", title: "Data Visualization",
+    description: "Transform complex datasets into visually engaging formats that make insights easy to understand. Enable faster, more confident decision-making across your organization.",
+    icon: (<svg viewBox="0 0 56 56" fill="none" stroke="currentColor" strokeWidth="1.5" width="44" height="44"><rect x="6" y="30" width="10" height="18" rx="2"/><rect x="22" y="20" width="10" height="28" rx="2"/><rect x="38" y="10" width="10" height="38" rx="2"/><circle cx="42" cy="7" r="4"/><path d="M6 28l16-10M22 18l16-10" strokeLinecap="round"/><path d="M4 50h48" strokeLinecap="round"/></svg>),
   },
   {
-    id: "remote",
-    label: "Remote Patient Care Solutions",
-    icon: <FiMonitor size={20} strokeWidth={1.6} />,
-    accent: "#34d399",
-    grad: "linear-gradient(135deg,#059669,#34d399)",
-    active: false,
-    desc: "Telehealth platforms with HD video consultations, digital prescriptions, remote diagnostics and real-time vital monitoring.",
+    id: 4, number: "04", title: "Data Integration Services",
+    description: "Seamlessly unify data from diverse sources with robust analytics services for consistency and accuracy. Ensure reliable access to the information your business needs.",
+    icon: (<svg viewBox="0 0 56 56" fill="none" stroke="currentColor" strokeWidth="1.5" width="44" height="44"><rect x="6" y="10" width="18" height="12" rx="3"/><rect x="6" y="32" width="18" height="12" rx="3"/><rect x="32" y="20" width="18" height="14" rx="3"/><path d="M24 16h4l4 11M24 38h4l4-11" strokeLinecap="round" strokeLinejoin="round"/><path d="M8 14h4M8 38h4" strokeLinecap="round"/></svg>),
   },
   {
-    id: "fitness",
-    label: "Fitness and Health Awareness Apps",
-    icon: <FiHeart size={20} strokeWidth={1.6} />,
-    accent: "#f472b6",
-    grad: "linear-gradient(135deg,#db2777,#f472b6)",
-    active: false,
-    desc: "Personalised wellness apps with AI coaching, nutrition tracking, mental health tools and gamification for behaviour change.",
+    id: 5, number: "05", title: "Data Warehousing Services",
+    description: "Build scalable, efficient data warehouses to store and organize critical business information. Streamline data retrieval and improve operational efficiency.",
+    icon: (<svg viewBox="0 0 56 56" fill="none" stroke="currentColor" strokeWidth="1.5" width="44" height="44"><rect x="10" y="14" width="36" height="28" rx="4"/><path d="M10 22h36M10 30h36"/><path d="M18 18h4M18 26h4M18 34h4" strokeLinecap="round"/><path d="M28 42v6M20 48h16" strokeLinecap="round"/></svg>),
   },
   {
-    id: "ehr",
-    label: "Electronic Health Records",
-    icon: <FiFileText size={20} strokeWidth={1.6} />,
-    accent: "#c084fc",
-    grad: "linear-gradient(135deg,#9333ea,#c084fc)",
-    active: false,
-    desc: "HIPAA-compliant EHR systems with structured clinical data, e-prescribing, decision support and seamless interoperability.",
+    id: 6, number: "06", title: "Data Science Consulting",
+    description: "Access expert guidance to develop predictive models and automate essential processes. Achieve better results and operational efficiency with advanced data science expertise.",
+    icon: (<svg viewBox="0 0 56 56" fill="none" stroke="currentColor" strokeWidth="1.5" width="44" height="44"><rect x="12" y="8" width="32" height="40" rx="3"/><path d="M18 18h20M18 24h20M18 30h12" strokeLinecap="round"/><circle cx="36" cy="36" r="7"/><path d="M33 36l2 2 4-4" strokeLinecap="round" strokeLinejoin="round"/></svg>),
+  },
+  {
+    id: 7, number: "07", title: "Data Governance Consulting",
+    description: "Implement proven frameworks to ensure data quality, security, and compliance. Create consistent, reliable systems to manage your data assets effectively.",
+    icon: (<svg viewBox="0 0 56 56" fill="none" stroke="currentColor" strokeWidth="1.5" width="44" height="44"><circle cx="28" cy="16" r="7"/><circle cx="14" cy="36" r="6"/><circle cx="42" cy="36" r="6"/><path d="M22 21l-6 9M34 21l6 9M20 36h16" strokeLinecap="round"/></svg>),
+  },
+  {
+    id: 8, number: "08", title: "Data Strategy Consulting",
+    description: "Develop and execute strategies that align your data with your business goals. Maximize the value of your information to drive measurable growth.",
+    icon: (<svg viewBox="0 0 56 56" fill="none" stroke="currentColor" strokeWidth="1.5" width="44" height="44"><path d="M10 38l10-14 8 8 10-16 8 8" strokeLinecap="round" strokeLinejoin="round"/><circle cx="46" cy="24" r="4"/><path d="M6 46h44" strokeLinecap="round"/><path d="M6 10v36" strokeLinecap="round"/></svg>),
+  },
+  {
+    id: 9, number: "09", title: "Real-Time Data Processing",
+    description: "Process and analyze data as it's generated to enable instant decision-making. Optimize operations, detect anomalies, and enhance customer experiences with real-time insights.",
+    icon: (<svg viewBox="0 0 56 56" fill="none" stroke="currentColor" strokeWidth="1.5" width="44" height="44"><rect x="8" y="16" width="40" height="28" rx="4"/><path d="M8 24h40"/><path d="M20 32l4 4 10-8" strokeLinecap="round" strokeLinejoin="round"/><path d="M16 8l-6 8M40 8l6 8" strokeLinecap="round"/></svg>),
   },
 ];
 
-/* ── feature row ── */
-function FeatureRow({ feature, index, activeId, onActivate }) {
-  const ref    = useRef(null);
-  const inView = useInView(ref, { once: true, margin: "-30px" });
-  const isActive = activeId === feature.id;
+export default function DataServices() {
+  const [hovered, setHovered] = useState(null);
+  const [expanded, setExpanded] = useState(null); // for mobile accordion
+  const [isMobile, setIsMobile] = useState(false);
+  const [isTablet, setIsTablet] = useState(false);
+  const [btnHov, setBtnHov] = useState(false);
 
-  return (
-    <motion.div
-      ref={ref}
-      initial={{ opacity: 0, x: 28 }}
-      animate={inView ? { opacity: 1, x: 0 } : {}}
-      transition={{ duration: 0.5, delay: index * 0.08, ease: [0.22, 1, 0.36, 1] }}
-      onClick={() => onActivate(feature.id)}
-      style={{
-        display: "flex", alignItems: "center", gap: 16,
-        padding: "clamp(12px,1.5vw,16px) clamp(14px,1.8vw,20px)",
-        borderRadius: 14, cursor: "pointer",
-        background: isActive ? `${feature.accent}14` : "rgba(255,255,255,0.02)",
-        border: isActive ? `1px solid ${feature.accent}40` : "1px solid transparent",
-        boxShadow: isActive ? `0 0 28px ${feature.accent}14` : "none",
-        transition: "all 0.35s cubic-bezier(0.22,1,0.36,1)",
-        position: "relative", overflow: "hidden",
-      }}
-    >
-      {/* active left bar */}
-      {isActive && (
-        <motion.div
-          layoutId="activeBar"
-          style={{
-            position: "absolute", left: 0, top: 0, bottom: 0, width: 3,
-            background: feature.grad, borderRadius: "14px 0 0 14px",
-          }}
-          transition={{ duration: 0.35 }}
-        />
-      )}
+  useEffect(() => {
+    const check = () => {
+      setIsMobile(window.innerWidth < 640);
+      setIsTablet(window.innerWidth >= 640 && window.innerWidth < 1024);
+    };
+    check();
+    window.addEventListener("resize", check);
+    return () => window.removeEventListener("resize", check);
+  }, []);
 
-      {/* icon */}
-      <div style={{
-        width: 44, height: 44, borderRadius: 12, flexShrink: 0,
-        background: isActive ? feature.grad : `${feature.accent}12`,
-        border: isActive ? "none" : `1px solid ${feature.accent}28`,
-        display: "flex", alignItems: "center", justifyContent: "center",
-        color: isActive ? "white" : feature.accent,
-        boxShadow: isActive ? `0 4px 16px ${feature.accent}40` : "none",
-        transition: "all 0.35s cubic-bezier(0.22,1,0.36,1)",
-      }}>
-        {feature.icon}
-      </div>
-
-      {/* label */}
-      <div style={{ flex: 1 }}>
-        <span style={{
-          fontFamily: "'DM Sans',sans-serif",
-          fontSize: "clamp(13px,1.4vw,15px)", fontWeight: isActive ? 700 : 500,
-          color: isActive ? "white" : "rgba(186,230,255,0.65)",
-          lineHeight: 1.4, transition: "color 0.3s",
-        }}>
-          {feature.label}
-        </span>
-
-        {/* expandable desc */}
-        {isActive && (
-          <motion.p
-            initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: "auto" }}
-            exit={{ opacity: 0, height: 0 }}
-            transition={{ duration: 0.35 }}
-            style={{
-              margin: "6px 0 0",
-              color: "rgba(186,230,255,0.50)",
-              fontSize: "clamp(11px,1.2vw,13px)", lineHeight: 1.65,
-              fontFamily: "'DM Sans',sans-serif",
-            }}
-          >
-            {feature.desc}
-          </motion.p>
-        )}
-      </div>
-
-      {/* chevron */}
-      <motion.div
-        animate={{ rotate: isActive ? 90 : 0, x: isActive ? 3 : 0 }}
-        transition={{ duration: 0.3 }}
-        style={{ color: isActive ? feature.accent : "rgba(147,197,253,0.25)", flexShrink: 0 }}
-      >
-        <FiArrowRight size={16} strokeWidth={2} />
-      </motion.div>
-    </motion.div>
-  );
-}
-
-/* ── mock app card ── */
-function MockupCard() {
-  const ref    = useRef(null);
-  const inView = useInView(ref, { once: true, margin: "-60px" });
-
-  return (
-    <motion.div
-      ref={ref}
-      initial={{ opacity: 0, y: 40, scale: 0.96 }}
-      animate={inView ? { opacity: 1, y: 0, scale: 1 } : {}}
-      transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
-      style={{ position: "relative" }}
-    >
-      {/* desktop screenshot card */}
-      <div style={{
-        borderRadius: 16, overflow: "hidden",
-        border: "1px solid rgba(59,130,246,0.20)",
-        boxShadow: "0 24px 60px rgba(0,0,0,0.5)",
-        background: "rgba(5,15,50,0.85)",
-        backdropFilter: "blur(20px)",
-      }}>
-        {/* browser chrome */}
-        <div style={{ background: "rgba(15,25,60,0.95)", padding: "10px 16px", display: "flex", alignItems: "center", gap: 6, borderBottom: "1px solid rgba(59,130,246,0.12)" }}>
-          <div style={{ width: 10, height: 10, borderRadius: "50%", background: "#ef4444" }}/>
-          <div style={{ width: 10, height: 10, borderRadius: "50%", background: "#f59e0b" }}/>
-          <div style={{ width: 10, height: 10, borderRadius: "50%", background: "#22c55e" }}/>
-          <div style={{ flex: 1, marginLeft: 8, background: "rgba(59,130,246,0.12)", borderRadius: 6, padding: "4px 10px" }}>
-            <span style={{ color: "rgba(147,197,253,0.45)", fontSize: 10, fontFamily: "'DM Sans',sans-serif" }}>hospital.hms.in/dashboard</span>
-          </div>
-        </div>
-        {/* fake HIS table */}
-        <div style={{ padding: "14px", overflowX: "hidden" }}>
-          {/* tab row */}
-          <div style={{ display: "flex", gap: 8, marginBottom: 12 }}>
-            {["Projects","Users","Vendors","Materials","Machines"].map((t, i) => (
-              <div key={t} style={{ padding: "4px 10px", borderRadius: 6, fontSize: 10, fontFamily: "'DM Sans',sans-serif",
-                background: i === 2 ? "rgba(34,211,238,0.18)" : "rgba(255,255,255,0.04)",
-                border: i === 2 ? "1px solid rgba(34,211,238,0.35)" : "1px solid rgba(255,255,255,0.06)",
-                color: i === 2 ? "#22d3ee" : "rgba(186,230,255,0.40)",
-              }}>{t}</div>
-            ))}
-          </div>
-          {/* status pills */}
-          <div style={{ display: "flex", gap: 6, marginBottom: 12 }}>
-            {[["Active","#22c55e"],["Disabled","#6b7280"],["With deviations","#f59e0b"]].map(([l,c]) => (
-              <div key={l} style={{ padding: "3px 9px", borderRadius: 5, fontSize: 9, fontFamily: "'DM Sans',sans-serif",
-                background: `${c}18`, border: `1px solid ${c}30`, color: c }}>
-                {l}
-              </div>
-            ))}
-          </div>
-          {/* fake rows */}
-          {["BrainPump.com","BrainPan.com","Brainquil","BrainWire","Brain Dandy"].map((name, i) => (
-            <div key={i} style={{ display: "flex", gap: 8, padding: "6px 0", borderBottom: "1px solid rgba(255,255,255,0.04)", alignItems: "center" }}>
-              <span style={{ flex: 2, fontSize: 10, color: "#38bdf8", fontFamily: "'DM Sans',sans-serif" }}>{name}</span>
-              <span style={{ flex: 1, fontSize: 9, color: "rgba(186,230,255,0.30)", fontFamily: "'DM Sans',sans-serif" }}>
-                {["Active","Inactive","Disabled","Active","Inactive"][i]}
-              </span>
-              <div style={{ flex: 1, height: 4, borderRadius: 2, background: `rgba(${i%2===0?"34,211,238":"96,165,250"},0.25)` }}/>
-            </div>
-          ))}
-        </div>
-      </div>
-
-      {/* mobile overlay card */}
-      <motion.div
-        animate={{ y: [0, -6, 0] }}
-        transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-        style={{
-          position: "absolute", bottom: -24, right: -20,
-          width: 180,
-          background: "rgba(5,15,50,0.95)",
-          backdropFilter: "blur(20px)",
-          border: "1px solid rgba(34,211,238,0.22)",
-          borderRadius: 20, overflow: "hidden",
-          boxShadow: "0 16px 40px rgba(0,0,0,0.5)",
-        }}
-      >
-        {/* phone chrome */}
-        <div style={{ background: "rgba(15,25,60,0.98)", padding: "8px 12px", textAlign: "center", borderBottom: "1px solid rgba(34,211,238,0.10)" }}>
-          <div style={{ width: 36, height: 4, borderRadius: 2, background: "rgba(255,255,255,0.15)", margin: "0 auto 6px" }}/>
-          {/* doctor image strip */}
-          <div style={{ height: 80, borderRadius: 10, overflow: "hidden", marginBottom: 8 }}>
-            <img
-              src="https://images.unsplash.com/photo-1584820927498-cfe5211fd8bf?w=300&q=80"
-              alt="doctor"
-              style={{ width: "100%", height: "100%", objectFit: "cover", filter: "brightness(0.75)" }}
-            />
-          </div>
-        </div>
-        <div style={{ padding: "10px 10px 12px" }}>
-          {[["Register via HMS Card","#22d3ee"],["Log in via HMS Card","#38bdf8"]].map(([l,c]) => (
-            <div key={l} style={{
-              background: `${c}18`, border: `1px solid ${c}35`,
-              borderRadius: 8, padding: "7px 10px", marginBottom: 6, textAlign: "center",
-            }}>
-              <span style={{ color: c, fontSize: 9, fontWeight: 700, fontFamily: "'DM Sans',sans-serif" }}>{l}</span>
-            </div>
-          ))}
-          <div style={{ textAlign: "center" }}>
-            <span style={{ color: "rgba(186,230,255,0.35)", fontSize: 8, fontFamily: "'DM Sans',sans-serif" }}>Register or Log in via phone</span>
-          </div>
-        </div>
-      </motion.div>
-
-      {/* HIPAA badge */}
-      <motion.div
-        initial={{ opacity: 0, scale: 0 }}
-        animate={inView ? { opacity: 1, scale: 1 } : {}}
-        transition={{ delay: 0.8, type: "spring", stiffness: 240, damping: 16 }}
-        style={{
-          position: "absolute", top: -16, left: -16,
-          background: "linear-gradient(135deg,#059669,#34d399)",
-          borderRadius: 10, padding: "6px 12px",
-          boxShadow: "0 6px 20px rgba(52,211,153,0.40)",
-          display: "flex", alignItems: "center", gap: 6,
-        }}
-      >
-        <FiShield size={13} color="white" strokeWidth={2}/>
-        <span style={{ color: "white", fontSize: 10, fontWeight: 700, fontFamily: "'DM Sans',sans-serif" }}>HIPAA Compliant</span>
-      </motion.div>
-    </motion.div>
-  );
-}
-
-/* ── decorative circle lines ── */
-function DecorativeCircles() {
-  return (
-    <div style={{ position: "absolute", bottom: -80, left: "50%", transform: "translateX(-50%)", pointerEvents: "none", zIndex: 0 }}>
-      {[400, 560, 720].map((size, i) => (
-        <div key={i} style={{
-          position: "absolute",
-          width: size, height: size,
-          borderRadius: "50%",
-          border: "1px solid rgba(59,130,246,0.07)",
-          top: "50%", left: "50%",
-          transform: "translate(-50%,-50%)",
-        }}/>
-      ))}
-    </div>
-  );
-}
-
-/* ── main section ── */
-export default function HealthcareSolutions() {
-  const [activeId, setActiveId] = useState("his");
-  const headRef    = useRef(null);
-  const headInView = useInView(headRef, { once: true, margin: "-60px" });
+  const handleCardClick = (i) => {
+    if (isMobile) setExpanded(expanded === i ? null : i);
+  };
 
   return (
     <section style={{
+      background: "linear-gradient(135deg,#020b18 0%,#041530 45%,#061d42 75%,#020e24 100%)",
+      minHeight: "100vh",
+      padding: isMobile ? "60px 16px 80px" : isTablet ? "72px 24px 90px" : "90px 40px 110px",
+      fontFamily: "'DM Sans','Segoe UI',sans-serif",
       position: "relative",
-      padding: "clamp(64px,10vw,110px) 0 clamp(80px,14vw,140px)",
-      background: "linear-gradient(135deg,#040d1a 0%,#071428 40%,#091e3a 70%,#0a1f3d 100%)",
       overflow: "hidden",
-      fontFamily: "'DM Sans',sans-serif",
-      borderTop: "1px solid rgba(59,130,246,0.08)",
     }}>
-      <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800;900&display=swap" rel="stylesheet"/>
 
-      {/* grid */}
-      <svg style={{ position:"absolute",inset:0,width:"100%",height:"100%",opacity:0.05,pointerEvents:"none" }} xmlns="http://www.w3.org/2000/svg">
-        <defs><pattern id="hcgrid" width="60" height="60" patternUnits="userSpaceOnUse"><path d="M 60 0 L 0 0 0 60" fill="none" stroke="white" strokeWidth="0.5"/></pattern></defs>
-        <rect width="100%" height="100%" fill="url(#hcgrid)"/>
-      </svg>
+      {/* Ambient bg */}
+      <div style={{ position:"absolute", inset:0, pointerEvents:"none" }}>
+        <div style={{ position:"absolute", top:"-120px", left:isMobile?"0":"20%", width: isMobile?"300px":"500px", height: isMobile?"300px":"500px", borderRadius:"50%", background:"radial-gradient(circle,rgba(37,99,235,0.18),transparent 70%)" }} />
+        <div style={{ position:"absolute", bottom:"-100px", right:isMobile?"0":"15%", width: isMobile?"280px":"460px", height: isMobile?"280px":"460px", borderRadius:"50%", background:"radial-gradient(circle,rgba(99,102,241,0.14),transparent 70%)" }} />
+        <div style={{ position:"absolute", inset:0, backgroundImage:"linear-gradient(rgba(59,130,246,0.04) 1px,transparent 1px),linear-gradient(90deg,rgba(59,130,246,0.04) 1px,transparent 1px)", backgroundSize:"60px 60px" }} />
+      </div>
 
-      {/* orbs */}
-      <motion.div animate={{ scale:[1,1.1,1],opacity:[0.18,0.30,0.18] }} transition={{ duration:10,repeat:Infinity,ease:"easeInOut" }}
-        style={{ position:"absolute",top:-100,left:-80,width:520,height:520,borderRadius:"50%",background:"radial-gradient(circle,#0891b2,#22d3ee,transparent 70%)",filter:"blur(90px)",pointerEvents:"none" }}/>
-      <motion.div animate={{ scale:[1,1.08,1],opacity:[0.15,0.25,0.15] }} transition={{ duration:14,repeat:Infinity,ease:"easeInOut",delay:3 }}
-        style={{ position:"absolute",bottom:-80,right:-80,width:500,height:500,borderRadius:"50%",background:"radial-gradient(circle,#1e40af,#3b82f6,transparent 70%)",filter:"blur(100px)",pointerEvents:"none" }}/>
+      <div style={{ maxWidth:"1200px", margin:"0 auto", position:"relative", zIndex:1 }}>
 
-      <DecorativeCircles/>
+        {/* ── Header ── */}
+        <div style={{ textAlign:"center", marginBottom: isMobile ? "48px" : "72px" }}>
+          <span style={{
+            display:"inline-flex", alignItems:"center", gap:"8px",
+            padding:"6px 18px", borderRadius:"100px",
+            background:"rgba(59,130,246,0.1)", border:"1px solid rgba(59,130,246,0.25)",
+            color:"#60a5fa", fontSize:"11px", fontWeight:"700",
+            letterSpacing:"0.2em", textTransform:"uppercase", marginBottom:"20px",
+          }}>
+            <span style={{ width:6, height:6, borderRadius:"50%", background:"#3b82f6", display:"inline-block" }} />
+            What We Offer
+          </span>
 
-      <div style={{ maxWidth:1280,margin:"0 auto",padding:"0 clamp(16px,5vw,48px)",position:"relative",zIndex:10 }}>
-
-        {/* ── header ── */}
-        <motion.div ref={headRef} initial={{ opacity:0,y:30 }} animate={headInView ? { opacity:1,y:0 } : {}} transition={{ duration:0.7 }}
-          style={{ textAlign:"center",marginBottom:"clamp(40px,7vw,72px)" }}>
-          <div style={{ display:"inline-flex",alignItems:"center",gap:8,background:"rgba(34,211,238,0.12)",backdropFilter:"blur(20px)",border:"1px solid rgba(34,211,238,0.28)",borderRadius:100,padding:"6px 18px",marginBottom:20 }}>
-            <motion.span animate={{ opacity:[1,0.3,1] }} transition={{ duration:1.8,repeat:Infinity }} style={{ width:6,height:6,borderRadius:"50%",background:"#22d3ee",boxShadow:"0 0 8px #22d3ee",display:"inline-block" }}/>
-            <span style={{ color:"#67e8f9",fontSize:12,fontWeight:700,letterSpacing:2.5,textTransform:"uppercase" }}>Healthcare IT</span>
-          </div>
-          <h2 style={{ color:"white",fontSize:"clamp(24px,4.5vw,52px)",fontWeight:900,letterSpacing:"-1.5px",lineHeight:1.08,marginBottom:20 }}>
-            Pioneering Healthcare{" "}
-            <span style={{ background:"linear-gradient(90deg,#22d3ee,#38bdf8,#818cf8)",WebkitBackgroundClip:"text",WebkitTextFillColor:"transparent" }}>
-              Software Solutions
-            </span>
+          <h2 style={{
+            fontSize: isMobile ? "32px" : isTablet ? "44px" : "clamp(36px,5vw,60px)",
+            fontWeight:"900", letterSpacing:"0.06em", textTransform:"uppercase",
+            margin:"0 0 20px",
+            background:"linear-gradient(135deg,#ffffff 30%,#93c5fd 65%,#3b82f6 100%)",
+            WebkitBackgroundClip:"text", WebkitTextFillColor:"transparent",
+          }}>
+            Our Services
           </h2>
-          <p style={{ color:"rgba(186,230,255,0.50)",fontSize:"clamp(14px,1.7vw,17px)",lineHeight:1.9,maxWidth:800,margin:"0 auto" }}>
-            As a seasoned healthcare IT provider, we stand at the forefront of technological advancements in the healthcare sector.
-            Our solutions, backed by years of experience and in-depth technical knowledge, are designed to offer comprehensive
-            tools that empower your services and streamline operations — from robust hospital information systems to remote patient
-            care solutions and fitness apps.
-          </p>
-        </motion.div>
 
-        {/* ── 3-column body ── */}
-        <div style={{
-          display: "grid",
-          gridTemplateColumns: "1fr clamp(220px,26vw,340px) clamp(260px,30%,380px)",
-          gap: "clamp(20px,3.5vw,48px)",
-          alignItems: "center",
-        }}>
-
-          {/* LEFT: feature list */}
-          <div style={{ display:"flex",flexDirection:"column",gap:4 }}>
-            {features.map((f, i) => (
-              <FeatureRow
-                key={f.id}
-                feature={f}
-                index={i}
-                activeId={activeId}
-                onActivate={setActiveId}
-              />
-            ))}
+          <div style={{ display:"flex", alignItems:"center", gap:"10px", justifyContent:"center", marginBottom:"20px" }}>
+            <div style={{ height:"1px", width:"60px", background:"linear-gradient(to right,transparent,rgba(59,130,246,0.6))" }} />
+            <div style={{ width:"6px", height:"6px", borderRadius:"50%", background:"#3b82f6" }} />
+            <div style={{ width:"4px", height:"4px", borderRadius:"50%", background:"rgba(59,130,246,0.5)" }} />
+            <div style={{ width:"6px", height:"6px", borderRadius:"50%", background:"#3b82f6" }} />
+            <div style={{ height:"1px", width:"60px", background:"linear-gradient(to left,transparent,rgba(59,130,246,0.6))" }} />
           </div>
 
-          {/* CENTER: mockup */}
-          <MockupCard/>
+          <p style={{ maxWidth:"680px", margin:"0 auto", fontSize: isMobile ? "14px" : "16px", lineHeight:"1.8", color:"rgba(148,163,184,0.85)", padding: isMobile ? "0 8px" : "0" }}>
+            Comprehensive data analytics and intelligence solutions designed to transform raw information into strategic business advantage.
+          </p>
+        </div>
 
-          {/* RIGHT: large feature highlight */}
-          <motion.div
-            key={activeId}
-            initial={{ opacity:0,x:20 }}
-            animate={{ opacity:1,x:0 }}
-            transition={{ duration:0.45,ease:[0.22,1,0.36,1] }}
-            style={{
-              borderRadius:22,padding:"clamp(24px,3vw,36px)",
-              background:`${features.find(f=>f.id===activeId)?.accent}0c`,
-              border:`1px solid ${features.find(f=>f.id===activeId)?.accent}30`,
-              backdropFilter:"blur(20px)",
-              boxShadow:`0 16px 40px rgba(0,0,0,0.25),0 0 30px ${features.find(f=>f.id===activeId)?.accent}10`,
-              position:"relative",overflow:"hidden",
-            }}
-          >
-            {(() => {
-              const f = features.find(x => x.id === activeId);
-              if (!f) return null;
+        {/* ── Services ── */}
+        {isMobile ? (
+          /* MOBILE: Accordion cards */
+          <div style={{ display:"flex", flexDirection:"column", gap:"10px" }}>
+            {services.map((service, i) => {
+              const isExp = expanded === i;
               return (
-                <>
-                  <div style={{ position:"absolute",top:-40,right:-20,width:180,height:180,borderRadius:"50%",background:`radial-gradient(circle,${f.accent}20,transparent 70%)`,filter:"blur(28px)",pointerEvents:"none" }}/>
-                  <div style={{ height:3,background:f.grad,borderRadius:2,marginBottom:22 }}/>
-                  <div style={{ display:"flex",alignItems:"center",gap:12,marginBottom:16 }}>
-                    <div style={{ width:48,height:48,borderRadius:14,background:f.grad,display:"flex",alignItems:"center",justifyContent:"center",boxShadow:`0 6px 20px ${f.accent}45` }}>
-                      {f.icon}
+                <div
+                  key={service.id}
+                  onClick={() => handleCardClick(i)}
+                  style={{
+                    borderRadius:"16px",
+                    border: isExp ? "1px solid rgba(59,130,246,0.4)" : "1px solid rgba(255,255,255,0.07)",
+                    background: isExp ? "linear-gradient(135deg,rgba(29,78,216,0.18),rgba(99,102,241,0.08))" : "rgba(255,255,255,0.03)",
+                    overflow:"hidden",
+                    cursor:"pointer",
+                    transition:"all 0.35s ease",
+                    boxShadow: isExp ? "0 8px 32px -8px rgba(37,99,235,0.4)" : "none",
+                  }}
+                >
+                  {/* Row header */}
+                  <div style={{ display:"flex", alignItems:"center", gap:"14px", padding:"18px 16px" }}>
+                    {/* Number badge */}
+                    <div style={{
+                      width:"36px", height:"36px", borderRadius:"10px", flexShrink:0,
+                      display:"flex", alignItems:"center", justifyContent:"center",
+                      background: isExp ? "linear-gradient(135deg,#1d4ed8,#4f46e5)" : "rgba(255,255,255,0.06)",
+                      border: isExp ? "none" : "1px solid rgba(255,255,255,0.1)",
+                    }}>
+                      <span style={{ fontSize:"11px", fontWeight:"900", color: isExp ? "white" : "rgba(100,116,139,0.7)" }}>
+                        {service.number}
+                      </span>
                     </div>
-                    <div style={{ display:"inline-flex",alignItems:"center",gap:6,background:`${f.accent}14`,border:`1px solid ${f.accent}30`,borderRadius:8,padding:"4px 12px" }}>
-                      <span style={{ width:5,height:5,borderRadius:"50%",background:f.accent,boxShadow:`0 0 6px ${f.accent}`,flexShrink:0 }}/>
-                      <span style={{ color:f.accent,fontSize:10,fontWeight:700,letterSpacing:1.5,textTransform:"uppercase",fontFamily:"'DM Sans',sans-serif" }}>Featured</span>
+
+                    {/* Icon */}
+                    <div style={{
+                      color: isExp ? "#60a5fa" : "rgba(148,163,184,0.4)",
+                      filter: isExp ? "drop-shadow(0 0 8px rgba(96,165,250,0.5))" : "none",
+                      flexShrink:0,
+                    }}>
+                      {service.icon}
+                    </div>
+
+                    {/* Title */}
+                    <h3 style={{ fontSize:"15px", fontWeight:"700", color: isExp ? "#f1f5f9" : "rgba(226,232,240,0.75)", flex:1, margin:0, letterSpacing:"0.01em" }}>
+                      {service.title}
+                    </h3>
+
+                    {/* Chevron */}
+                    <svg viewBox="0 0 24 24" fill="none" stroke={isExp ? "#60a5fa" : "rgba(100,116,139,0.5)"} strokeWidth="2" width="18" height="18"
+                      style={{ transform: isExp ? "rotate(180deg)" : "rotate(0)", transition:"transform 0.3s", flexShrink:0 }}>
+                      <polyline points="6 9 12 15 18 9" />
+                    </svg>
+                  </div>
+
+                  {/* Expanded description */}
+                  {isExp && (
+                    <div style={{ padding:"0 16px 20px 16px", paddingLeft:"66px" }}>
+                      <p style={{ fontSize:"13px", lineHeight:"1.85", color:"rgba(148,163,184,0.85)", margin:"0 0 14px" }}>
+                        {service.description}
+                      </p>
+                      <div style={{ display:"flex", alignItems:"center", gap:"8px" }}>
+                        <div style={{ height:"1.5px", flex:1, borderRadius:"1px", background:"linear-gradient(to right,rgba(37,99,235,0.7),transparent)" }} />
+                        <span style={{ fontSize:"10px", fontWeight:"700", letterSpacing:"0.15em", textTransform:"uppercase", color:"rgba(96,165,250,0.7)" }}>
+                          Learn More →
+                        </span>
+                      </div>
+                    </div>
+                  )}
+                </div>
+              );
+            })}
+          </div>
+        ) : isTablet ? (
+          /* TABLET: 2-column grid cards */
+          <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:"14px" }}>
+            {services.map((service, i) => {
+              const isHov = hovered === i;
+              return (
+                <div
+                  key={service.id}
+                  onMouseEnter={() => setHovered(i)}
+                  onMouseLeave={() => setHovered(null)}
+                  style={{
+                    borderRadius:"16px",
+                    padding:"28px 24px",
+                    border: isHov ? "1px solid rgba(59,130,246,0.4)" : "1px solid rgba(255,255,255,0.07)",
+                    background: isHov ? "linear-gradient(145deg,rgba(29,78,216,0.18),rgba(99,102,241,0.08))" : "rgba(255,255,255,0.03)",
+                    boxShadow: isHov ? "0 16px 48px -8px rgba(37,99,235,0.35)" : "none",
+                    transform: isHov ? "translateY(-5px)" : "translateY(0)",
+                    transition:"all 0.35s cubic-bezier(0.34,1.56,0.64,1)",
+                    cursor:"pointer",
+                    backdropFilter:"blur(8px)",
+                    position:"relative", overflow:"hidden",
+                  }}
+                >
+                  {/* Top bar */}
+                  <div style={{ position:"absolute", top:0, left:0, right:0, height:"3px", background: isHov ? "linear-gradient(90deg,#1d4ed8,#6366f1)" : "transparent", transition:"all 0.3s" }} />
+
+                  {/* Number + icon row */}
+                  <div style={{ display:"flex", alignItems:"center", justifyContent:"space-between", marginBottom:"16px" }}>
+                    <div style={{ color: isHov ? "#60a5fa" : "rgba(148,163,184,0.4)", filter: isHov ? "drop-shadow(0 0 10px rgba(96,165,250,0.5))" : "none", transform: isHov ? "scale(1.08)" : "scale(1)", transition:"all 0.4s cubic-bezier(0.34,1.56,0.64,1)" }}>
+                      {service.icon}
+                    </div>
+                    <span style={{
+                      fontSize:"12px", fontWeight:"900", letterSpacing:"0.15em",
+                      background: isHov ? "linear-gradient(135deg,#60a5fa,#a5b4fc)" : "rgba(148,163,184,0.25)",
+                      WebkitBackgroundClip:"text", WebkitTextFillColor:"transparent",
+                    }}>
+                      {service.number}
+                    </span>
+                  </div>
+
+                  <h3 style={{ fontSize:"16px", fontWeight:"800", color: isHov ? "#f1f5f9" : "rgba(226,232,240,0.78)", marginBottom:"10px", letterSpacing:"0.01em", transition:"color 0.3s" }}>
+                    {service.title}
+                  </h3>
+
+                  <p style={{ fontSize:"13px", lineHeight:"1.85", color: isHov ? "rgba(148,163,184,0.9)" : "rgba(100,116,139,0.8)", margin:0, transition:"color 0.3s" }}>
+                    {service.description}
+                  </p>
+
+                  {isHov && (
+                    <div style={{ marginTop:"16px", display:"flex", alignItems:"center", gap:"10px" }}>
+                      <div style={{ height:"1.5px", flex:1, borderRadius:"1px", background:"linear-gradient(to right,rgba(37,99,235,0.8),transparent)" }} />
+                      <span style={{ fontSize:"10px", fontWeight:"700", letterSpacing:"0.15em", textTransform:"uppercase", color:"rgba(96,165,250,0.7)" }}>Learn More →</span>
+                    </div>
+                  )}
+                </div>
+              );
+            })}
+          </div>
+        ) : (
+          /* DESKTOP: Horizontal list rows */
+          <div style={{ display:"flex", flexDirection:"column", gap:"10px" }}>
+            {services.map((service, i) => {
+              const isHov = hovered === i;
+              return (
+                <div
+                  key={service.id}
+                  onMouseEnter={() => setHovered(i)}
+                  onMouseLeave={() => setHovered(null)}
+                  style={{
+                    display:"flex", alignItems:"center",
+                    borderRadius:"16px", overflow:"hidden",
+                    border: isHov ? "1px solid rgba(59,130,246,0.35)" : "1px solid rgba(255,255,255,0.05)",
+                    background: isHov ? "linear-gradient(135deg,rgba(37,99,235,0.15),rgba(99,102,241,0.08))" : "linear-gradient(135deg,rgba(255,255,255,0.03),rgba(255,255,255,0.01))",
+                    boxShadow: isHov ? "0 16px 48px -8px rgba(37,99,235,0.35)" : "none",
+                    transform: isHov ? "translateX(6px)" : "translateX(0)",
+                    transition:"all 0.35s cubic-bezier(0.34,1.56,0.64,1)",
+                    cursor:"pointer",
+                    backdropFilter:"blur(8px)",
+                  }}
+                >
+                  {/* Left panel */}
+                  <div style={{
+                    flexShrink:0, width:"180px", padding:"32px 28px",
+                    display:"flex", flexDirection:"column", alignItems:"center", justifyContent:"center", gap:"12px",
+                    borderRight:"1px solid rgba(255,255,255,0.06)",
+                    background: isHov ? "linear-gradient(135deg,rgba(37,99,235,0.2),rgba(59,130,246,0.1))" : "rgba(255,255,255,0.02)",
+                    transition:"background 0.35s",
+                  }}>
+                    <span style={{
+                      fontSize:"13px", fontWeight:"900", letterSpacing:"0.15em",
+                      background: isHov ? "linear-gradient(135deg,#60a5fa,#a5b4fc)" : "rgba(148,163,184,0.3)",
+                      WebkitBackgroundClip:"text", WebkitTextFillColor:"transparent",
+                    }}>
+                      {service.number}
+                    </span>
+                    <div style={{
+                      color: isHov ? "#60a5fa" : "rgba(148,163,184,0.45)",
+                      transform: isHov ? "scale(1.1)" : "scale(1)",
+                      filter: isHov ? "drop-shadow(0 0 10px rgba(96,165,250,0.5))" : "none",
+                      transition:"all 0.4s cubic-bezier(0.34,1.56,0.64,1)",
+                    }}>
+                      {service.icon}
                     </div>
                   </div>
-                  <h3 style={{ color:"white",fontSize:"clamp(15px,1.8vw,19px)",fontWeight:800,lineHeight:1.3,marginBottom:12,background:f.grad,WebkitBackgroundClip:"text",WebkitTextFillColor:"transparent",fontFamily:"'DM Sans',sans-serif" }}>
-                    {f.label}
-                  </h3>
-                  <p style={{ color:"rgba(186,230,255,0.55)",fontSize:"clamp(12px,1.3vw,14px)",lineHeight:1.8,margin:0,fontFamily:"'DM Sans',sans-serif" }}>
-                    {f.desc}
-                  </p>
-                  <motion.button whileHover={{ scale:1.04,boxShadow:`0 0 20px ${f.accent}40` }} whileTap={{ scale:0.97 }}
-                    style={{ marginTop:20,display:"inline-flex",alignItems:"center",gap:7,padding:"10px 20px",borderRadius:10,background:f.grad,border:"none",color:"white",fontFamily:"'DM Sans',sans-serif",fontWeight:700,fontSize:12,cursor:"pointer" }}>
-                    Learn More <FiArrowRight size={13}/>
-                  </motion.button>
-                </>
-              );
-            })()}
-          </motion.div>
 
+                  {/* Content */}
+                  <div style={{ flex:1, padding:"32px 40px" }}>
+                    <div style={{ display:"flex", alignItems:"flex-start", justifyContent:"space-between", gap:"16px" }}>
+                      <div style={{ flex:1 }}>
+                        <h3 style={{ fontSize:"20px", fontWeight:"800", color: isHov ? "#f1f5f9" : "rgba(241,245,249,0.8)", marginBottom:"10px", transition:"color 0.3s" }}>
+                          {service.title}
+                        </h3>
+                        <p style={{ fontSize:"14px", lineHeight:"1.85", color: isHov ? "rgba(148,163,184,0.9)" : "rgba(100,116,139,0.85)", maxWidth:"680px", margin:0, transition:"color 0.3s" }}>
+                          {service.description}
+                        </p>
+                      </div>
+                      <div style={{
+                        flexShrink:0, width:"40px", height:"40px", borderRadius:"50%",
+                        border: isHov ? "1.5px solid rgba(96,165,250,0.6)" : "1.5px solid rgba(255,255,255,0.08)",
+                        display:"flex", alignItems:"center", justifyContent:"center",
+                        background: isHov ? "rgba(37,99,235,0.2)" : "transparent",
+                        transform: isHov ? "translateX(4px) rotate(-45deg)" : "translateX(0) rotate(0)",
+                        transition:"all 0.35s ease", marginTop:"4px",
+                      }}>
+                        <svg viewBox="0 0 24 24" fill="none" stroke={isHov ? "#60a5fa" : "rgba(100,116,139,0.6)"} strokeWidth="2" width="16" height="16">
+                          <path d="M5 12h14M12 5l7 7-7 7" strokeLinecap="round" strokeLinejoin="round"/>
+                        </svg>
+                      </div>
+                    </div>
+                    {isHov && (
+                      <div style={{ marginTop:"18px", display:"flex", alignItems:"center", gap:"12px" }}>
+                        <div style={{ height:"2px", flex:1, borderRadius:"2px", background:"linear-gradient(to right,rgba(37,99,235,0.8),rgba(99,102,241,0.4),transparent)" }} />
+                        <span style={{ fontSize:"11px", fontWeight:"700", letterSpacing:"0.15em", textTransform:"uppercase", color:"rgba(96,165,250,0.7)" }}>Learn More →</span>
+                      </div>
+                    )}
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        )}
+
+        {/* ── CTA ── */}
+        <div style={{ textAlign:"center", marginTop: isMobile ? "48px" : "60px" }}>
+          <button
+            onMouseEnter={() => setBtnHov(true)}
+            onMouseLeave={() => setBtnHov(false)}
+            style={{
+              display:"inline-flex", alignItems:"center", gap:"12px",
+              padding: isMobile ? "14px 28px" : "16px 40px",
+              borderRadius:"14px", border:"none",
+              background:"linear-gradient(135deg,#1d4ed8,#2563eb,#4f46e5)",
+              color:"white", fontSize: isMobile ? "13px" : "15px", fontWeight:"800",
+              letterSpacing:"0.05em", cursor:"pointer",
+              boxShadow: btnHov ? "0 16px 48px -4px rgba(37,99,235,0.75)" : "0 8px 32px -4px rgba(37,99,235,0.6)",
+              transform: btnHov ? "translateY(-3px)" : "translateY(0)",
+              transition:"all 0.3s ease",
+              width: isMobile ? "100%" : "auto",
+              justifyContent: isMobile ? "center" : "flex-start",
+            }}
+          >
+            <span>Explore All Services</span>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" width="18" height="18">
+              <path d="M5 12h14M12 5l7 7-7 7" strokeLinecap="round" strokeLinejoin="round"/>
+            </svg>
+          </button>
         </div>
+
       </div>
     </section>
   );

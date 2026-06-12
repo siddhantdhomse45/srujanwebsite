@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 
 const categories = [
   {
@@ -98,6 +98,17 @@ export default function OurClientsCaseStudies() {
   const [activeCategory, setActiveCategory] = useState(0);
   const [hovTab, setHovTab] = useState(null);
   const [hovCTA, setHovCTA] = useState(false);
+  const tabsContainerRef = useRef(null);
+
+  // Auto‑scroll active tab into view on mobile
+  useEffect(() => {
+    if (tabsContainerRef.current) {
+      const activeTab = tabsContainerRef.current.children[activeCategory];
+      if (activeTab) {
+        activeTab.scrollIntoView({ behavior: "smooth", block: "nearest", inline: "center" });
+      }
+    }
+  }, [activeCategory]);
 
   const cat = categories[activeCategory];
   const cs = cat.cases[0];
@@ -107,7 +118,7 @@ export default function OurClientsCaseStudies() {
       style={{
         background: "linear-gradient(135deg,#020b18 0%,#041530 45%,#061d42 75%,#020e24 100%)",
         minHeight: "100vh",
-        padding: "90px 40px 110px",
+        padding: "clamp(60px, 10vw, 90px) clamp(20px, 5vw, 40px) clamp(80px, 10vw, 110px)",
         fontFamily: "'DM Sans','Segoe UI',sans-serif",
         position: "relative",
         overflow: "hidden",
@@ -122,8 +133,8 @@ export default function OurClientsCaseStudies() {
 
       <div style={{ maxWidth:"1200px", margin:"0 auto", position:"relative", zIndex:1 }}>
 
-        {/* ── Header ── */}
-        <div style={{ textAlign:"center", marginBottom:"60px" }}>
+        {/* Header */}
+        <div style={{ textAlign:"center", marginBottom:"clamp(40px, 7vw, 60px)" }}>
           <span style={{
             display:"inline-flex", alignItems:"center", gap:"8px",
             padding:"6px 18px", borderRadius:"100px",
@@ -152,13 +163,25 @@ export default function OurClientsCaseStudies() {
             <div style={{ height:"1px", width:"80px", background:"linear-gradient(to left,transparent,rgba(59,130,246,0.6))" }} />
           </div>
 
-          <p style={{ fontSize:"16px", color:"rgba(148,163,184,0.75)", letterSpacing:"0.05em" }}>
+          <p style={{ fontSize:"clamp(14px, 3vw, 16px)", color:"rgba(148,163,184,0.75)", letterSpacing:"0.05em" }}>
             Case studies we engineered
           </p>
         </div>
 
-        {/* ── Category Tabs ── */}
-        <div style={{ display:"grid", gridTemplateColumns:"repeat(4,1fr)", gap:"12px", marginBottom:"32px" }}>
+        {/* Category Tabs – horizontally scrollable on mobile */}
+        <div
+          ref={tabsContainerRef}
+          style={{
+            display: "flex",
+            overflowX: "auto",
+            gap: "12px",
+            marginBottom: "32px",
+            paddingBottom: "8px",
+            scrollbarWidth: "thin",
+            WebkitOverflowScrolling: "touch",
+          }}
+          className="tabs-scroll"
+        >
           {categories.map((cat, i) => {
             const isAct = activeCategory === i;
             const isHov = hovTab === i;
@@ -174,6 +197,8 @@ export default function OurClientsCaseStudies() {
                   padding:"28px 16px 24px",
                   borderRadius:"16px",
                   cursor:"pointer",
+                  flex: "0 0 auto",
+                  minWidth: "140px",
                   border: isAct
                     ? "1.5px solid rgba(96,165,250,0.6)"
                     : isHov ? "1px solid rgba(59,130,246,0.3)" : "1px solid rgba(255,255,255,0.07)",
@@ -189,14 +214,10 @@ export default function OurClientsCaseStudies() {
                   overflow:"hidden",
                 }}
               >
-                {/* Top bar */}
                 <div style={{
                   position:"absolute", top:0, left:0, right:0, height:"3px",
                   background: isAct ? "linear-gradient(90deg,#1d4ed8,#6366f1)" : "transparent",
-                  transition:"all 0.3s",
-                }} />
-
-                {/* Icon */}
+                }}/>
                 <div style={{
                   color: isAct ? "#93c5fd" : isHov ? "#60a5fa" : "rgba(148,163,184,0.4)",
                   filter: isAct ? "drop-shadow(0 0 10px rgba(59,130,246,0.6))" : "none",
@@ -205,13 +226,10 @@ export default function OurClientsCaseStudies() {
                 }}>
                   {cat.icon}
                 </div>
-
-                {/* Label */}
                 <span style={{
-                  fontSize:"13px", fontWeight: isAct ? "800" : "600",
+                  fontSize:"clamp(12px, 3vw, 13px)", fontWeight: isAct ? "800" : "600",
                   color: isAct ? "#93c5fd" : isHov ? "rgba(148,163,184,0.8)" : "rgba(100,116,139,0.7)",
                   textAlign:"center", letterSpacing:"0.02em", lineHeight:1.3,
-                  transition:"color 0.3s",
                 }}>
                   {cat.label}
                 </span>
@@ -220,8 +238,8 @@ export default function OurClientsCaseStudies() {
           })}
         </div>
 
-        {/* ── Case Study Panel ── */}
-        <div style={{
+        {/* Case Study Panel – stacks on mobile */}
+        <div className="case-panel" style={{
           display:"grid", gridTemplateColumns:"1fr 1fr", gap:"0",
           borderRadius:"20px", overflow:"hidden",
           border:"1px solid rgba(59,130,246,0.15)",
@@ -231,23 +249,19 @@ export default function OurClientsCaseStudies() {
           <div style={{
             position:"relative",
             background: cs.imageGradient,
-            minHeight:"420px",
+            minHeight:"clamp(300px, 50vh, 420px)",
             display:"flex", alignItems:"center", justifyContent:"center",
             overflow:"hidden",
           }}>
-            {/* Grid lines */}
             <div style={{
               position:"absolute", inset:0,
               backgroundImage:"linear-gradient(rgba(59,130,246,0.07) 1px,transparent 1px),linear-gradient(90deg,rgba(59,130,246,0.07) 1px,transparent 1px)",
               backgroundSize:"40px 40px",
             }} />
-            {/* Ambient glow */}
             <div style={{ position:"absolute", inset:0, background:"radial-gradient(ellipse at center,rgba(37,99,235,0.2),transparent 70%)" }} />
-
-            {/* Icon visual */}
             <div style={{ position:"relative", zIndex:2, textAlign:"center" }}>
               <div style={{
-                fontSize:"96px", lineHeight:1, marginBottom:"24px",
+                fontSize:"clamp(64px, 15vw, 96px)", lineHeight:1, marginBottom:"24px",
                 filter:"drop-shadow(0 0 30px rgba(59,130,246,0.5))",
               }}>
                 {cs.imageEmoji}
@@ -256,25 +270,22 @@ export default function OurClientsCaseStudies() {
                 display:"inline-flex", alignItems:"center", gap:"8px",
                 padding:"8px 20px", borderRadius:"100px",
                 background:"rgba(37,99,235,0.2)", border:"1px solid rgba(59,130,246,0.35)",
-                color:"#93c5fd", fontSize:"12px", fontWeight:"700", letterSpacing:"0.1em",
+                color:"#93c5fd", fontSize:"clamp(10px, 3vw, 12px)", fontWeight:"700", letterSpacing:"0.1em",
               }}>
-                <span style={{ width:6, height:6, borderRadius:"50%", background:"#3b82f6", display:"inline-block" }} />
+                <span style={{ width:6, height:6, borderRadius:"50%", background:"#3b82f6" }} />
                 {cat.label}
               </div>
             </div>
-
-            {/* Corner accents */}
             <div style={{ position:"absolute", top:"16px", left:"16px", width:"32px", height:"32px", borderTop:"2px solid rgba(59,130,246,0.5)", borderLeft:"2px solid rgba(59,130,246,0.5)", borderRadius:"4px 0 0 0" }} />
             <div style={{ position:"absolute", bottom:"16px", right:"16px", width:"32px", height:"32px", borderBottom:"2px solid rgba(59,130,246,0.5)", borderRight:"2px solid rgba(59,130,246,0.5)", borderRadius:"0 0 4px 0" }} />
           </div>
 
           {/* Right: Content */}
           <div style={{
-            padding:"48px 44px",
+            padding:"clamp(32px, 5vw, 48px) clamp(28px, 5vw, 44px)",
             background:"linear-gradient(145deg,rgba(6,18,42,0.95),rgba(4,15,38,0.98))",
             display:"flex", flexDirection:"column", justifyContent:"space-between",
           }}>
-            {/* Left accent */}
             <div>
               <div style={{
                 display:"inline-flex", alignItems:"center", gap:"8px",
@@ -287,7 +298,7 @@ export default function OurClientsCaseStudies() {
               </div>
 
               <h3 style={{
-                fontSize:"20px", fontWeight:"900", color:"#f1f5f9",
+                fontSize:"clamp(20px, 4vw, 22px)", fontWeight:"900", color:"#f1f5f9",
                 marginBottom:"32px", lineHeight:1.3,
               }}>
                 {cs.title}
@@ -308,7 +319,7 @@ export default function OurClientsCaseStudies() {
                   </div>
                   <span style={{ fontSize:"14px", fontWeight:"800", color:"#f1f5f9", letterSpacing:"0.04em" }}>Challenge</span>
                 </div>
-                <p style={{ fontSize:"14px", lineHeight:"1.85", color:"rgba(148,163,184,0.85)", margin:0, paddingLeft:"38px" }}>
+                <p style={{ fontSize:"clamp(13px, 2.5vw, 14px)", lineHeight:"1.85", color:"rgba(148,163,184,0.85)", margin:0, paddingLeft:"38px" }}>
                   {cs.challenge}
                 </p>
               </div>
@@ -328,7 +339,7 @@ export default function OurClientsCaseStudies() {
                   </div>
                   <span style={{ fontSize:"14px", fontWeight:"800", color:"#f1f5f9", letterSpacing:"0.04em" }}>Solution</span>
                 </div>
-                <p style={{ fontSize:"14px", lineHeight:"1.85", color:"rgba(148,163,184,0.85)", margin:0, paddingLeft:"38px" }}>
+                <p style={{ fontSize:"clamp(13px, 2.5vw, 14px)", lineHeight:"1.85", color:"rgba(148,163,184,0.85)", margin:0, paddingLeft:"38px" }}>
                   {cs.solution}
                 </p>
               </div>
@@ -338,7 +349,7 @@ export default function OurClientsCaseStudies() {
                 {cs.tags.map((tag, i) => (
                   <span key={i} style={{
                     padding:"5px 12px", borderRadius:"8px",
-                    fontSize:"11px", fontWeight:"700", letterSpacing:"0.1em", textTransform:"uppercase",
+                    fontSize:"clamp(10px, 2.5vw, 11px)", fontWeight:"700", letterSpacing:"0.1em", textTransform:"uppercase",
                     color:"#60a5fa", background:"rgba(37,99,235,0.12)", border:"1px solid rgba(59,130,246,0.2)",
                   }}>
                     {tag}
@@ -353,9 +364,9 @@ export default function OurClientsCaseStudies() {
               onMouseLeave={() => setHovCTA(false)}
               style={{
                 display:"inline-flex", alignItems:"center", gap:"10px",
-                padding:"14px 28px", borderRadius:"12px", border:"none",
+                padding:"clamp(12px, 2vw, 14px) clamp(24px, 4vw, 28px)", borderRadius:"12px", border:"none",
                 background: hovCTA ? "linear-gradient(135deg,#2563eb,#4f46e5)" : "linear-gradient(135deg,#1d4ed8,#2563eb)",
-                color:"white", fontSize:"13px", fontWeight:"800",
+                color:"white", fontSize:"clamp(12px, 2.5vw, 13px)", fontWeight:"800",
                 letterSpacing:"0.1em", textTransform:"uppercase", cursor:"pointer",
                 boxShadow: hovCTA ? "0 12px 36px -4px rgba(37,99,235,0.65)" : "0 6px 20px -4px rgba(37,99,235,0.45)",
                 transform: hovCTA ? "translateY(-2px)" : "translateY(0)",
@@ -370,7 +381,7 @@ export default function OurClientsCaseStudies() {
           </div>
         </div>
 
-        {/* ── Dot nav ── */}
+        {/* Dot navigation */}
         <div style={{ display:"flex", justifyContent:"center", gap:"8px", marginTop:"28px" }}>
           {categories.map((_, i) => (
             <div
@@ -387,6 +398,39 @@ export default function OurClientsCaseStudies() {
         </div>
 
       </div>
+
+      {/* Responsive CSS overrides */}
+      <style>{`
+        @media (max-width: 900px) {
+          .case-panel {
+            grid-template-columns: 1fr !important;
+          }
+        }
+        @media (max-width: 640px) {
+          .tabs-scroll {
+            gap: 10px !important;
+          }
+          .tabs-scroll > div {
+            min-width: 120px !important;
+            padding: 20px 10px 16px !important;
+            gap: 10px !important;
+          }
+          .tabs-scroll > div svg {
+            width: 40px !important;
+            height: 40px !important;
+          }
+        }
+        @media (max-width: 480px) {
+          .tabs-scroll > div {
+            min-width: 105px !important;
+            padding: 16px 8px 12px !important;
+          }
+          .tabs-scroll > div svg {
+            width: 36px !important;
+            height: 36px !important;
+          }
+        }
+      `}</style>
     </section>
   );
 }

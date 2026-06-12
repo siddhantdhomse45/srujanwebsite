@@ -9,7 +9,7 @@ const stories = [
     challenge:
       "The client needed to modernize legacy processes, interlink a variety of data sets, improve communication between responsible parties and eliminate data duplicates across multiple locations in the corresponding systems. This warranted a unified software solution that would serve as a single source of the important and updated data that employees can easily access and organize, avoiding data duplication.",
     solution:
-      "Intellectsoft created an enterprise portal that eliminates significant manual efforts and builds a knowledge base collecting information from across all business units, compiling data from previous findings during customer outages. This solution increases visibility and provides employees with operational and technical information and instruction manuals to effectively operate across the units.",
+      "Srujan Infotech created an enterprise portal that eliminates significant manual efforts and builds a knowledge base collecting information from across all business units, compiling data from previous findings during customer outages. This solution increases visibility and provides employees with operational and technical information and instruction manuals to effectively operate across the units.",
     tags: ["ERP", "Portal", "Data Unification"],
   },
   {
@@ -75,7 +75,7 @@ function useInView(threshold = 0.15) {
 export default function ClientSuccessStories() {
   const [current, setCurrent] = useState(0);
   const [animating, setAnimating] = useState(false);
-  const [direction, setDirection] = useState(1); // 1=forward, -1=back
+  const [direction, setDirection] = useState(1);
   const [headerRef, headerInView] = useInView(0.2);
   const [cardRef, cardInView] = useInView(0.1);
 
@@ -99,7 +99,7 @@ export default function ClientSuccessStories() {
       style={{
         background: "linear-gradient(180deg,#020b18 0%,#041530 60%,#020b18 100%)",
         fontFamily: "'DM Sans','Segoe UI',sans-serif",
-        padding: "100px 0 80px",
+        padding: "clamp(60px, 10vw, 100px) 0 clamp(60px, 10vw, 80px)",
         position: "relative",
         overflow: "hidden",
         minHeight: "100vh",
@@ -108,6 +108,77 @@ export default function ClientSuccessStories() {
         justifyContent: "center",
       }}
     >
+      <style>{`
+        /* Responsive styles */
+        @media (max-width: 900px) {
+          .stories-card-grid {
+            grid-template-columns: 1fr !important;
+            min-height: auto !important;
+          }
+          .stories-image-side {
+            height: 280px !important;
+          }
+          .stories-text-side {
+            padding: 32px 28px !important;
+          }
+          .stories-arrows {
+            position: static !important;
+            display: flex !important;
+            justify-content: center !important;
+            gap: 20px !important;
+            margin-top: 32px !important;
+          }
+          .stories-arrow-btn {
+            position: static !important;
+            transform: none !important;
+            width: 44px !important;
+            height: 44px !important;
+          }
+        }
+        @media (max-width: 640px) {
+          .stories-text-side {
+            padding: 24px 20px !important;
+          }
+          .stories-text-side h3 {
+            font-size: 20px !important;
+            margin-bottom: 20px !important;
+          }
+          .stories-text-side .divider {
+            margin-bottom: 20px !important;
+          }
+          .stories-text-side p {
+            font-size: 12px !important;
+            line-height: 1.7 !important;
+          }
+          .stories-image-side .top-tag {
+            top: 16px !important;
+            left: 16px !important;
+            font-size: 10px !important;
+            padding: 4px 10px !important;
+          }
+          .stories-image-side .bottom-tags {
+            bottom: 16px !important;
+            left: 16px !important;
+            gap: 6px !important;
+          }
+          .stories-image-side .bottom-tags span {
+            padding: 3px 8px !important;
+            font-size: 8px !important;
+          }
+          .stories-dots {
+            margin-top: 28px !important;
+          }
+        }
+        @media (max-width: 480px) {
+          .stories-text-side {
+            padding: 20px 16px !important;
+          }
+          .stories-image-side {
+            height: 220px !important;
+          }
+        }
+      `}</style>
+
       {/* Blueprint grid */}
       <div style={{
         position: "absolute", inset: 0, pointerEvents: "none",
@@ -116,22 +187,17 @@ export default function ClientSuccessStories() {
       }} />
 
       {/* Ambient glows */}
-      <div style={{ position: "absolute", top: "15%", left: "0%", width: "500px", height: "500px", borderRadius: "50%", background: "radial-gradient(circle,rgba(37,99,235,0.08),transparent 70%)", pointerEvents: "none" }} />
-      <div style={{ position: "absolute", bottom: "10%", right: "0%", width: "400px", height: "400px", borderRadius: "50%", background: "radial-gradient(circle,rgba(99,102,241,0.07),transparent 70%)", pointerEvents: "none" }} />
+      <div style={{ position: "absolute", top: "15%", left: "0%", width: "min(500px, 70vw)", height: "min(500px, 70vw)", borderRadius: "50%", background: "radial-gradient(circle,rgba(37,99,235,0.08),transparent 70%)", pointerEvents: "none" }} />
+      <div style={{ position: "absolute", bottom: "10%", right: "0%", width: "min(400px, 60vw)", height: "min(400px, 60vw)", borderRadius: "50%", background: "radial-gradient(circle,rgba(99,102,241,0.07),transparent 70%)", pointerEvents: "none" }} />
 
-      {/* Left arrow */}
-      <NavArrow dir="left" onClick={prev} />
-      {/* Right arrow */}
-      <NavArrow dir="right" onClick={next} />
+      <div style={{ maxWidth: "1100px", margin: "0 auto", padding: "0 clamp(16px, 5vw, 80px)", position: "relative", zIndex: 10, width: "100%" }}>
 
-      <div style={{ maxWidth: "1100px", margin: "0 auto", padding: "0 80px", position: "relative", zIndex: 10, width: "100%" }}>
-
-        {/* ── Header ── */}
+        {/* Header */}
         <div
           ref={headerRef}
           style={{
             textAlign: "center",
-            marginBottom: "64px",
+            marginBottom: "clamp(48px, 8vw, 64px)",
             opacity: headerInView ? 1 : 0,
             transform: headerInView ? "translateY(0)" : "translateY(28px)",
             transition: "opacity 0.7s ease, transform 0.7s ease",
@@ -141,7 +207,7 @@ export default function ClientSuccessStories() {
             display: "inline-flex", alignItems: "center", gap: "8px",
             padding: "7px 18px", borderRadius: "6px",
             background: "linear-gradient(135deg,#1d4ed8,#2563eb)",
-            color: "white", fontSize: "11px", fontWeight: "800",
+            color: "white", fontSize: "clamp(10px, 2.5vw, 11px)", fontWeight: "800",
             letterSpacing: "0.2em", textTransform: "uppercase",
             boxShadow: "0 4px 16px rgba(37,99,235,0.5)",
             marginBottom: "22px",
@@ -150,7 +216,7 @@ export default function ClientSuccessStories() {
             Case Studies
           </div>
           <h2 style={{
-            fontSize: "clamp(28px,4vw,50px)",
+            fontSize: "clamp(28px, 4.5vw, 50px)",
             fontWeight: "900",
             letterSpacing: "0.06em",
             textTransform: "uppercase",
@@ -168,17 +234,21 @@ export default function ClientSuccessStories() {
             </span>
           </h2>
           <p style={{
-            fontSize: "16px", lineHeight: "1.8",
+            fontSize: "clamp(14px, 2.5vw, 16px)",
+            lineHeight: "1.8",
             color: "rgba(148,163,184,0.85)",
-            maxWidth: "580px", margin: "0 auto",
+            maxWidth: "580px",
+            margin: "0 auto",
+            padding: "0 16px",
           }}>
             Discover how leading construction companies effectively addressed critical business challenges through digital innovation.
           </p>
         </div>
 
-        {/* ── Card ── */}
+        {/* Card */}
         <div
           ref={cardRef}
+          className="stories-card-grid"
           style={{
             display: "grid",
             gridTemplateColumns: "1fr 1fr",
@@ -195,6 +265,7 @@ export default function ClientSuccessStories() {
         >
           {/* Image side */}
           <div
+            className="stories-image-side"
             style={{
               position: "relative",
               overflow: "hidden",
@@ -215,28 +286,25 @@ export default function ClientSuccessStories() {
                 filter: "brightness(0.55)",
               }}
             />
-            {/* Overlay gradient */}
             <div style={{
               position: "absolute", inset: 0,
               background: "linear-gradient(135deg,rgba(4,21,48,0.4) 0%,transparent 60%)",
             }} />
 
-            {/* Top tag */}
-            <div style={{
+            <div className="top-tag" style={{
               position: "absolute", top: "24px", left: "24px",
               padding: "6px 14px", borderRadius: "20px",
               background: "rgba(4,21,48,0.85)",
               border: "1px solid rgba(59,130,246,0.35)",
               backdropFilter: "blur(10px)",
-              fontSize: "11px", fontWeight: "800",
+              fontSize: "clamp(10px, 2vw, 11px)", fontWeight: "800",
               color: "#60a5fa", letterSpacing: "0.12em",
               textTransform: "uppercase",
             }}>
               {story.tag}
             </div>
 
-            {/* Bottom tags */}
-            <div style={{
+            <div className="bottom-tags" style={{
               position: "absolute", bottom: "24px", left: "24px",
               display: "flex", gap: "8px", flexWrap: "wrap",
             }}>
@@ -246,7 +314,7 @@ export default function ClientSuccessStories() {
                   background: "linear-gradient(135deg,rgba(37,99,235,0.5),rgba(99,102,241,0.4))",
                   border: "1px solid rgba(99,102,241,0.3)",
                   backdropFilter: "blur(8px)",
-                  fontSize: "10px", fontWeight: "800",
+                  fontSize: "clamp(8px, 2vw, 10px)", fontWeight: "800",
                   color: "rgba(255,255,255,0.85)",
                   letterSpacing: "0.1em", textTransform: "uppercase",
                 }}>
@@ -255,10 +323,9 @@ export default function ClientSuccessStories() {
               ))}
             </div>
 
-            {/* Story number */}
             <div style={{
               position: "absolute", bottom: "24px", right: "24px",
-              fontSize: "11px", fontWeight: "800",
+              fontSize: "clamp(10px, 2vw, 11px)", fontWeight: "800",
               color: "rgba(96,165,250,0.6)", letterSpacing: "0.1em",
             }}>
               {String(current + 1).padStart(2, "0")} / {String(stories.length).padStart(2, "0")}
@@ -267,6 +334,7 @@ export default function ClientSuccessStories() {
 
           {/* Text side */}
           <div
+            className="stories-text-side"
             style={{
               background: "rgba(4,21,48,0.92)",
               backdropFilter: "blur(16px)",
@@ -281,22 +349,22 @@ export default function ClientSuccessStories() {
               transition: "opacity 0.35s ease, transform 0.35s ease",
             }}
           >
-            {/* Title */}
             <h3 style={{
-              fontSize: "clamp(16px,2vw,22px)",
+              fontSize: "clamp(16px, 2.5vw, 22px)",
               fontWeight: "900",
               color: "white",
               margin: "0 0 28px",
               lineHeight: 1.3,
-              letterSpacing: "0.01em",
             }}>
               {story.title}
             </h3>
 
-            {/* Divider */}
-            <div style={{ width: "40px", height: "3px", borderRadius: "2px", background: "linear-gradient(90deg,#2563eb,#6366f1)", marginBottom: "28px" }} />
+            <div className="divider" style={{
+              width: "40px", height: "3px", borderRadius: "2px",
+              background: "linear-gradient(90deg,#2563eb,#6366f1)",
+              marginBottom: "28px",
+            }} />
 
-            {/* Challenge */}
             <div style={{ marginBottom: "24px" }}>
               <div style={{ display: "flex", alignItems: "center", gap: "10px", marginBottom: "12px" }}>
                 <div style={{
@@ -315,12 +383,11 @@ export default function ClientSuccessStories() {
                   Challenge
                 </span>
               </div>
-              <p style={{ fontSize: "13px", lineHeight: "1.8", color: "rgba(148,163,184,0.85)", margin: 0 }}>
+              <p style={{ fontSize: "clamp(12px, 2.2vw, 13px)", lineHeight: "1.8", color: "rgba(148,163,184,0.85)", margin: 0 }}>
                 {story.challenge}
               </p>
             </div>
 
-            {/* Solution */}
             <div>
               <div style={{ display: "flex", alignItems: "center", gap: "10px", marginBottom: "12px" }}>
                 <div style={{
@@ -337,15 +404,15 @@ export default function ClientSuccessStories() {
                   Solution
                 </span>
               </div>
-              <p style={{ fontSize: "13px", lineHeight: "1.8", color: "rgba(148,163,184,0.85)", margin: 0 }}>
+              <p style={{ fontSize: "clamp(12px, 2.2vw, 13px)", lineHeight: "1.8", color: "rgba(148,163,184,0.85)", margin: 0 }}>
                 {story.solution}
               </p>
             </div>
           </div>
         </div>
 
-        {/* ── Dots ── */}
-        <div style={{ display: "flex", justifyContent: "center", gap: "10px", marginTop: "36px" }}>
+        {/* Dots */}
+        <div className="stories-dots" style={{ display: "flex", justifyContent: "center", gap: "10px", marginTop: "36px" }}>
           {stories.map((_, i) => (
             <button
               key={i}
@@ -367,6 +434,22 @@ export default function ClientSuccessStories() {
           ))}
         </div>
       </div>
+
+      {/* Navigation arrows - responsive wrapper */}
+      <div className="stories-arrows" style={{
+        position: "absolute",
+        top: "50%",
+        left: 0,
+        right: 0,
+        transform: "translateY(-50%)",
+        display: "flex",
+        justifyContent: "space-between",
+        pointerEvents: "none",
+        padding: "0 16px",
+      }}>
+        <NavArrow dir="left" onClick={prev} />
+        <NavArrow dir="right" onClick={next} />
+      </div>
     </section>
   );
 }
@@ -379,6 +462,7 @@ function NavArrow({ dir, onClick }) {
       onClick={onClick}
       onMouseEnter={() => setHov(true)}
       onMouseLeave={() => setHov(false)}
+      className="stories-arrow-btn"
       style={{
         position: "absolute",
         top: "50%",
@@ -386,7 +470,8 @@ function NavArrow({ dir, onClick }) {
         left: isLeft ? "16px" : "auto",
         right: isLeft ? "auto" : "16px",
         zIndex: 20,
-        width: "48px", height: "48px",
+        width: "clamp(40px, 6vw, 48px)",
+        height: "clamp(40px, 6vw, 48px)",
         borderRadius: "50%",
         border: hov ? "1.5px solid rgba(96,165,250,0.6)" : "1.5px solid rgba(255,255,255,0.12)",
         background: hov ? "rgba(37,99,235,0.2)" : "rgba(4,21,48,0.7)",
@@ -397,6 +482,7 @@ function NavArrow({ dir, onClick }) {
         boxShadow: hov ? "0 0 20px rgba(37,99,235,0.3)" : "none",
         transform: `translateY(-50%) ${hov ? (isLeft ? "translateX(-2px)" : "translateX(2px)") : ""}`,
         transition: "all 0.3s ease",
+        pointerEvents: "auto",
       }}
     >
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" width="18" height="18">

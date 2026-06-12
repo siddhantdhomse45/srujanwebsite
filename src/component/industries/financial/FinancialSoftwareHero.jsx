@@ -7,6 +7,7 @@ import { motion, useScroll, useTransform, useInView } from "framer-motion";
  ║  Matches screenshot: full-bleed photo, dark overlay,        ║
  ║  bold ALL-CAPS heading, subtitle, single CTA button         ║
  ║  Color upgrade: #3b82f6 blue replaces screenshot green      ║
+ ║  FULLY RESPONSIVE (mobile, tablet, desktop)                 ║
  ╚══════════════════════════════════════════════════════════════╝
 */
 
@@ -14,13 +15,14 @@ const BLUE      = "#3b82f6";
 const BLUE_LITE = "#60a5fa";
 const E         = [0.22, 1, 0.36, 1];
 
-/* ── Topo wave lines — brand asset ── */
+/* ── Topo wave lines — brand asset (hidden on mobile) ── */
 const TopoLines = () => (
   <svg
     style={{
       position: "absolute", inset: 0,
       width: "100%", height: "100%",
       pointerEvents: "none", opacity: 0.06,
+      display: "none",
     }}
     viewBox="0 0 1400 600"
     preserveAspectRatio="xMidYMid slice"
@@ -37,7 +39,7 @@ const TopoLines = () => (
   </svg>
 );
 
-/* ── Ambient orb ── */
+/* ── Ambient orb (scaled for mobile) ── */
 function Orb({ style }) {
   return (
     <motion.div
@@ -52,7 +54,7 @@ function Orb({ style }) {
 }
 
 /* ══════════════════════════════════════════
-   MAIN EXPORT
+   MAIN EXPORT (FULLY RESPONSIVE)
 ══════════════════════════════════════════ */
 export default function FinancialSoftwareHero() {
   const ref = useRef(null);
@@ -146,16 +148,57 @@ export default function FinancialSoftwareHero() {
         }
         .fsh-btn-outline:active { transform: scale(0.97); }
 
-        /* Responsive */
+        /* Trust stats strip */
+        .fsh-stats {
+          display: flex;
+          gap: 0;
+          margin-top: 64px;
+          flex-wrap: wrap;
+        }
+        .fsh-stat-item {
+          padding-right: 28px;
+          margin-right: 28px;
+          border-right: 1px solid rgba(255,255,255,0.09);
+        }
+        .fsh-stat-item:last-child {
+          border-right: none;
+        }
+
+        /* ========== RESPONSIVE BREAKPOINTS ========== */
         @media (max-width: 900px) {
           .fsh-inner  { padding: 80px 36px !important; }
           .fsh-h1     { font-size: clamp(28px, 6.5vw, 48px) !important; }
+          .fsh-content { max-width: 100% !important; text-align: left; }
+          .fsh-stat-item {
+            padding-right: 20px;
+            margin-right: 20px;
+          }
         }
-        @media (max-width: 520px) {
-          .fsh-inner  { padding: 64px 20px !important; }
-          .fsh-btns   { flex-direction: column !important; align-items: stretch !important; }
-          .fsh-btns a { justify-content: center; }
-          .fsh-trust  { display: none !important; }
+
+        @media (max-width: 640px) {
+          .fsh-inner  { padding: 64px 24px !important; }
+          .fsh-btns   { flex-direction: column !important; align-items: stretch !important; gap: 12px !important; }
+          .fsh-btns a { justify-content: center; width: 100%; white-space: normal; text-align: center; padding: 14px 24px; }
+          .fsh-stats  { justify-content: space-between; gap: 16px; margin-top: 48px; }
+          .fsh-stat-item {
+            padding-right: 0;
+            margin-right: 0;
+            border-right: none;
+            flex: 1;
+            text-align: center;
+          }
+          .fsh-stat-item .stat-value { font-size: 24px !important; }
+          .fsh-stat-item .stat-label { font-size: 9px !important; letter-spacing: 1.2px !important; }
+        }
+
+        @media (max-width: 480px) {
+          .fsh-inner  { padding: 56px 20px !important; }
+          .fsh-h1     { font-size: 28px !important; line-height: 1.1 !important; }
+          .fsh-subtitle { font-size: 14px !important; margin-bottom: 36px !important; }
+          .fsh-rule   { margin-bottom: 20px !important; }
+          .fsh-stats  { gap: 12px; }
+          .fsh-stat-item .stat-value { font-size: 20px !important; }
+          .fsh-stat-item .stat-label { font-size: 8px !important; }
         }
       `}</style>
 
@@ -180,7 +223,7 @@ export default function FinancialSoftwareHero() {
             "linear-gradient(106deg, rgba(3,7,22,0.97) 0%, rgba(4,9,26,0.94) 30%, rgba(5,11,28,0.82) 55%, rgba(3,8,22,0.55) 75%, rgba(2,6,16,0.28) 100%)",
         }} />
 
-        {/* ── Deep blue tint wash — matches #3b82f6 palette ── */}
+        {/* ── Deep blue tint wash ── */}
         <div style={{
           position: "absolute", inset: 0,
           background: "radial-gradient(ellipse at 5% 55%, rgba(8,22,72,0.58) 0%, transparent 58%)",
@@ -194,11 +237,11 @@ export default function FinancialSoftwareHero() {
           pointerEvents: "none",
         }} />
 
-        {/* ── Ambient orbs ── */}
-        <Orb style={{ width: 580, height: 580, background: "rgba(59,130,246,0.10)", top: -160, left: -140 }} />
-        <Orb style={{ width: 420, height: 420, background: "rgba(96,165,250,0.07)", bottom: -80, right: "22%" }} />
+        {/* ── Ambient orbs (responsive size) ── */}
+        <Orb style={{ width: "min(580px, 80vw)", height: "min(580px, 80vw)", background: "rgba(59,130,246,0.10)", top: -160, left: -140 }} />
+        <Orb style={{ width: "min(420px, 60vw)", height: "min(420px, 60vw)", background: "rgba(96,165,250,0.07)", bottom: -80, right: "22%" }} />
 
-        {/* ── Topo wave lines ── */}
+        {/* ── Topo wave lines (hidden on mobile via CSS inside SVG) ── */}
         <TopoLines />
 
         {/* ── Dot grid ── */}
@@ -239,7 +282,7 @@ export default function FinancialSoftwareHero() {
                 <div style={{ width: 40, height: 2.5, background: BLUE, borderRadius: 2 }} />
                 <span style={{
                   fontFamily: "'Barlow', sans-serif",
-                  fontWeight: 700, fontSize: 11,
+                  fontWeight: 700, fontSize: "clamp(10px, 2.5vw, 11px)",
                   letterSpacing: 3.5, textTransform: "uppercase",
                   color: BLUE,
                 }}>
@@ -278,6 +321,7 @@ export default function FinancialSoftwareHero() {
 
               {/* Animated blue rule */}
               <motion.div
+                className="fsh-rule"
                 initial={{ scaleX: 0, opacity: 0 }}
                 animate={inV ? { scaleX: 1, opacity: 1 } : {}}
                 transition={{ duration: 0.9, delay: 0.5, ease: E }}
@@ -290,6 +334,7 @@ export default function FinancialSoftwareHero() {
 
               {/* Subtitle */}
               <motion.p
+                className="fsh-subtitle"
                 initial={{ opacity: 0, y: 20 }}
                 animate={inV ? { opacity: 1, y: 0 } : {}}
                 transition={{ duration: 0.85, delay: 0.46, ease: E }}
@@ -320,7 +365,6 @@ export default function FinancialSoftwareHero() {
                   flexWrap: "wrap", alignItems: "center",
                 }}
               >
-                {/* PRIMARY — solid blue (replaces screenshot's green) */}
                 <a href="#" className="fsh-btn-primary">
                   Talk to Us
                   <svg width="13" height="13" viewBox="0 0 14 14" fill="none"
@@ -328,8 +372,6 @@ export default function FinancialSoftwareHero() {
                     <path d="M2 7h10M8 3l4 4-4 4"/>
                   </svg>
                 </a>
-
-                {/* SECONDARY — blue outline */}
                 <a href="#" className="fsh-btn-outline">
                   View Portfolio
                   <svg width="13" height="13" viewBox="0 0 14 14" fill="none"
@@ -339,16 +381,12 @@ export default function FinancialSoftwareHero() {
                 </a>
               </motion.div>
 
-              {/* Trust strip stats */}
+              {/* Trust strip stats — responsive */}
               <motion.div
-                className="fsh-trust"
+                className="fsh-stats"
                 initial={{ opacity: 0 }}
                 animate={inV ? { opacity: 1 } : {}}
                 transition={{ delay: 0.95, duration: 0.8 }}
-                style={{
-                  display: "flex", gap: 0,
-                  marginTop: 64, flexWrap: "wrap",
-                }}
               >
                 {[
                   { value: "500+",  label: "FinTech Projects"    },
@@ -356,20 +394,17 @@ export default function FinancialSoftwareHero() {
                   { value: "21",    label: "Countries Served"    },
                   { value: "98%",   label: "Client Retention"    },
                 ].map((s, i) => (
-                  <div key={s.label} style={{
-                    paddingRight: 28, marginRight: 28,
-                    borderRight: i < 3 ? "1px solid rgba(255,255,255,0.09)" : "none",
-                  }}>
-                    <div style={{
+                  <div key={s.label} className="fsh-stat-item">
+                    <div className="stat-value" style={{
                       fontFamily: "'Barlow Condensed', sans-serif",
-                      fontWeight: 900, fontSize: 28,
+                      fontWeight: 900, fontSize: "clamp(20px, 4vw, 28px)",
                       color: "#ffffff", lineHeight: 1, letterSpacing: "-0.5px",
                     }}>
                       {s.value}
                     </div>
-                    <div style={{
+                    <div className="stat-label" style={{
                       fontFamily: "'Barlow', sans-serif",
-                      fontWeight: 600, fontSize: 10,
+                      fontWeight: 600, fontSize: "clamp(8px, 2vw, 10px)",
                       letterSpacing: 1.8, textTransform: "uppercase",
                       color: "rgba(255,255,255,0.30)", marginTop: 5,
                     }}>
@@ -388,7 +423,7 @@ export default function FinancialSoftwareHero() {
           animate={{ y: [0, 10, 0] }}
           transition={{ repeat: Infinity, duration: 2.2 }}
           style={{
-            position: "absolute", bottom: 36,
+            position: "absolute", bottom: "clamp(20px, 5vh, 36px)",
             left: "50%", transform: "translateX(-50%)",
             zIndex: 10,
           }}

@@ -126,128 +126,131 @@ const reviews = [
 ];
 
 function StarRating({ rating, accent }) {
-  const full  = Math.floor(rating);
-  const half  = rating % 1 >= 0.5;
+  const full = Math.floor(rating);
+  const half = rating % 1 >= 0.5;
   const empty = 5 - full - (half ? 1 : 0);
   return (
-    <div style={{ display:"flex", alignItems:"center", gap:3 }}>
-      {Array(full).fill(0).map((_,i) => (
-        <FiStar key={"f"+i} size={14} fill={accent} stroke={accent}/>
+    <div style={{ display: "flex", alignItems: "center", gap: 3 }}>
+      {Array(full).fill(0).map((_, i) => (
+        <FiStar key={"f" + i} size={14} fill={accent} stroke={accent} />
       ))}
       {half && (
-        <div style={{ position:"relative", width:14, height:14 }}>
-          <FiStar size={14} fill="rgba(255,255,255,0.12)" stroke="rgba(255,255,255,0.2)" style={{ position:"absolute" }}/>
-          <div style={{ position:"absolute",inset:0,overflow:"hidden",width:"50%" }}>
-            <FiStar size={14} fill={accent} stroke={accent}/>
+        <div style={{ position: "relative", width: 14, height: 14 }}>
+          <FiStar size={14} fill="rgba(255,255,255,0.12)" stroke="rgba(255,255,255,0.2)" style={{ position: "absolute" }} />
+          <div style={{ position: "absolute", inset: 0, overflow: "hidden", width: "50%" }}>
+            <FiStar size={14} fill={accent} stroke={accent} />
           </div>
         </div>
       )}
-      {Array(empty).fill(0).map((_,i) => (
-        <FiStar key={"e"+i} size={14} fill="rgba(255,255,255,0.10)" stroke="rgba(255,255,255,0.18)"/>
+      {Array(empty).fill(0).map((_, i) => (
+        <FiStar key={"e" + i} size={14} fill="rgba(255,255,255,0.10)" stroke="rgba(255,255,255,0.18)" />
       ))}
     </div>
   );
 }
 
-function ReviewCard({ review, position }) {
-  /* position: "center" | "left" | "right" | "hidden" */
+function ReviewCard({ review, position, isCenter }) {
   const variants = {
-    center: { opacity:1,  scale:1,    x:0,    zIndex:10, filter:"blur(0px)" },
-    left:   { opacity:0.5, scale:0.88, x:"-62%", zIndex:5,  filter:"blur(1px)" },
-    right:  { opacity:0.5, scale:0.88, x:"62%",  zIndex:5,  filter:"blur(1px)" },
-    hidden: { opacity:0,  scale:0.80, x:0,    zIndex:0,  filter:"blur(4px)" },
+    center: { opacity: 1, scale: 1, x: 0, zIndex: 10, filter: "blur(0px)" },
+    left: { opacity: 0.5, scale: 0.88, x: "-62%", zIndex: 5, filter: "blur(1px)" },
+    right: { opacity: 0.5, scale: 0.88, x: "62%", zIndex: 5, filter: "blur(1px)" },
+    hidden: { opacity: 0, scale: 0.8, x: 0, zIndex: 0, filter: "blur(4px)" },
   };
 
   return (
     <motion.div
       variants={variants}
       animate={position}
-      transition={{ duration:0.55, ease:[0.22,1,0.36,1] }}
+      transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
+      className={isCenter ? "center-card" : ""}
       style={{
-        position:"absolute", top:0,
-        width:"clamp(300px,38vw,480px)",
-        left:"50%", marginLeft:"clamp(-150px,-19vw,-240px)",
-        borderRadius:24,
+        position: "absolute",
+        top: 0,
+        left: "50%",
+        width: "clamp(300px, 38vw, 480px)",
+        marginLeft: "clamp(-150px, -19vw, -240px)",
+        borderRadius: 24,
         background: position === "center"
           ? `linear-gradient(145deg,${review.accent}0e,rgba(255,255,255,0.05))`
           : "rgba(255,255,255,0.02)",
         border: position === "center"
           ? `1px solid ${review.accent}35`
           : "1px solid rgba(255,255,255,0.06)",
-        backdropFilter:"blur(24px)", WebkitBackdropFilter:"blur(24px)",
-        padding:"clamp(28px,3.5vw,40px)",
+        backdropFilter: "blur(24px)",
+        WebkitBackdropFilter: "blur(24px)",
+        padding: "clamp(24px, 3.5vw, 40px)",
         boxShadow: position === "center"
           ? `0 24px 60px rgba(0,0,0,0.4), 0 0 40px ${review.accent}14`
           : "none",
         pointerEvents: position === "center" ? "auto" : "none",
-        fontFamily:"'DM Sans',sans-serif",
-        minHeight: 340,
-        display:"flex", flexDirection:"column", justifyContent:"space-between",
+        fontFamily: "'DM Sans', sans-serif",
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "space-between",
       }}
     >
-      {/* top quote mark */}
-      <div style={{
-        fontSize:56, lineHeight:1, color:`${review.accent}30`,
-        fontFamily:"Georgia,serif", marginBottom:-8,
-      }}>"</div>
+      <div style={{ fontSize: 56, lineHeight: 1, color: `${review.accent}30`, fontFamily: "Georgia,serif", marginBottom: -8 }}>
+        "
+      </div>
 
-      {/* quote text */}
-      <div style={{ flex:1 }}>
+      <div style={{ flex: 1 }}>
         <p style={{
-          color:"rgba(255,255,255,0.80)",
-          fontSize:"clamp(14px,1.6vw,16px)",
-          lineHeight:1.8, fontWeight:500,
-          margin:"0 0 16px",
+          color: "rgba(255,255,255,0.80)",
+          fontSize: "clamp(14px, 1.6vw, 16px)",
+          lineHeight: 1.8,
+          fontWeight: 500,
+          margin: "0 0 16px",
         }}>
           {review.quote}
         </p>
         <p style={{
-          color:"rgba(186,230,255,0.45)",
-          fontSize:"clamp(12px,1.3vw,13.5px)",
-          lineHeight:1.75, margin:0,
+          color: "rgba(186,230,255,0.45)",
+          fontSize: "clamp(12px, 1.3vw, 13.5px)",
+          lineHeight: 1.75,
+          margin: 0,
         }}>
           {review.full}
         </p>
       </div>
 
-      {/* closing quote mark */}
-      <div style={{
-        textAlign:"right", fontSize:48, lineHeight:0.8,
-        color:`${review.accent}25`, fontFamily:"Georgia,serif",
-        marginBottom:16,
-      }}>"</div>
+      <div style={{ textAlign: "right", fontSize: 48, lineHeight: 0.8, color: `${review.accent}25`, fontFamily: "Georgia,serif", marginBottom: 16 }}>
+        "
+      </div>
 
-      {/* divider */}
-      <div style={{ height:1, background:`linear-gradient(90deg,${review.accent}40,transparent)`, marginBottom:20 }}/>
+      <div style={{ height: 1, background: `linear-gradient(90deg,${review.accent}40,transparent)`, marginBottom: 20 }} />
 
-      {/* footer */}
-      <div style={{ display:"flex", alignItems:"center", justifyContent:"space-between", flexWrap:"wrap", gap:12 }}>
+      <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", flexWrap: "wrap", gap: 12 }}>
         <div>
           <div style={{
-            color:"white", fontSize:"clamp(14px,1.6vw,16px)", fontWeight:800,
-            letterSpacing:"-0.2px", marginBottom:3,
+            color: "white",
+            fontSize: "clamp(14px, 1.6vw, 16px)",
+            fontWeight: 800,
+            letterSpacing: "-0.2px",
+            marginBottom: 3,
           }}>
             {review.company}
           </div>
-          <div style={{ color:"rgba(255,255,255,0.50)", fontSize:"clamp(11px,1.2vw,13px)", marginBottom:4 }}>
+          <div style={{ color: "rgba(255,255,255,0.50)", fontSize: "clamp(11px, 1.2vw, 13px)", marginBottom: 4 }}>
             {review.person} · {review.role}
           </div>
-          <div style={{ display:"flex", alignItems:"center", gap:6, color:"rgba(186,230,255,0.50)", fontSize:12 }}>
+          <div style={{ display: "flex", alignItems: "center", gap: 6, color: "rgba(186,230,255,0.50)", fontSize: 12 }}>
             <span>{review.flag}</span>
             <span>{review.location}</span>
           </div>
         </div>
 
-        <div style={{ display:"flex", flexDirection:"column", alignItems:"flex-end", gap:6 }}>
+        <div style={{ display: "flex", flexDirection: "column", alignItems: "flex-end", gap: 6 }}>
           <div style={{
-            fontSize:"clamp(20px,2.5vw,26px)", fontWeight:900,
-            background:`linear-gradient(90deg,${review.accent},#818cf8)`,
-            WebkitBackgroundClip:"text", WebkitTextFillColor:"transparent",
-            letterSpacing:"-1px",
+            fontSize: "clamp(20px, 2.5vw, 26px)",
+            fontWeight: 900,
+            background: `linear-gradient(90deg,${review.accent},#818cf8)`,
+            WebkitBackgroundClip: "text",
+            WebkitTextFillColor: "transparent",
+            letterSpacing: "-1px",
           }}>
             {review.rating.toFixed(1)}
           </div>
-          <StarRating rating={review.rating} accent={review.accent}/>
+          <StarRating rating={review.rating} accent={review.accent} />
         </div>
       </div>
     </motion.div>
@@ -257,173 +260,287 @@ function ReviewCard({ review, position }) {
 export default function Reviews() {
   const [current, setCurrent] = useState(0);
   const [direction, setDirection] = useState(1);
-  const headRef    = useRef(null);
+  const [containerHeight, setContainerHeight] = useState(520);
+  const headRef = useRef(null);
+  const carouselRef = useRef(null);
   const headInView = useInView(headRef, { once: true, margin: "-60px" });
   const total = reviews.length;
 
-  const prev = () => { setDirection(-1); setCurrent(c => (c - 1 + total) % total); };
-  const next = () => { setDirection(1);  setCurrent(c => (c + 1) % total); };
+  const prev = () => {
+    setDirection(-1);
+    setCurrent((c) => (c - 1 + total) % total);
+  };
+  const next = () => {
+    setDirection(1);
+    setCurrent((c) => (c + 1) % total);
+  };
 
-  /* auto-play */
+  // Auto-play
   useEffect(() => {
-    const t = setInterval(() => { setDirection(1); setCurrent(c => (c+1) % total); }, 5000);
+    const t = setInterval(() => {
+      setDirection(1);
+      setCurrent((c) => (c + 1) % total);
+    }, 5000);
     return () => clearInterval(t);
   }, [total]);
 
+  // Dynamically adjust container height to prevent overlap with controls
+  useEffect(() => {
+    const updateHeight = () => {
+      const centerCard = document.querySelector(".center-card");
+      if (centerCard) {
+        const height = centerCard.getBoundingClientRect().height;
+        setContainerHeight(height + 48); // add comfortable padding below
+      }
+    };
+    updateHeight();
+    window.addEventListener("resize", updateHeight);
+    return () => window.removeEventListener("resize", updateHeight);
+  }, [current]);
+
   const getPosition = (i) => {
     const diff = (i - current + total) % total;
-    if (diff === 0)            return "center";
-    if (diff === 1)            return "right";
-    if (diff === total - 1)    return "left";
+    if (diff === 0) return "center";
+    if (diff === 1) return "right";
+    if (diff === total - 1) return "left";
     return "hidden";
   };
 
-  const cardHeight = 420;
-
   return (
-    <section style={{
-      position:"relative",
-      padding:"clamp(64px,10vw,110px) 0 clamp(80px,12vw,130px)",
-      background:"linear-gradient(135deg,#040d1a 0%,#071428 40%,#091e3a 70%,#0a1f3d 100%)",
-      overflow:"hidden",
-      fontFamily:"'DM Sans',sans-serif",
-      borderTop:"1px solid rgba(59,130,246,0.08)",
-    }}>
-      <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800;900&display=swap" rel="stylesheet"/>
+    <section
+      style={{
+        position: "relative",
+        padding: "clamp(64px,10vw,110px) 0 clamp(80px,12vw,130px)",
+        background: "linear-gradient(135deg,#040d1a 0%,#071428 40%,#091e3a 70%,#0a1f3d 100%)",
+        overflow: "hidden",
+        fontFamily: "'DM Sans', sans-serif",
+        borderTop: "1px solid rgba(59,130,246,0.08)",
+      }}
+    >
+      <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
 
-      {/* grid */}
-      <svg style={{ position:"absolute",inset:0,width:"100%",height:"100%",opacity:0.05,pointerEvents:"none" }} xmlns="http://www.w3.org/2000/svg">
+      {/* background grid */}
+      <svg style={{ position: "absolute", inset: 0, width: "100%", height: "100%", opacity: 0.05, pointerEvents: "none" }} xmlns="http://www.w3.org/2000/svg">
         <defs>
           <pattern id="rvgrid" width="60" height="60" patternUnits="userSpaceOnUse">
-            <path d="M 60 0 L 0 0 0 60" fill="none" stroke="white" strokeWidth="0.5"/>
+            <path d="M 60 0 L 0 0 0 60" fill="none" stroke="white" strokeWidth="0.5" />
           </pattern>
         </defs>
-        <rect width="100%" height="100%" fill="url(#rvgrid)"/>
+        <rect width="100%" height="100%" fill="url(#rvgrid)" />
       </svg>
 
-      {/* orbs */}
-      <motion.div animate={{ scale:[1,1.1,1],opacity:[0.13,0.22,0.13] }} transition={{ duration:10,repeat:Infinity,ease:"easeInOut" }}
-        style={{ position:"absolute",top:-100,left:-80,width:480,height:480,borderRadius:"50%",
-          background:"radial-gradient(circle,#1e40af,#3b82f6,transparent 70%)",filter:"blur(90px)",pointerEvents:"none" }}/>
-      <motion.div animate={{ scale:[1,1.08,1],opacity:[0.12,0.2,0.12] }} transition={{ duration:14,repeat:Infinity,ease:"easeInOut" }}
-        style={{ position:"absolute",bottom:-80,right:-80,width:500,height:500,borderRadius:"50%",
-          background:"radial-gradient(circle,#4f46e5,#06b6d4,transparent 70%)",filter:"blur(100px)",pointerEvents:"none" }}/>
+      {/* animated orbs */}
+      <motion.div
+        animate={{ scale: [1, 1.1, 1], opacity: [0.13, 0.22, 0.13] }}
+        transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
+        style={{
+          position: "absolute",
+          top: -100,
+          left: -80,
+          width: 480,
+          height: 480,
+          borderRadius: "50%",
+          background: "radial-gradient(circle,#1e40af,#3b82f6,transparent 70%)",
+          filter: "blur(90px)",
+          pointerEvents: "none",
+        }}
+      />
+      <motion.div
+        animate={{ scale: [1, 1.08, 1], opacity: [0.12, 0.2, 0.12] }}
+        transition={{ duration: 14, repeat: Infinity, ease: "easeInOut" }}
+        style={{
+          position: "absolute",
+          bottom: -80,
+          right: -80,
+          width: 500,
+          height: 500,
+          borderRadius: "50%",
+          background: "radial-gradient(circle,#4f46e5,#06b6d4,transparent 70%)",
+          filter: "blur(100px)",
+          pointerEvents: "none",
+        }}
+      />
 
-      <div style={{ maxWidth:1280,margin:"0 auto",padding:"0 clamp(16px,5vw,48px)",position:"relative",zIndex:10 }}>
-
+      <div style={{ maxWidth: 1280, margin: "0 auto", padding: "0 clamp(16px,5vw,48px)", position: "relative", zIndex: 10 }}>
         {/* header */}
         <motion.div
           ref={headRef}
-          initial={{ opacity:0,y:30 }}
-          animate={headInView ? { opacity:1,y:0 } : {}}
-          transition={{ duration:0.7 }}
-          style={{ textAlign:"center",marginBottom:"clamp(40px,6vw,64px)" }}
+          initial={{ opacity: 0, y: 30 }}
+          animate={headInView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.7 }}
+          style={{ textAlign: "center", marginBottom: "clamp(40px,6vw,64px)" }}
         >
-          <div style={{
-            display:"inline-flex",alignItems:"center",gap:8,
-            background:"rgba(59,130,246,0.10)",backdropFilter:"blur(20px)",
-            border:"1px solid rgba(59,130,246,0.25)",
-            borderRadius:100,padding:"6px 18px",marginBottom:20,
-          }}>
+          <div
+            style={{
+              display: "inline-flex",
+              alignItems: "center",
+              gap: 8,
+              background: "rgba(59,130,246,0.10)",
+              backdropFilter: "blur(20px)",
+              border: "1px solid rgba(59,130,246,0.25)",
+              borderRadius: 100,
+              padding: "6px 18px",
+              marginBottom: 20,
+            }}
+          >
             <motion.span
-              animate={{ opacity:[1,0.3,1] }}
-              transition={{ duration:1.8,repeat:Infinity }}
-              style={{ width:6,height:6,borderRadius:"50%",background:"#38bdf8",boxShadow:"0 0 8px #38bdf8",display:"inline-block" }}
+              animate={{ opacity: [1, 0.3, 1] }}
+              transition={{ duration: 1.8, repeat: Infinity }}
+              style={{
+                width: 6,
+                height: 6,
+                borderRadius: "50%",
+                background: "#38bdf8",
+                boxShadow: "0 0 8px #38bdf8",
+                display: "inline-block",
+              }}
             />
-            <span style={{ color:"#93c5fd",fontSize:12,fontWeight:700,letterSpacing:2.5,textTransform:"uppercase" }}>
+            <span style={{ color: "#93c5fd", fontSize: 12, fontWeight: 700, letterSpacing: 2.5, textTransform: "uppercase" }}>
               Client Reviews
             </span>
           </div>
-          <h2 style={{
-            color:"white",fontSize:"clamp(26px,4.5vw,52px)",
-            fontWeight:900,letterSpacing:"-1.5px",lineHeight:1.08,marginBottom:16,
-          }}>
+          <h2
+            style={{
+              color: "white",
+              fontSize: "clamp(26px,4.5vw,52px)",
+              fontWeight: 900,
+              letterSpacing: "-1.5px",
+              lineHeight: 1.08,
+              marginBottom: 16,
+            }}
+          >
             What Our{" "}
-            <span style={{ background:"linear-gradient(90deg,#38bdf8,#60a5fa,#818cf8)",WebkitBackgroundClip:"text",WebkitTextFillColor:"transparent" }}>
+            <span
+              style={{
+                background: "linear-gradient(90deg,#38bdf8,#60a5fa,#818cf8)",
+                WebkitBackgroundClip: "text",
+                WebkitTextFillColor: "transparent",
+              }}
+            >
               Clients Say
             </span>
           </h2>
-          <p style={{
-            color:"rgba(186,230,255,0.50)",
-            fontSize:"clamp(14px,1.7vw,17px)",lineHeight:1.8,maxWidth:560,margin:"0 auto",
-          }}>
+          <p
+            style={{
+              color: "rgba(186,230,255,0.50)",
+              fontSize: "clamp(14px,1.7vw,17px)",
+              lineHeight: 1.8,
+              maxWidth: 560,
+              margin: "0 auto",
+            }}
+          >
             Real feedback from real Indian businesses we've partnered with across industries.
           </p>
         </motion.div>
 
-        {/* carousel */}
-        <div style={{ position:"relative",height:cardHeight,marginBottom:56 }}>
-          {reviews.map((review,i) => (
-            <ReviewCard key={review.id} review={review} position={getPosition(i)}/>
+        {/* carousel container with dynamic height */}
+        <div
+          ref={carouselRef}
+          style={{
+            position: "relative",
+            height: containerHeight,
+            marginBottom: 56,
+            transition: "height 0.3s ease",
+          }}
+        >
+          {reviews.map((review, i) => (
+            <ReviewCard
+              key={review.id}
+              review={review}
+              position={getPosition(i)}
+              isCenter={getPosition(i) === "center"}
+            />
           ))}
         </div>
 
         {/* controls */}
-        <div style={{ display:"flex",flexDirection:"column",alignItems:"center",gap:24 }}>
-
-          {/* prev / next buttons */}
-          <div style={{ display:"flex",alignItems:"center",gap:16 }}>
+        <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 24 }}>
+          <div style={{ display: "flex", alignItems: "center", gap: 16 }}>
             <motion.button
               onClick={prev}
-              whileHover={{ scale:1.1,background:"rgba(59,130,246,0.20)" }}
-              whileTap={{ scale:0.95 }}
+              whileHover={{ scale: 1.1, background: "rgba(59,130,246,0.20)" }}
+              whileTap={{ scale: 0.95 }}
               style={{
-                width:48,height:48,borderRadius:"50%",
-                background:"rgba(59,130,246,0.10)",
-                border:"1px solid rgba(59,130,246,0.25)",
-                display:"flex",alignItems:"center",justifyContent:"center",
-                color:"#93c5fd",cursor:"pointer",transition:"all 0.3s",outline:"none",
+                width: 48,
+                height: 48,
+                borderRadius: "50%",
+                background: "rgba(59,130,246,0.10)",
+                border: "1px solid rgba(59,130,246,0.25)",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                color: "#93c5fd",
+                cursor: "pointer",
+                transition: "all 0.3s",
+                outline: "none",
               }}
             >
-              <FiChevronLeft size={20}/>
+              <FiChevronLeft size={20} />
             </motion.button>
 
-            {/* counter */}
-            <span style={{
-              color:"rgba(147,197,253,0.50)",fontSize:13,fontWeight:600,
-              fontFamily:"'DM Sans',sans-serif",minWidth:60,textAlign:"center",
-            }}>
+            <span
+              style={{
+                color: "rgba(147,197,253,0.50)",
+                fontSize: 13,
+                fontWeight: 600,
+                fontFamily: "'DM Sans', sans-serif",
+                minWidth: 60,
+                textAlign: "center",
+              }}
+            >
               {current + 1} / {total}
             </span>
 
             <motion.button
               onClick={next}
-              whileHover={{ scale:1.1,background:"rgba(59,130,246,0.20)" }}
-              whileTap={{ scale:0.95 }}
+              whileHover={{ scale: 1.1, background: "rgba(59,130,246,0.20)" }}
+              whileTap={{ scale: 0.95 }}
               style={{
-                width:48,height:48,borderRadius:"50%",
-                background:"rgba(59,130,246,0.10)",
-                border:"1px solid rgba(59,130,246,0.25)",
-                display:"flex",alignItems:"center",justifyContent:"center",
-                color:"#93c5fd",cursor:"pointer",transition:"all 0.3s",outline:"none",
+                width: 48,
+                height: 48,
+                borderRadius: "50%",
+                background: "rgba(59,130,246,0.10)",
+                border: "1px solid rgba(59,130,246,0.25)",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                color: "#93c5fd",
+                cursor: "pointer",
+                transition: "all 0.3s",
+                outline: "none",
               }}
             >
-              <FiChevronRight size={20}/>
+              <FiChevronRight size={20} />
             </motion.button>
           </div>
 
           {/* dot progress bar */}
-          <div style={{ display:"flex",gap:8,alignItems:"center" }}>
-            {reviews.map((_,i) => (
+          <div style={{ display: "flex", gap: 8, alignItems: "center" }}>
+            {reviews.map((_, i) => (
               <motion.button
                 key={i}
-                onClick={() => { setDirection(i > current ? 1 : -1); setCurrent(i); }}
+                onClick={() => {
+                  setDirection(i > current ? 1 : -1);
+                  setCurrent(i);
+                }}
                 animate={{
                   width: i === current ? 28 : 8,
-                  background: i === current
-                    ? reviews[current].accent
-                    : "rgba(255,255,255,0.12)",
+                  background:
+                    i === current ? reviews[current].accent : "rgba(255,255,255,0.12)",
                 }}
-                transition={{ duration:0.35 }}
+                transition={{ duration: 0.35 }}
                 style={{
-                  height:8,borderRadius:4,border:"none",
-                  cursor:"pointer",outline:"none",padding:0,
+                  height: 8,
+                  borderRadius: 4,
+                  border: "none",
+                  cursor: "pointer",
+                  outline: "none",
+                  padding: 0,
                 }}
               />
             ))}
           </div>
         </div>
-
       </div>
     </section>
   );

@@ -29,6 +29,8 @@ function LocationPin({ loc, index }) {
       transition={{ delay:0.4+index*0.08,duration:0.5,type:"spring",stiffness:260,damping:18 }}
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
+      onTouchStart={() => setHovered(true)}
+      onTouchEnd={() => setTimeout(() => setHovered(false), 500)}
       style={{
         position:"absolute",
         top:loc.top,left:loc.left,
@@ -36,7 +38,6 @@ function LocationPin({ loc, index }) {
         cursor:"default",zIndex: hovered ? 20 : 10,
       }}
     >
-      {/* pulse rings */}
       <motion.div
         animate={{ scale:[1,2.2,1],opacity:[0.5,0,0.5] }}
         transition={{ duration:2.5,repeat:Infinity,ease:"easeInOut",delay:index*0.3 }}
@@ -54,7 +55,6 @@ function LocationPin({ loc, index }) {
         }}
       />
 
-      {/* dot */}
       <motion.div
         animate={hovered ? { scale:1.4 } : { scale:1 }}
         style={{
@@ -67,8 +67,7 @@ function LocationPin({ loc, index }) {
         }}
       />
 
-      {/* tooltip */}
-      <AnimatePresenceShim visible={hovered}>
+      {hovered && (
         <motion.div
           initial={{ opacity:0,y:8,scale:0.9 }}
           animate={{ opacity:1,y:0,scale:1 }}
@@ -92,7 +91,6 @@ function LocationPin({ loc, index }) {
             )}
           </div>
           <div style={{ color:"rgba(186,230,255,0.55)",fontSize:11,fontFamily:"'DM Sans',sans-serif",marginTop:1 }}>{loc.country}</div>
-          {/* arrow */}
           <div style={{
             position:"absolute",top:"100%",left:"50%",transform:"translateX(-50%)",
             width:0,height:0,
@@ -101,15 +99,9 @@ function LocationPin({ loc, index }) {
             borderTop:`5px solid ${loc.accent}40`,
           }}/>
         </motion.div>
-      </AnimatePresenceShim>
+      )}
     </motion.div>
   );
-}
-
-/* tiny helper — AnimatePresence equivalent without import conflict */
-function AnimatePresenceShim({ visible, children }) {
-  if (!visible) return null;
-  return children;
 }
 
 function StatCard({ stat, index }) {
@@ -175,6 +167,38 @@ export default function HQLocations() {
     }}>
       <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800;900&display=swap" rel="stylesheet"/>
 
+      <style>{`
+        @media (max-width: 768px) {
+          .map-container {
+            aspect-ratio: 16 / 11 !important;
+            min-height: 280px !important;
+          }
+          .location-chips {
+            gap: 8px !important;
+            margin-bottom: 36px !important;
+          }
+          .location-chips > div {
+            padding: 4px 12px !important;
+          }
+          .stats-row {
+            gap: 12px !important;
+            flex-direction: column !important;
+            align-items: stretch !important;
+          }
+          .stats-row > div {
+            width: 100% !important;
+          }
+        }
+        @media (max-width: 480px) {
+          .map-container {
+            aspect-ratio: 4 / 3 !important;
+          }
+          .location-chips > div span:not(:first-child) {
+            font-size: 11px !important;
+          }
+        }
+      `}</style>
+
       <svg style={{ position:"absolute",inset:0,width:"100%",height:"100%",opacity:0.05,pointerEvents:"none" }} xmlns="http://www.w3.org/2000/svg">
         <defs><pattern id="hqlgrid" width="60" height="60" patternUnits="userSpaceOnUse"><path d="M 60 0 L 0 0 0 60" fill="none" stroke="white" strokeWidth="0.5"/></pattern></defs>
         <rect width="100%" height="100%" fill="url(#hqlgrid)"/>
@@ -201,12 +225,13 @@ export default function HQLocations() {
           </p>
         </motion.div>
 
-        {/* world map */}
+        {/* world map container - responsive */}
         <motion.div
           ref={mapRef}
           initial={{ opacity:0,y:30 }}
           animate={mapInView ? { opacity:1,y:0 } : {}}
           transition={{ duration:0.8,ease:[0.22,1,0.36,1] }}
+          className="map-container"
           style={{
             position:"relative",
             borderRadius:24,overflow:"hidden",
@@ -218,45 +243,34 @@ export default function HQLocations() {
             minHeight:300,
           }}
         >
-          {/* SVG World Map (simplified continents outline) */}
           <svg
             viewBox="0 0 1000 430"
             style={{ position:"absolute",inset:0,width:"100%",height:"100%",opacity:0.12 }}
             xmlns="http://www.w3.org/2000/svg"
           >
-            {/* dot grid world map pattern */}
             <defs>
               <pattern id="dots" width="12" height="12" patternUnits="userSpaceOnUse">
                 <circle cx="2" cy="2" r="1" fill="rgba(96,165,250,0.7)"/>
               </pattern>
             </defs>
-            {/* North America */}
             <ellipse cx="175" cy="165" rx="120" ry="90" fill="url(#dots)" opacity="0.9"/>
-            {/* South America */}
             <ellipse cx="225" cy="300" rx="70" ry="95" fill="url(#dots)" opacity="0.9"/>
-            {/* Europe */}
             <ellipse cx="490" cy="145" rx="70" ry="60" fill="url(#dots)" opacity="0.9"/>
-            {/* Africa */}
             <ellipse cx="510" cy="270" rx="75" ry="100" fill="url(#dots)" opacity="0.9"/>
-            {/* Asia */}
             <ellipse cx="680" cy="180" rx="190" ry="120" fill="url(#dots)" opacity="0.9"/>
-            {/* Australia */}
             <ellipse cx="790" cy="320" rx="75" ry="55" fill="url(#dots)" opacity="0.9"/>
           </svg>
 
-          {/* gradient overlay on map */}
           <div style={{
             position:"absolute",inset:0,
             background:"linear-gradient(135deg,rgba(4,13,26,0.3),transparent 50%,rgba(4,13,26,0.3))",
             pointerEvents:"none",
           }}/>
 
-          {/* location pins */}
           {locations.map((loc,i) => (
             <LocationPin key={loc.city} loc={loc} index={i}/>
           ))}
 
-          {/* SDLC watermark label */}
           <div style={{
             position:"absolute",bottom:16,left:"50%",transform:"translateX(-50%)",
             display:"flex",alignItems:"center",gap:8,
@@ -274,6 +288,7 @@ export default function HQLocations() {
 
         {/* location chips row */}
         <motion.div
+          className="location-chips"
           initial={{ opacity:0,y:16 }}
           animate={mapInView ? { opacity:1,y:0 } : {}}
           transition={{ duration:0.6,delay:0.3 }}
@@ -302,8 +317,8 @@ export default function HQLocations() {
           ))}
         </motion.div>
 
-        {/* stats row */}
-        <div style={{ display:"flex",gap:"clamp(12px,2vw,20px)",flexWrap:"wrap" }}>
+        {/* stats row - responsive */}
+        <div className="stats-row" style={{ display:"flex",gap:"clamp(12px,2vw,20px)",flexWrap:"wrap" }}>
           {stats.map((s,i) => <StatCard key={s.value+i} stat={s} index={i}/>)}
         </div>
 

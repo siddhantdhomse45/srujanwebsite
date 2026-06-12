@@ -114,12 +114,86 @@ export default function BenefitsSection() {
       style={{
         background: "linear-gradient(135deg,#020b18 0%,#041530 45%,#061d42 75%,#020e24 100%)",
         minHeight: "100vh",
-        padding: "90px 40px 110px",
+        padding: "clamp(60px, 10vw, 90px) clamp(20px, 5vw, 40px) clamp(80px, 10vw, 110px)",
         fontFamily: "'DM Sans','Segoe UI',sans-serif",
         position: "relative",
         overflow: "hidden",
       }}
     >
+      <style>{`
+        /* Responsive styles */
+        @media (max-width: 900px) {
+          .benefits-grid {
+            grid-template-columns: 1fr !important;
+            gap: 0 !important;
+          }
+          .benefits-grid > div {
+            border-right: none !important;
+            border-bottom: 1px solid rgba(59,130,246,0.12) !important;
+            padding: 36px 32px !important;
+          }
+          .benefits-grid > div:last-child {
+            border-bottom: none !important;
+          }
+        }
+        @media (max-width: 768px) {
+          .benefits-header h2 {
+            font-size: clamp(28px, 5vw, 38px) !important;
+          }
+          .benefits-header p {
+            font-size: 14px !important;
+            padding: 0 16px !important;
+          }
+          .benefits-grid > div {
+            padding: 28px 24px !important;
+          }
+          .benefits-icon {
+            width: 44px !important;
+            height: 44px !important;
+          }
+          .benefits-icon svg {
+            width: 30px !important;
+            height: 30px !important;
+          }
+          .benefits-title {
+            font-size: 16px !important;
+          }
+          .benefits-desc {
+            font-size: 13px !important;
+            line-height: 1.7 !important;
+          }
+          .cta-button {
+            padding: 14px 32px !important;
+            font-size: 13px !important;
+            width: auto !important;
+            min-width: 260px;
+          }
+        }
+        @media (max-width: 480px) {
+          .benefits-grid > div {
+            padding: 24px 20px !important;
+          }
+          .benefits-icon {
+            width: 40px !important;
+            height: 40px !important;
+          }
+          .benefits-icon svg {
+            width: 28px !important;
+            height: 28px !important;
+          }
+          .benefits-number {
+            font-size: 10px !important;
+          }
+          .benefits-title {
+            font-size: 15px !important;
+            margin-bottom: 8px !important;
+          }
+          .learn-more {
+            font-size: 11px !important;
+          }
+        }
+      `}</style>
+
       {/* Ambient bg */}
       <div style={{ position:"absolute", inset:0, pointerEvents:"none" }}>
         <div style={{ position:"absolute", top:"-80px", left:"25%", width:"600px", height:"400px", borderRadius:"50%", background:"radial-gradient(ellipse,rgba(37,99,235,0.18),transparent 70%)" }} />
@@ -133,8 +207,8 @@ export default function BenefitsSection() {
 
       <div style={{ maxWidth:"1200px", margin:"0 auto", position:"relative", zIndex:1 }}>
 
-        {/* ── Header ── */}
-        <div style={{ textAlign:"center", marginBottom:"72px" }}>
+        {/* Header */}
+        <div className="benefits-header" style={{ textAlign:"center", marginBottom:"clamp(48px, 8vw, 72px)" }}>
           <span style={{
             display:"inline-flex", alignItems:"center", gap:"8px",
             padding:"6px 18px", borderRadius:"100px",
@@ -173,8 +247,8 @@ export default function BenefitsSection() {
           </p>
         </div>
 
-        {/* ── 2-column grid ── */}
-        <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:"0" }}>
+        {/* Benefits Grid - responsive */}
+        <div className="benefits-grid" style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:"0" }}>
           {benefits.map((b, i) => {
             const isHov = hovered === i;
             const col = i % 2;
@@ -188,7 +262,7 @@ export default function BenefitsSection() {
                 onMouseEnter={() => setHovered(i)}
                 onMouseLeave={() => setHovered(null)}
                 style={{
-                  padding:"40px 44px",
+                  padding:"clamp(28px, 5vw, 40px) clamp(32px, 5vw, 44px)",
                   borderRight: col === 0 ? "1px solid rgba(59,130,246,0.12)" : "none",
                   borderBottom: !isLastRow ? "1px solid rgba(59,130,246,0.12)" : "none",
                   background: isHov
@@ -212,12 +286,12 @@ export default function BenefitsSection() {
 
                 {/* Icon + Number row */}
                 <div style={{ display:"flex", alignItems:"center", justifyContent:"space-between", marginBottom:"18px" }}>
-                  <div style={{
+                  <div className="benefits-icon" style={{
                     display:"flex",
                     alignItems:"center",
                     justifyContent:"center",
-                    width:"52px",
-                    height:"52px",
+                    width:"clamp(44px, 6vw, 52px)",
+                    height:"clamp(44px, 6vw, 52px)",
                     borderRadius:"14px",
                     background: isHov ? "rgba(37,99,235,0.2)" : "rgba(255,255,255,0.04)",
                     border: isHov ? "1.5px solid rgba(59,130,246,0.4)" : "1.5px solid rgba(255,255,255,0.07)",
@@ -229,8 +303,8 @@ export default function BenefitsSection() {
                     {b.icon}
                   </div>
 
-                  <span style={{
-                    fontSize:"11px",
+                  <span className="benefits-number" style={{
+                    fontSize:"clamp(10px, 2vw, 11px)",
                     fontWeight:"900",
                     letterSpacing:"0.18em",
                     color: isHov ? "rgba(96,165,250,0.7)" : "rgba(71,85,105,0.4)",
@@ -241,8 +315,8 @@ export default function BenefitsSection() {
                 </div>
 
                 {/* Title */}
-                <h3 style={{
-                  fontSize:"18px",
+                <h3 className="benefits-title" style={{
+                  fontSize:"clamp(16px, 3vw, 18px)",
                   fontWeight:"800",
                   color: isHov ? "#f1f5f9" : "rgba(226,232,240,0.75)",
                   marginBottom:"12px",
@@ -253,8 +327,8 @@ export default function BenefitsSection() {
                 </h3>
 
                 {/* Description */}
-                <p style={{
-                  fontSize:"14px",
+                <p className="benefits-desc" style={{
+                  fontSize:"clamp(13px, 2.5vw, 14px)",
                   lineHeight:"1.85",
                   color: isHov ? "rgba(148,163,184,0.9)" : "rgba(100,116,139,0.8)",
                   margin:"0 0 20px",
@@ -263,7 +337,7 @@ export default function BenefitsSection() {
                   {b.description}
                 </p>
 
-                {/* Bottom "Learn more" */}
+                {/* Bottom "Learn more" - appears on hover */}
                 <div style={{
                   display:"flex",
                   alignItems:"center",
@@ -272,8 +346,8 @@ export default function BenefitsSection() {
                   transform: isHov ? "translateY(0)" : "translateY(6px)",
                   transition:"all 0.3s ease",
                 }}>
-                  <span style={{
-                    fontSize:"12px",
+                  <span className="learn-more" style={{
+                    fontSize:"clamp(11px, 2vw, 12px)",
                     fontWeight:"700",
                     letterSpacing:"0.12em",
                     textTransform:"uppercase",
@@ -298,14 +372,15 @@ export default function BenefitsSection() {
           })}
         </div>
 
-        {/* ── CTA ── */}
-        <div style={{ textAlign:"center", marginTop:"64px" }}>
-          <button
+        {/* CTA */}
+        <div style={{ textAlign:"center", marginTop:"clamp(48px, 8vw, 64px)" }}>
+          <button className="cta-button"
             style={{
               display:"inline-flex", alignItems:"center", gap:"12px",
-              padding:"16px 42px", borderRadius:"14px", border:"none",
+              padding:"clamp(14px, 2.5vw, 16px) clamp(32px, 5vw, 42px)",
+              borderRadius:"14px", border:"none",
               background:"linear-gradient(135deg,#1d4ed8,#2563eb,#4f46e5)",
-              color:"white", fontSize:"15px", fontWeight:"800",
+              color:"white", fontSize:"clamp(13px, 2vw, 15px)", fontWeight:"800",
               letterSpacing:"0.05em", cursor:"pointer",
               boxShadow:"0 8px 32px -4px rgba(37,99,235,0.6)",
               transition:"all 0.3s ease",

@@ -7,7 +7,7 @@ import {
   FiHome,
 } from "react-icons/fi";
 
-/* ── Data (unchanged) ── */
+/* ── Data ── */
 const stories = [
   {
     id: "wynn",
@@ -66,10 +66,10 @@ const logos = [
   { label: "Smart Luxury Hotel", Icon: FiCpu },
 ];
 
-/* ── Decorative circles (same as HospitalitySolutions) ── */
+/* ── Decorative circles – hidden on mobile ── */
 function DecorativeCircles() {
   return (
-    <div style={{ position: "absolute", top: "50%", left: "50%", transform: "translate(-50%,-50%)", pointerEvents: "none", zIndex: 0 }}>
+    <div className="decor-circles" style={{ position: "absolute", top: "50%", left: "50%", transform: "translate(-50%,-50%)", pointerEvents: "none", zIndex: 0 }}>
       {[500, 700, 900].map((size, i) => (
         <div key={i} style={{ position: "absolute", width: size, height: size, borderRadius: "50%", border: "1px solid rgba(59,130,246,0.05)", top: "50%", left: "50%", transform: "translate(-50%,-50%)" }} />
       ))}
@@ -77,19 +77,20 @@ function DecorativeCircles() {
   );
 }
 
-/* ── Image placeholder (dark theme) ── */
+/* ── Image placeholder (responsive) ── */
 function StoryImage({ story }) {
   const { Icon, imgLabel } = story;
   return (
     <div
+      className="story-image"
       style={{
-        width: "48%",
+        width: "clamp(220px, 40%, 48%)",
         flexShrink: 0,
         borderRadius: 10,
         overflow: "hidden",
         background: "linear-gradient(135deg,rgba(59,130,246,0.15),rgba(37,99,235,0.08))",
         border: "1px solid rgba(59,130,246,0.2)",
-        height: 380,
+        height: "clamp(260px, 35vw, 380px)",
         display: "flex",
         flexDirection: "column",
         alignItems: "center",
@@ -97,13 +98,15 @@ function StoryImage({ story }) {
         gap: 14,
       }}
     >
-      <Icon size={52} strokeWidth={1} color="#60a5fa" />
+      <Icon size={clamp(36, 8, 52)} strokeWidth={1} color="#60a5fa" />
       <span
         style={{
-          fontSize: 13,
+          fontSize: "clamp(11px, 2.5vw, 13px)",
           fontWeight: 700,
           color: "#93c5fd",
           fontFamily: "'DM Sans',sans-serif",
+          textAlign: "center",
+          padding: "0 12px",
         }}
       >
         {imgLabel}
@@ -112,21 +115,28 @@ function StoryImage({ story }) {
   );
 }
 
-/* ── Scrolling logo strip (dark theme) ── */
+/* Helper for icon size */
+function clamp(val, min, max) {
+  return Math.min(max, Math.max(min, val));
+}
+
+/* ── Scrolling logo strip (responsive, no overflow) ── */
 function LogoStrip({ activeIndex }) {
   const doubled = [...logos, ...logos];
-
   return (
     <div
+      className="logo-strip-container"
       style={{
         borderTop: "1px solid rgba(59,130,246,0.15)",
         marginTop: "3rem",
         overflow: "hidden",
         position: "relative",
         background: "rgba(4,21,48,0.5)",
+        width: "100%",
       }}
     >
       <div
+        className="logo-strip-scroll"
         style={{
           display: "flex",
           width: "max-content",
@@ -138,9 +148,10 @@ function LogoStrip({ activeIndex }) {
           return (
             <div
               key={i}
+              className="logo-item"
               style={{
-                minWidth: 170,
-                padding: "18px 24px",
+                minWidth: "clamp(130px, 25vw, 170px)",
+                padding: "clamp(12px, 2vw, 18px) clamp(16px, 3vw, 24px)",
                 borderRight: "1px solid rgba(59,130,246,0.1)",
                 borderBottom: isActive ? "2.5px solid #60a5fa" : "2.5px solid transparent",
                 display: "flex",
@@ -151,14 +162,14 @@ function LogoStrip({ activeIndex }) {
               }}
             >
               <logo.Icon
-                size={18}
+                size={clamp(16, 1.8, 18)}
                 strokeWidth={1.8}
                 color={isActive ? "#60a5fa" : "rgba(148,163,184,0.5)"}
                 style={{ flexShrink: 0 }}
               />
               <span
                 style={{
-                  fontSize: 12,
+                  fontSize: "clamp(10px, 2.5vw, 12px)",
                   fontWeight: 700,
                   color: isActive ? "#60a5fa" : "rgba(186,230,255,0.5)",
                   whiteSpace: "nowrap",
@@ -179,21 +190,24 @@ function LogoStrip({ activeIndex }) {
           0%   { transform: translateX(0); }
           100% { transform: translateX(-50%); }
         }
+        @media (max-width: 768px) {
+          .logo-strip-scroll {
+            animation: scrollLogos 24s linear infinite;
+          }
+        }
       `}</style>
     </div>
   );
 }
 
-/* ── Main export (dark themed) ── */
+/* ── Main export (fully responsive) ── */
 export default function SuccessStories() {
   const [active, setActive] = useState(0);
   const timerRef = useRef(null);
 
-  const headRef = useRef(null);
-
   function goTo(idx) {
     setActive(idx);
-    resetTimer(idx);
+    resetTimer();
   }
 
   function resetTimer() {
@@ -215,7 +229,7 @@ export default function SuccessStories() {
       style={{
         position: "relative",
         background: "linear-gradient(135deg,#040d1a 0%,#071428 40%,#091e3a 70%,#0a1f3d 100%)",
-        padding: "clamp(48px,8vw,96px) 0 0",
+        padding: "clamp(48px, 8vw, 96px) 0 0",
         fontFamily: "'DM Sans', sans-serif",
         overflow: "hidden",
         borderTop: "1px solid rgba(59,130,246,0.08)",
@@ -226,8 +240,8 @@ export default function SuccessStories() {
         rel="stylesheet"
       />
 
-      {/* Blueprint grid */}
-      <svg style={{ position: "absolute", inset: 0, width: "100%", height: "100%", opacity: 0.05, pointerEvents: "none" }} xmlns="http://www.w3.org/2000/svg">
+      {/* Blueprint grid – hidden on mobile */}
+      <svg className="bg-pattern" style={{ position: "absolute", inset: 0, width: "100%", height: "100%", opacity: 0.05, pointerEvents: "none" }} xmlns="http://www.w3.org/2000/svg">
         <defs>
           <pattern id="successgrid" width="60" height="60" patternUnits="userSpaceOnUse">
             <path d="M 60 0 L 0 0 0 60" fill="none" stroke="white" strokeWidth="0.5" />
@@ -236,17 +250,19 @@ export default function SuccessStories() {
         <rect width="100%" height="100%" fill="url(#successgrid)" />
       </svg>
 
-      {/* Animated orbs */}
-      <motion.div
-        animate={{ scale: [1, 1.12, 1], opacity: [0.15, 0.26, 0.15] }}
-        transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
-        style={{ position: "absolute", top: -120, left: -80, width: 560, height: 560, borderRadius: "50%", background: "radial-gradient(circle,#1d4ed8,#2563eb,transparent 70%)", filter: "blur(90px)", pointerEvents: "none" }}
-      />
-      <motion.div
-        animate={{ scale: [1, 1.08, 1], opacity: [0.12, 0.22, 0.12] }}
-        transition={{ duration: 14, repeat: Infinity, ease: "easeInOut", delay: 4 }}
-        style={{ position: "absolute", bottom: -80, right: -60, width: 480, height: 480, borderRadius: "50%", background: "radial-gradient(circle,#4f46e5,#818cf8,transparent 70%)", filter: "blur(100px)", pointerEvents: "none" }}
-      />
+      {/* Animated orbs – hidden on mobile */}
+      <div className="bg-orbs">
+        <motion.div
+          animate={{ scale: [1, 1.12, 1], opacity: [0.15, 0.26, 0.15] }}
+          transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
+          style={{ position: "absolute", top: -120, left: -80, width: 560, height: 560, borderRadius: "50%", background: "radial-gradient(circle,#1d4ed8,#2563eb,transparent 70%)", filter: "blur(90px)", pointerEvents: "none" }}
+        />
+        <motion.div
+          animate={{ scale: [1, 1.08, 1], opacity: [0.12, 0.22, 0.12] }}
+          transition={{ duration: 14, repeat: Infinity, ease: "easeInOut", delay: 4 }}
+          style={{ position: "absolute", bottom: -80, right: -60, width: 480, height: 480, borderRadius: "50%", background: "radial-gradient(circle,#4f46e5,#818cf8,transparent 70%)", filter: "blur(100px)", pointerEvents: "none" }}
+        />
+      </div>
 
       <DecorativeCircles />
 
@@ -254,25 +270,22 @@ export default function SuccessStories() {
         style={{
           maxWidth: 1100,
           margin: "0 auto",
-          padding: "0 clamp(16px,5vw,48px)",
+          padding: "0 clamp(16px, 5vw, 48px)",
           position: "relative",
           zIndex: 10,
         }}
       >
-        {/* ── Heading (dark theme) ── */}
-        <div
-          ref={headRef}
-          style={{ textAlign: "center", marginBottom: "clamp(28px,4vw,48px)" }}
-        >
+        {/* Heading */}
+        <div style={{ textAlign: "center", marginBottom: "clamp(28px, 5vw, 48px)" }}>
           <h2
             style={{
               margin: "0 0 14px",
-              fontSize: "clamp(20px,3vw,30px)",
+              fontSize: "clamp(20px, 5vw, 30px)",
               fontWeight: 800,
               color: "#ffffff",
               textTransform: "uppercase",
               letterSpacing: "-0.5px",
-              lineHeight: 1.15,
+              lineHeight: 1.2,
             }}
           >
             Success Stories
@@ -280,11 +293,12 @@ export default function SuccessStories() {
           <p
             style={{
               margin: 0,
-              fontSize: "clamp(13px,1.4vw,15px)",
+              fontSize: "clamp(13px, 1.4vw, 15px)",
               color: "rgba(186,230,255,0.60)",
               lineHeight: 1.85,
               maxWidth: 580,
               marginInline: "auto",
+              padding: "0 16px",
             }}
           >
             Fortune 1000 satisfied customers worldwide across hospitality vertical
@@ -292,7 +306,7 @@ export default function SuccessStories() {
           </p>
         </div>
 
-        {/* ── Story Card (dark theme) ── */}
+        {/* Story Card – responsive wrapping */}
         <AnimatePresence mode="wait">
           <motion.div
             key={story.id}
@@ -302,26 +316,25 @@ export default function SuccessStories() {
             transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
             style={{
               display: "flex",
-              gap: "clamp(20px,3.5vw,48px)",
+              gap: "clamp(24px, 5vw, 48px)",
               alignItems: "flex-start",
               flexWrap: "wrap",
+              justifyContent: "center",
             }}
           >
-            {/* Image / placeholder */}
             <StoryImage story={story} />
 
-            {/* Content */}
             <div
               style={{
                 flex: 1,
-                minWidth: "clamp(220px,40%,420px)",
+                minWidth: "clamp(220px, 60%, 420px)",
                 paddingTop: "0.25rem",
               }}
             >
               <h3
                 style={{
                   margin: "0 0 12px",
-                  fontSize: "clamp(18px,2.2vw,24px)",
+                  fontSize: "clamp(18px, 4vw, 24px)",
                   fontWeight: 800,
                   color: "#ffffff",
                   letterSpacing: "-0.3px",
@@ -333,7 +346,7 @@ export default function SuccessStories() {
               <p
                 style={{
                   margin: "0 0 20px",
-                  fontSize: "clamp(13px,1.4vw,14.5px)",
+                  fontSize: "clamp(13px, 1.4vw, 14.5px)",
                   color: "rgba(186,230,255,0.70)",
                   lineHeight: 1.85,
                 }}
@@ -344,7 +357,7 @@ export default function SuccessStories() {
               <p
                 style={{
                   margin: "0 0 6px",
-                  fontSize: "clamp(13px,1.3vw,14px)",
+                  fontSize: "clamp(13px, 1.3vw, 14px)",
                   fontWeight: 700,
                   color: "#93c5fd",
                 }}
@@ -354,7 +367,7 @@ export default function SuccessStories() {
               <p
                 style={{
                   margin: "0 0 18px",
-                  fontSize: "clamp(12.5px,1.3vw,13.5px)",
+                  fontSize: "clamp(12.5px, 1.3vw, 13.5px)",
                   color: "rgba(186,230,255,0.60)",
                   lineHeight: 1.85,
                 }}
@@ -365,7 +378,7 @@ export default function SuccessStories() {
               <p
                 style={{
                   margin: "0 0 6px",
-                  fontSize: "clamp(13px,1.3vw,14px)",
+                  fontSize: "clamp(13px, 1.3vw, 14px)",
                   fontWeight: 700,
                   color: "#93c5fd",
                 }}
@@ -375,7 +388,7 @@ export default function SuccessStories() {
               <p
                 style={{
                   margin: "0 0 22px",
-                  fontSize: "clamp(12.5px,1.3vw,13.5px)",
+                  fontSize: "clamp(12.5px, 1.3vw, 13.5px)",
                   color: "rgba(186,230,255,0.60)",
                   lineHeight: 1.85,
                 }}
@@ -384,7 +397,7 @@ export default function SuccessStories() {
               </p>
 
               {/* Dots */}
-              <div style={{ display: "flex", gap: 8 }}>
+              <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
                 {stories.map((_, i) => (
                   <button
                     key={i}
@@ -408,8 +421,27 @@ export default function SuccessStories() {
         </AnimatePresence>
       </div>
 
-      {/* ── Logo Strip (dark themed) ── */}
+      {/* Logo Strip */}
       <LogoStrip activeIndex={active} />
+
+      {/* Responsive CSS media queries */}
+      <style>{`
+        @media (max-width: 1024px) {
+          .bg-orbs, .decor-circles, .bg-pattern {
+            display: none !important;
+          }
+        }
+        @media (max-width: 768px) {
+          .story-image {
+            width: 100% !important;
+            max-width: 320px;
+            margin: 0 auto;
+          }
+          .logo-strip-container {
+            margin-top: 2rem !important;
+          }
+        }
+      `}</style>
     </section>
   );
 }

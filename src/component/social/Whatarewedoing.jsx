@@ -86,71 +86,51 @@ export default function WhatAreWeDoing() {
 
         .wwd-grid {
           display: grid;
-          grid-template-columns: 1fr 1fr;
-          border-radius: 24px;
-          overflow: hidden;
-          border: 1px solid rgba(255,255,255,0.08);
-          background: rgba(255,255,255,0.025);
-          backdrop-filter: blur(20px);
-          -webkit-backdrop-filter: blur(20px);
+          grid-template-columns: 1fr;
+          gap: 24px;
+          border-radius: 28px;
         }
 
         .wwd-card {
           padding: clamp(24px, 3.5vw, 44px);
+          background: rgba(255,255,255,0.03);
+          backdrop-filter: blur(20px);
+          -webkit-backdrop-filter: blur(20px);
+          border: 1px solid rgba(255,255,255,0.08);
+          border-radius: 28px;
+          transition: all 0.4s cubic-bezier(0.22, 1, 0.36, 1);
           position: relative;
           overflow: hidden;
-          transition: background 0.4s cubic-bezier(0.22,1,0.36,1), box-shadow 0.4s cubic-bezier(0.22,1,0.36,1);
-          cursor: default;
+          cursor: pointer;
         }
 
-        /* Right column cards get left border */
-        .wwd-card:nth-child(even) {
-          border-left: 1px solid rgba(255,255,255,0.07);
-        }
-
-        /* Top row cards get bottom border */
-        .wwd-card:nth-child(1),
-        .wwd-card:nth-child(2) {
-          border-bottom: 1px solid rgba(255,255,255,0.07);
-        }
-
-        /* ── Tablet (≤900px): single column ── */
-        @media (max-width: 900px) {
-          .wwd-inner {
-            padding: 0 32px;
-          }
-
+        /* Tablet and desktop: 2 columns */
+        @media (min-width: 768px) {
           .wwd-grid {
-            grid-template-columns: 1fr;
-            border-radius: 20px;
-          }
-
-          /* Remove side border in single-column layout */
-          .wwd-card:nth-child(even) {
-            border-left: none;
-          }
-
-          /* Every card except the last gets a bottom divider */
-          .wwd-card:not(:last-child) {
-            border-bottom: 1px solid rgba(255,255,255,0.07) !important;
-          }
-
-          /* Remove the grid top-row bottom border override side effect */
-          .wwd-card:nth-child(2) {
-            border-bottom: 1px solid rgba(255,255,255,0.07);
+            grid-template-columns: repeat(2, 1fr);
+            gap: 28px;
           }
         }
 
-        /* ── Mobile (≤480px) ── */
+        /* Extra spacing on large screens */
+        @media (min-width: 1200px) {
+          .wwd-grid {
+            gap: 32px;
+          }
+        }
+
+        /* Mobile padding */
+        @media (max-width: 640px) {
+          .wwd-inner {
+            padding: 0 20px;
+          }
+        }
+
+        /* Small mobile */
         @media (max-width: 480px) {
           .wwd-inner {
             padding: 0 16px;
           }
-
-          .wwd-grid {
-            border-radius: 16px;
-          }
-
           .wwd-card {
             padding: 24px 20px;
           }
@@ -255,7 +235,7 @@ export default function WhatAreWeDoing() {
           </Rev>
         </div>
 
-        {/* ── 2×2 Card Grid ── */}
+        {/* ── 2×2 Card Grid with proper gap ── */}
         <Rev delay={0.3}>
           <div className="wwd-grid">
             {programs.map((prog, i) => {
@@ -275,8 +255,8 @@ export default function WhatAreWeDoing() {
                   style={{
                     background: hovered === i
                       ? `linear-gradient(145deg,${prog.glow},rgba(255,255,255,0.04))`
-                      : "transparent",
-                    boxShadow: hovered === i ? `inset 0 0 40px ${prog.color}08` : "none",
+                      : "rgba(255,255,255,0.03)",
+                    boxShadow: hovered === i ? `inset 0 0 40px ${prog.color}08, 0 12px 28px -8px rgba(0,0,0,0.3)` : "0 4px 20px rgba(0,0,0,0.2)",
                   }}
                 >
                   {/* Glow blob on hover */}

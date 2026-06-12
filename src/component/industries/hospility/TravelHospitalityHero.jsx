@@ -54,7 +54,6 @@ export default function TravelHospitalityHero() {
             "linear-gradient(135deg,rgba(2,11,24,0.96) 0%,rgba(4,21,48,0.82) 50%,rgba(2,11,24,0.55) 100%)",
         }}
       />
-      {/* Left vignette */}
       <div
         style={{
           position: "absolute",
@@ -63,7 +62,6 @@ export default function TravelHospitalityHero() {
             "linear-gradient(to right,rgba(2,11,24,0.99) 0%,rgba(2,11,24,0.7) 60%,transparent 100%)",
         }}
       />
-      {/* Top vignette */}
       <div
         style={{
           position: "absolute",
@@ -71,7 +69,6 @@ export default function TravelHospitalityHero() {
           background: "linear-gradient(to bottom,rgba(2,11,24,0.95),transparent)",
         }}
       />
-      {/* Bottom vignette */}
       <div
         style={{
           position: "absolute",
@@ -97,13 +94,13 @@ export default function TravelHospitalityHero() {
         <rect width="100%" height="100%" fill="url(#travgrid)" />
       </svg>
 
-      {/* Animated orbs */}
+      {/* Animated orbs (responsive size) */}
       <motion.div
         animate={{ scale: [1, 1.12, 1], opacity: [0.12, 0.22, 0.12] }}
         transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
         style={{
           position: "absolute", top: "-80px", left: "-60px",
-          width: 500, height: 500, borderRadius: "50%",
+          width: "min(500px, 80vw)", height: "min(500px, 80vw)", borderRadius: "50%",
           background: "radial-gradient(circle,#1d4ed8,#2563eb,transparent 70%)",
           filter: "blur(90px)", pointerEvents: "none",
         }}
@@ -113,32 +110,34 @@ export default function TravelHospitalityHero() {
         transition={{ duration: 14, repeat: Infinity, ease: "easeInOut", delay: 4 }}
         style={{
           position: "absolute", bottom: "-60px", right: "10%",
-          width: 420, height: 420, borderRadius: "50%",
+          width: "min(420px, 70vw)", height: "min(420px, 70vw)", borderRadius: "50%",
           background: "radial-gradient(circle,#4f46e5,#6366f1,transparent 70%)",
           filter: "blur(100px)", pointerEvents: "none",
         }}
       />
 
-      {/* Floating particles */}
-      {[
-        { top: "20%", left: "52%", size: 3, opacity: 0.35 },
-        { top: "38%", left: "67%", size: 2, opacity: 0.25 },
-        { top: "62%", left: "58%", size: 4, opacity: 0.2 },
-        { top: "74%", left: "74%", size: 2, opacity: 0.3 },
-        { top: "26%", left: "80%", size: 3, opacity: 0.22 },
-        { top: "84%", left: "50%", size: 2, opacity: 0.18 },
-      ].map((d, i) => (
-        <div
-          key={i}
-          style={{
-            position: "absolute",
-            top: d.top, left: d.left,
-            width: `${d.size}px`, height: `${d.size}px`,
-            borderRadius: "50%", background: "#60a5fa",
-            opacity: d.opacity, pointerEvents: "none",
-          }}
-        />
-      ))}
+      {/* Floating particles – hidden on mobile */}
+      <div className="particles">
+        {[
+          { top: "20%", left: "52%", size: 3, opacity: 0.35 },
+          { top: "38%", left: "67%", size: 2, opacity: 0.25 },
+          { top: "62%", left: "58%", size: 4, opacity: 0.2 },
+          { top: "74%", left: "74%", size: 2, opacity: 0.3 },
+          { top: "26%", left: "80%", size: 3, opacity: 0.22 },
+          { top: "84%", left: "50%", size: 2, opacity: 0.18 },
+        ].map((d, i) => (
+          <div
+            key={i}
+            style={{
+              position: "absolute",
+              top: d.top, left: d.left,
+              width: `${d.size}px`, height: `${d.size}px`,
+              borderRadius: "50%", background: "#60a5fa",
+              opacity: d.opacity, pointerEvents: "none",
+            }}
+          />
+        ))}
+      </div>
 
       {/* ── Content ── */}
       <div
@@ -152,7 +151,7 @@ export default function TravelHospitalityHero() {
           width: "100%",
         }}
       >
-        <div style={{ maxWidth: 700 }}>
+        <div style={{ maxWidth: "min(700px, 100%)" }}>
 
           {/* Badge */}
           <motion.div
@@ -182,7 +181,7 @@ export default function TravelHospitalityHero() {
               />
               <span
                 style={{
-                  color: "#93c5fd", fontSize: 11, fontWeight: 700,
+                  color: "#93c5fd", fontSize: "clamp(10px, 3vw, 11px)", fontWeight: 700,
                   letterSpacing: "0.2em", textTransform: "uppercase",
                   fontFamily: "'DM Sans',sans-serif",
                 }}
@@ -198,7 +197,7 @@ export default function TravelHospitalityHero() {
             animate={inView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.7, delay: 0.1 }}
             style={{
-              fontSize: "clamp(30px,5vw,64px)",
+              fontSize: "clamp(30px, 6vw, 64px)",
               fontWeight: 900,
               letterSpacing: "-0.02em",
               textTransform: "uppercase",
@@ -250,7 +249,7 @@ export default function TravelHospitalityHero() {
             animate={inView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.7, delay: 0.2 }}
             style={{
-              fontSize: "clamp(14px,1.7vw,17px)",
+              fontSize: "clamp(14px, 2.5vw, 17px)",
               lineHeight: 1.9,
               color: "rgba(148,163,184,0.9)",
               maxWidth: 580,
@@ -264,14 +263,14 @@ export default function TravelHospitalityHero() {
             and engineering experience.
           </motion.p>
 
-          {/* Buttons */}
+          {/* Buttons (responsive) */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={inView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.7, delay: 0.3 }}
+            className="hero-buttons"
             style={{ display: "flex", alignItems: "center", gap: 16, flexWrap: "wrap" }}
           >
-            {/* Primary */}
             <motion.button
               onMouseEnter={() => setHovBtn1(true)}
               onMouseLeave={() => setHovBtn1(false)}
@@ -279,12 +278,13 @@ export default function TravelHospitalityHero() {
               whileTap={{ scale: 0.97 }}
               style={{
                 display: "inline-flex", alignItems: "center", gap: 10,
-                padding: "16px 32px", borderRadius: 12, border: "none",
+                padding: "clamp(14px, 2vw, 16px) clamp(28px, 4vw, 32px)",
+                borderRadius: 12, border: "none",
                 background: hovBtn1
                   ? "linear-gradient(135deg,#2563eb,#4f46e5)"
                   : "linear-gradient(135deg,#1d4ed8,#2563eb)",
                 color: "white",
-                fontSize: 13, fontWeight: 800,
+                fontSize: "clamp(12px, 2vw, 13px)", fontWeight: 800,
                 letterSpacing: "0.12em", textTransform: "uppercase",
                 cursor: "pointer",
                 boxShadow: hovBtn1
@@ -300,7 +300,6 @@ export default function TravelHospitalityHero() {
               </motion.span>
             </motion.button>
 
-            {/* Secondary */}
             <motion.button
               onMouseEnter={() => setHovBtn2(true)}
               onMouseLeave={() => setHovBtn2(false)}
@@ -308,7 +307,8 @@ export default function TravelHospitalityHero() {
               whileTap={{ scale: 0.97 }}
               style={{
                 display: "inline-flex", alignItems: "center", gap: 10,
-                padding: "15px 32px", borderRadius: 12,
+                padding: "clamp(13px, 2vw, 15px) clamp(28px, 4vw, 32px)",
+                borderRadius: 12,
                 border: hovBtn2
                   ? "1.5px solid rgba(96,165,250,0.7)"
                   : "1.5px solid rgba(255,255,255,0.18)",
@@ -316,7 +316,7 @@ export default function TravelHospitalityHero() {
                   ? "rgba(37,99,235,0.15)"
                   : "rgba(255,255,255,0.04)",
                 color: hovBtn2 ? "#93c5fd" : "rgba(255,255,255,0.8)",
-                fontSize: 13, fontWeight: 800,
+                fontSize: "clamp(12px, 2vw, 13px)", fontWeight: 800,
                 letterSpacing: "0.12em", textTransform: "uppercase",
                 cursor: "pointer",
                 boxShadow: hovBtn2 ? "0 0 24px rgba(37,99,235,0.2)" : "none",
@@ -330,14 +330,15 @@ export default function TravelHospitalityHero() {
             </motion.button>
           </motion.div>
 
-          {/* Stats row */}
+          {/* Stats row (responsive) */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={inView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.7, delay: 0.45 }}
+            className="stats-row"
             style={{
               display: "flex", alignItems: "center",
-              gap: "clamp(20px,4vw,40px)",
+              gap: "clamp(20px, 4vw, 40px)",
               marginTop: 56, paddingTop: 32,
               borderTop: "1px solid rgba(59,130,246,0.15)",
               flexWrap: "wrap",
@@ -355,7 +356,7 @@ export default function TravelHospitalityHero() {
                   <span style={{ color: "#60a5fa" }}>{s.icon}</span>
                   <span
                     style={{
-                      fontSize: "clamp(20px,2.5vw,28px)",
+                      fontSize: "clamp(20px, 4vw, 28px)",
                       fontWeight: 900,
                       background: "linear-gradient(135deg,#ffffff,#60a5fa)",
                       WebkitBackgroundClip: "text",
@@ -369,7 +370,7 @@ export default function TravelHospitalityHero() {
                 </div>
                 <span
                   style={{
-                    fontSize: 11, fontWeight: 600,
+                    fontSize: "clamp(10px, 2vw, 11px)", fontWeight: 600,
                     letterSpacing: "0.1em", textTransform: "uppercase",
                     color: "rgba(100,116,139,0.8)",
                     fontFamily: "'DM Sans',sans-serif",
@@ -383,17 +384,15 @@ export default function TravelHospitalityHero() {
         </div>
       </div>
 
-      {/* ── Right side decorative lines + floating badges ── */}
-      <div
-        style={{
-          position: "absolute", right: 0, top: "50%",
-          transform: "translateY(-50%)",
-          width: "38%", height: "80%",
-          pointerEvents: "none", zIndex: 5,
-          display: "flex", flexDirection: "column",
-          justifyContent: "center", padding: "0 60px", gap: 18,
-        }}
-      >
+      {/* ── Right side decorative lines + floating badges (hidden on mobile) ── */}
+      <div className="right-decor" style={{
+        position: "absolute", right: 0, top: "50%",
+        transform: "translateY(-50%)",
+        width: "38%", height: "80%",
+        pointerEvents: "none", zIndex: 5,
+        display: "flex", flexDirection: "column",
+        justifyContent: "center", padding: "0 60px", gap: 18,
+      }}>
         {[70, 100, 55, 85, 40, 90, 65].map((w, i) => (
           <div
             key={i}
@@ -407,7 +406,6 @@ export default function TravelHospitalityHero() {
           />
         ))}
 
-        {/* Floating badge 1 */}
         <motion.div
           animate={{ y: [0, -6, 0] }}
           transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
@@ -441,7 +439,6 @@ export default function TravelHospitalityHero() {
           </div>
         </motion.div>
 
-        {/* Floating badge 2 */}
         <motion.div
           animate={{ y: [0, -8, 0] }}
           transition={{ duration: 5, repeat: Infinity, ease: "easeInOut", delay: 1.5 }}
@@ -474,6 +471,47 @@ export default function TravelHospitalityHero() {
           </div>
         </motion.div>
       </div>
+
+      {/* Responsive CSS Media Queries */}
+      <style>{`
+        /* Hide decorative right side and floating particles on tablet/mobile */
+        @media (max-width: 1024px) {
+          .right-decor {
+            display: none !important;
+          }
+          .particles {
+            display: none !important;
+          }
+        }
+
+        /* Buttons stack on mobile */
+        @media (max-width: 640px) {
+          .hero-buttons {
+            flex-direction: column !important;
+            align-items: stretch !important;
+            gap: 12px !important;
+          }
+          .hero-buttons button {
+            width: 100%;
+            justify-content: center;
+          }
+        }
+
+        /* Stats row wrap and spacing */
+        @media (max-width: 640px) {
+          .stats-row {
+            justify-content: space-between;
+            gap: 20px;
+          }
+        }
+        @media (max-width: 480px) {
+          .stats-row {
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 16px;
+          }
+        }
+      `}</style>
     </section>
   );
 }

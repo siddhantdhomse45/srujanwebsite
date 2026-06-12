@@ -154,7 +154,6 @@ const solutions = [
   },
 ];
 
-// Animate on scroll hook
 function useInView(threshold = 0.15) {
   const ref = useRef(null);
   const [inView, setInView] = useState(false);
@@ -170,19 +169,20 @@ function useInView(threshold = 0.15) {
 }
 
 function SolutionRow({ solution, index }) {
-  const isEven = index % 2 === 0; // even = image left, odd = image right
+  const isEven = index % 2 === 0;
   const [ref, inView] = useInView();
   const [imgHov, setImgHov] = useState(false);
 
   return (
     <div
       ref={ref}
+      className="solution-row"
       style={{
         display: "grid",
         gridTemplateColumns: "1fr 1fr",
-        gap: "64px",
+        gap: "clamp(32px, 6vw, 64px)",
         alignItems: "center",
-        padding: "80px 0",
+        padding: "clamp(48px, 8vw, 80px) 0",
         borderBottom: "1px solid rgba(59,130,246,0.08)",
         opacity: inView ? 1 : 0,
         transform: inView ? "translateY(0)" : "translateY(48px)",
@@ -192,6 +192,7 @@ function SolutionRow({ solution, index }) {
     >
       {/* Image side */}
       <div
+        className="solution-image"
         style={{ order: isEven ? 1 : 2 }}
         onMouseEnter={() => setImgHov(true)}
         onMouseLeave={() => setImgHov(false)}
@@ -199,7 +200,7 @@ function SolutionRow({ solution, index }) {
         <div
           style={{
             position: "relative",
-            borderRadius: "20px",
+            borderRadius: "clamp(16px, 3vw, 20px)",
             overflow: "hidden",
             boxShadow: imgHov
               ? "0 32px 80px rgba(37,99,235,0.35), 0 0 0 1px rgba(59,130,246,0.4)"
@@ -213,30 +214,27 @@ function SolutionRow({ solution, index }) {
             alt={solution.title}
             style={{
               width: "100%",
-              height: "340px",
+              height: "clamp(240px, 40vw, 340px)",
               objectFit: "cover",
               display: "block",
               filter: imgHov ? "brightness(0.75)" : "brightness(0.55)",
               transition: "filter 0.4s ease",
             }}
           />
-          {/* Gradient overlay */}
           <div style={{
             position: "absolute", inset: 0,
             background: isEven
               ? "linear-gradient(135deg,rgba(4,21,48,0.5) 0%,transparent 60%)"
               : "linear-gradient(225deg,rgba(4,21,48,0.5) 0%,transparent 60%)",
-            transition: "opacity 0.4s ease",
           }} />
-
-          {/* Corner accent */}
           <div style={{
             position: "absolute",
-            top: "20px",
-            left: isEven ? "20px" : "auto",
-            right: isEven ? "auto" : "20px",
-            width: "48px", height: "48px",
-            borderRadius: "12px",
+            top: "clamp(12px, 3vw, 20px)",
+            left: isEven ? "clamp(12px, 3vw, 20px)" : "auto",
+            right: isEven ? "auto" : "clamp(12px, 3vw, 20px)",
+            width: "clamp(40px, 6vw, 48px)",
+            height: "clamp(40px, 6vw, 48px)",
+            borderRadius: "clamp(10px, 2vw, 12px)",
             background: "linear-gradient(135deg,#1d4ed8,#4f46e5)",
             display: "flex", alignItems: "center", justifyContent: "center",
             color: "white",
@@ -244,19 +242,17 @@ function SolutionRow({ solution, index }) {
           }}>
             {solution.icon}
           </div>
-
-          {/* Step number badge */}
           <div style={{
             position: "absolute",
-            bottom: "20px",
-            right: isEven ? "20px" : "auto",
-            left: isEven ? "auto" : "20px",
+            bottom: "clamp(12px, 3vw, 20px)",
+            right: isEven ? "clamp(12px, 3vw, 20px)" : "auto",
+            left: isEven ? "auto" : "clamp(12px, 3vw, 20px)",
             padding: "6px 14px",
             borderRadius: "20px",
             background: "rgba(4,21,48,0.85)",
             border: "1px solid rgba(59,130,246,0.3)",
             backdropFilter: "blur(10px)",
-            fontSize: "11px",
+            fontSize: "clamp(10px, 2vw, 11px)",
             fontWeight: "800",
             color: "#60a5fa",
             letterSpacing: "0.12em",
@@ -269,6 +265,7 @@ function SolutionRow({ solution, index }) {
 
       {/* Text side */}
       <div
+        className="solution-text"
         style={{
           order: isEven ? 2 : 1,
           opacity: inView ? 1 : 0,
@@ -278,42 +275,37 @@ function SolutionRow({ solution, index }) {
           transition: "opacity 0.7s ease 0.25s, transform 0.7s ease 0.25s",
         }}
       >
-        {/* Badge */}
         <div style={{
           display: "inline-flex", alignItems: "center", gap: "8px",
           padding: "6px 14px", borderRadius: "6px",
           background: "linear-gradient(135deg,#1d4ed8,#2563eb)",
-          color: "white", fontSize: "10px", fontWeight: "800",
+          color: "white", fontSize: "clamp(9px, 2vw, 10px)", fontWeight: "800",
           letterSpacing: "0.2em", textTransform: "uppercase",
           boxShadow: "0 4px 16px rgba(37,99,235,0.4)",
           marginBottom: "20px",
         }}>
-          <span style={{ width: "5px", height: "5px", borderRadius: "50%", background: "rgba(255,255,255,0.8)", display: "inline-block" }} />
+          <span style={{ width: "5px", height: "5px", borderRadius: "50%", background: "rgba(255,255,255,0.8)" }} />
           Solution {String(index + 1).padStart(2, "0")}
         </div>
 
-        {/* Title */}
         <h3 style={{
-          fontSize: "clamp(20px,2.5vw,30px)",
+          fontSize: "clamp(20px, 3.5vw, 30px)",
           fontWeight: "900",
           color: "white",
           margin: "0 0 16px",
           lineHeight: 1.2,
-          letterSpacing: "0.01em",
         }}>
           {solution.title}
         </h3>
 
-        {/* Divider */}
         <div style={{
           width: "48px", height: "3px", borderRadius: "2px",
           background: "linear-gradient(90deg,#2563eb,#6366f1)",
           marginBottom: "20px",
         }} />
 
-        {/* Description */}
         <p style={{
-          fontSize: "15px",
+          fontSize: "clamp(14px, 2.5vw, 15px)",
           lineHeight: "1.85",
           color: "rgba(148,163,184,0.9)",
           margin: "0 0 28px",
@@ -321,7 +313,6 @@ function SolutionRow({ solution, index }) {
           {solution.desc}
         </p>
 
-        {/* Bullets */}
         <div style={{ display: "flex", flexDirection: "column", gap: "11px", marginBottom: "32px" }}>
           {solution.bullets.map((b, i) => (
             <div
@@ -343,14 +334,59 @@ function SolutionRow({ solution, index }) {
                   <polyline points="20 6 9 17 4 12" />
                 </svg>
               </div>
-              <span style={{ fontSize: "13px", color: "rgba(203,213,225,0.85)", lineHeight: "1.65" }}>{b}</span>
+              <span style={{ fontSize: "clamp(12px, 2.2vw, 13px)", color: "rgba(203,213,225,0.85)", lineHeight: "1.65" }}>
+                {b}
+              </span>
             </div>
           ))}
         </div>
 
-        {/* CTA */}
         <LearnMoreBtn />
       </div>
+
+      {/* Responsive CSS override for small screens */}
+      <style>{`
+        @media (max-width: 900px) {
+          .solution-row {
+            grid-template-columns: 1fr !important;
+            gap: 40px !important;
+          }
+          .solution-image {
+            order: 1 !important;
+          }
+          .solution-text {
+            order: 2 !important;
+            transform: translateX(0) !important;
+            text-align: center;
+          }
+          .solution-text > div:first-child {
+            margin-left: auto;
+            margin-right: auto;
+          }
+          .solution-text > .divider {
+            margin-left: auto;
+            margin-right: auto;
+          }
+          .solution-text .bullets-list {
+            align-items: center;
+          }
+          .solution-text .bullets-list > div {
+            justify-content: center;
+            text-align: left;
+          }
+          .solution-text button {
+            margin: 0 auto;
+          }
+        }
+        @media (max-width: 600px) {
+          .solution-text .bullets-list {
+            gap: 8px;
+          }
+          .solution-text .bullets-list > div {
+            gap: 8px;
+          }
+        }
+      `}</style>
     </div>
   );
 }
@@ -363,11 +399,12 @@ function LearnMoreBtn() {
       onMouseLeave={() => setHov(false)}
       style={{
         display: "inline-flex", alignItems: "center", gap: "10px",
-        padding: "14px 28px", borderRadius: "10px", border: "none",
+        padding: "clamp(12px, 2vw, 14px) clamp(24px, 4vw, 28px)",
+        borderRadius: "10px", border: "none",
         background: hov
           ? "linear-gradient(135deg,#2563eb,#4f46e5)"
           : "linear-gradient(135deg,#1d4ed8,#2563eb)",
-        color: "white", fontSize: "12px", fontWeight: "800",
+        color: "white", fontSize: "clamp(11px, 2vw, 12px)", fontWeight: "800",
         letterSpacing: "0.12em", textTransform: "uppercase",
         cursor: "pointer",
         boxShadow: hov
@@ -394,7 +431,7 @@ export default function ConstructionSolutions() {
       style={{
         background: "linear-gradient(180deg,#020b18 0%,#041530 50%,#020b18 100%)",
         fontFamily: "'DM Sans','Segoe UI',sans-serif",
-        padding: "100px 0 60px",
+        padding: "clamp(60px, 10vw, 100px) 0 clamp(60px, 10vw, 80px)",
         position: "relative",
         overflow: "hidden",
       }}
@@ -408,17 +445,17 @@ export default function ConstructionSolutions() {
       }} />
 
       {/* Ambient glows */}
-      <div style={{ position: "absolute", top: "5%", left: "5%", width: "500px", height: "500px", borderRadius: "50%", background: "radial-gradient(circle,rgba(37,99,235,0.06),transparent 70%)", pointerEvents: "none" }} />
-      <div style={{ position: "absolute", bottom: "5%", right: "5%", width: "400px", height: "400px", borderRadius: "50%", background: "radial-gradient(circle,rgba(99,102,241,0.06),transparent 70%)", pointerEvents: "none" }} />
+      <div style={{ position: "absolute", top: "5%", left: "5%", width: "min(500px, 70vw)", height: "min(500px, 70vw)", borderRadius: "50%", background: "radial-gradient(circle,rgba(37,99,235,0.06),transparent 70%)", pointerEvents: "none" }} />
+      <div style={{ position: "absolute", bottom: "5%", right: "5%", width: "min(400px, 60vw)", height: "min(400px, 60vw)", borderRadius: "50%", background: "radial-gradient(circle,rgba(99,102,241,0.06),transparent 70%)", pointerEvents: "none" }} />
 
-      <div style={{ maxWidth: "1200px", margin: "0 auto", padding: "0 48px", position: "relative", zIndex: 10 }}>
+      <div style={{ maxWidth: "1200px", margin: "0 auto", padding: "0 clamp(20px, 5vw, 48px)", position: "relative", zIndex: 10 }}>
 
-        {/* ── Header ── */}
+        {/* Header */}
         <div
           ref={headerRef}
           style={{
             textAlign: "center",
-            marginBottom: "80px",
+            marginBottom: "clamp(48px, 8vw, 80px)",
             opacity: headerInView ? 1 : 0,
             transform: headerInView ? "translateY(0)" : "translateY(32px)",
             transition: "opacity 0.7s ease, transform 0.7s ease",
@@ -428,7 +465,7 @@ export default function ConstructionSolutions() {
             display: "inline-flex", alignItems: "center", gap: "8px",
             padding: "7px 18px", borderRadius: "6px",
             background: "linear-gradient(135deg,#1d4ed8,#2563eb)",
-            color: "white", fontSize: "11px", fontWeight: "800",
+            color: "white", fontSize: "clamp(10px, 2.5vw, 11px)", fontWeight: "800",
             letterSpacing: "0.2em", textTransform: "uppercase",
             boxShadow: "0 4px 16px rgba(37,99,235,0.5)",
             marginBottom: "24px",
@@ -438,7 +475,7 @@ export default function ConstructionSolutions() {
           </div>
 
           <h2 style={{
-            fontSize: "clamp(28px,4vw,48px)",
+            fontSize: "clamp(28px, 4.5vw, 48px)",
             fontWeight: "900",
             letterSpacing: "0.05em",
             textTransform: "uppercase",
@@ -457,17 +494,18 @@ export default function ConstructionSolutions() {
           </h2>
 
           <p style={{
-            fontSize: "16px",
+            fontSize: "clamp(14px, 2.5vw, 16px)",
             lineHeight: "1.8",
             color: "rgba(148,163,184,0.85)",
             maxWidth: "620px",
             margin: "0 auto",
+            padding: "0 16px",
           }}>
             We develop full-scale software for construction companies to help you digitalize your green building business processes, achieve operational efficiency, and drive innovation.
           </p>
         </div>
 
-        {/* ── Alternating rows ── */}
+        {/* Alternating rows */}
         {solutions.map((solution, index) => (
           <SolutionRow key={solution.id} solution={solution} index={index} />
         ))}

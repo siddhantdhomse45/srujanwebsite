@@ -37,6 +37,7 @@ function polar(cx, cy, r, angleDeg) {
 function OrbitalDiagram() {
   const ref    = useRef(null);
   const inView = useInView(ref, { once: true, margin: "-60px" });
+  const size = "clamp(280px, 70vw, 400px)";
   const cx = 200, cy = 200, R1 = 80, R2 = 150;
 
   return (
@@ -45,9 +46,12 @@ function OrbitalDiagram() {
       initial={{ opacity: 0, scale: 0.88 }}
       animate={inView ? { opacity: 1, scale: 1 } : {}}
       transition={{ duration: 0.85, ease: [0.22, 1, 0.36, 1] }}
-      style={{ position: "relative", width: 400, height: 400, flexShrink: 0, margin: "0 auto" }}
+      style={{
+        position: "relative",
+        width: size, height: size,
+        flexShrink: 0, margin: "0 auto",
+      }}
     >
-      {/* SVG base: circles + spokes */}
       <svg viewBox="0 0 400 400" style={{ position: "absolute", inset: 0, width: "100%", height: "100%" }}>
         <defs>
           <radialGradient id="centerGrad" cx="50%" cy="50%" r="50%">
@@ -59,15 +63,9 @@ function OrbitalDiagram() {
             <stop offset="100%" stopColor="#22d3ee" stopOpacity="0"/>
           </radialGradient>
         </defs>
-
-        {/* outer ring fill */}
         <circle cx={cx} cy={cy} r={R2} fill="url(#ring1Grad)"/>
-        {/* outer ring border */}
         <circle cx={cx} cy={cy} r={R2} fill="none" stroke="rgba(34,211,238,0.18)" strokeWidth="1"/>
-        {/* inner ring */}
         <circle cx={cx} cy={cy} r={R1} fill="url(#centerGrad)" stroke="rgba(34,211,238,0.28)" strokeWidth="1.2"/>
-
-        {/* spokes from center to node positions */}
         {ORBIT_NODES.map((n, i) => {
           const p = polar(cx, cy, R2, n.angle);
           return (
@@ -84,7 +82,6 @@ function OrbitalDiagram() {
         })}
       </svg>
 
-      {/* central logo circle */}
       <motion.div
         animate={{ rotate: 360 }}
         transition={{ duration: 40, repeat: Infinity, ease: "linear" }}
@@ -100,7 +97,8 @@ function OrbitalDiagram() {
       <div style={{
         position: "absolute",
         top: "50%", left: "50%",
-        width: 72, height: 72,
+        width: "clamp(56px, 12vw, 72px)",
+        height: "clamp(56px, 12vw, 72px)",
         transform: "translate(-50%,-50%)",
         borderRadius: "50%",
         background: "linear-gradient(135deg,#1d4ed8,#22d3ee)",
@@ -108,10 +106,9 @@ function OrbitalDiagram() {
         boxShadow: "0 0 40px rgba(34,211,238,0.50), 0 0 80px rgba(29,78,216,0.25)",
         zIndex: 3,
       }}>
-        <span style={{ color: "white", fontSize: 26, fontWeight: 900, fontFamily: "'DM Sans',sans-serif", letterSpacing: -1 }}>IS</span>
+        <span style={{ color: "white", fontSize: "clamp(20px, 5vw, 26px)", fontWeight: 900, fontFamily: "'DM Sans',sans-serif", letterSpacing: -1 }}>IS</span>
       </div>
 
-      {/* orbital icon nodes */}
       {ORBIT_NODES.map((n, i) => {
         const p = polar(cx, cy, R2, n.angle);
         return (
@@ -124,7 +121,9 @@ function OrbitalDiagram() {
               position: "absolute",
               left: p.x, top: p.y,
               transform: "translate(-50%,-50%)",
-              width: 48, height: 48, borderRadius: "50%",
+              width: "clamp(36px, 8vw, 48px)",
+              height: "clamp(36px, 8vw, 48px)",
+              borderRadius: "50%",
               background: `${n.accent}16`,
               border: `1.5px solid ${n.accent}40`,
               display: "flex", alignItems: "center", justifyContent: "center",
@@ -141,8 +140,6 @@ function OrbitalDiagram() {
             >
               {n.icon}
             </motion.div>
-
-            {/* pulse */}
             <motion.div
               animate={{ scale: [1, 1.8, 1], opacity: [0.4, 0, 0.4] }}
               transition={{ duration: 2.5, repeat: Infinity, ease: "easeInOut", delay: i * 0.35 }}
@@ -166,8 +163,8 @@ function SolutionItem({ solution, index }) {
       animate={inView ? { opacity: 1, x: 0 } : {}}
       transition={{ duration: 0.45, delay: index * 0.07, ease: [0.22, 1, 0.36, 1] }}
       style={{
-        display: "flex", alignItems: "center", gap: 14,
-        padding: "clamp(10px,1.4vw,14px) clamp(12px,1.6vw,18px)",
+        display: "flex", alignItems: "center", gap: "clamp(10px, 2vw, 14px)",
+        padding: "clamp(10px, 1.8vw, 14px) clamp(12px, 2vw, 18px)",
         borderRadius: 12,
         background: "rgba(255,255,255,0.02)",
         border: "1px solid rgba(59,130,246,0.08)",
@@ -181,9 +178,10 @@ function SolutionItem({ solution, index }) {
         x: 4,
       }}
     >
-      {/* check badge */}
       <div style={{
-        width: 28, height: 28, borderRadius: "50%", flexShrink: 0,
+        width: "clamp(24px, 5vw, 28px)",
+        height: "clamp(24px, 5vw, 28px)",
+        borderRadius: "50%", flexShrink: 0,
         background: solution.grad,
         display: "flex", alignItems: "center", justifyContent: "center",
         boxShadow: `0 2px 10px ${solution.accent}40`,
@@ -191,9 +189,10 @@ function SolutionItem({ solution, index }) {
         <FiCheck size={12} color="white" strokeWidth={2.8}/>
       </div>
 
-      {/* icon */}
       <div style={{
-        width: 32, height: 32, borderRadius: 9, flexShrink: 0,
+        width: "clamp(28px, 6vw, 32px)",
+        height: "clamp(28px, 6vw, 32px)",
+        borderRadius: 9, flexShrink: 0,
         background: `${solution.accent}12`,
         border: `1px solid ${solution.accent}25`,
         display: "flex", alignItems: "center", justifyContent: "center",
@@ -202,18 +201,19 @@ function SolutionItem({ solution, index }) {
         {solution.icon}
       </div>
 
-      {/* label */}
       <span style={{
         fontFamily: "'DM Sans',sans-serif",
-        fontSize: "clamp(13px,1.4vw,15px)", fontWeight: 600,
-        color: "rgba(186,230,255,0.80)", lineHeight: 1.3,
+        fontSize: "clamp(12px, 3vw, 15px)",
+        fontWeight: 600,
+        color: "rgba(186,230,255,0.80)",
+        lineHeight: 1.3,
+        flex: 1,
       }}>
         {solution.label}
       </span>
 
-      {/* right dot indicator */}
       <div style={{
-        marginLeft: "auto", width: 5, height: 5, borderRadius: "50%",
+        width: 5, height: 5, borderRadius: "50%",
         background: solution.accent, boxShadow: `0 0 6px ${solution.accent}`,
         flexShrink: 0,
       }}/>
@@ -236,7 +236,7 @@ export default function HealthcareAppsSolutions() {
     }}>
       <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800;900&display=swap" rel="stylesheet"/>
 
-      {/* grid */}
+      {/* background grid */}
       <svg style={{ position:"absolute",inset:0,width:"100%",height:"100%",opacity:0.05,pointerEvents:"none" }} xmlns="http://www.w3.org/2000/svg">
         <defs><pattern id="hasgrid" width="60" height="60" patternUnits="userSpaceOnUse"><path d="M 60 0 L 0 0 0 60" fill="none" stroke="white" strokeWidth="0.5"/></pattern></defs>
         <rect width="100%" height="100%" fill="url(#hasgrid)"/>
@@ -244,18 +244,9 @@ export default function HealthcareAppsSolutions() {
 
       {/* orbs */}
       <motion.div animate={{ scale:[1,1.12,1],opacity:[0.18,0.30,0.18] }} transition={{ duration:10,repeat:Infinity,ease:"easeInOut" }}
-        style={{ position:"absolute",top:-100,left:-80,width:520,height:520,borderRadius:"50%",background:"radial-gradient(circle,#0891b2,#22d3ee,transparent 70%)",filter:"blur(90px)",pointerEvents:"none" }}/>
+        style={{ position:"absolute",top:"-100px",left:"-80px",width:"min(520px,80vw)",height:"min(520px,80vw)",borderRadius:"50%",background:"radial-gradient(circle,#0891b2,#22d3ee,transparent 70%)",filter:"blur(90px)",pointerEvents:"none" }}/>
       <motion.div animate={{ scale:[1,1.08,1],opacity:[0.15,0.25,0.15] }} transition={{ duration:14,repeat:Infinity,ease:"easeInOut",delay:3 }}
-        style={{ position:"absolute",bottom:-80,right:-80,width:500,height:500,borderRadius:"50%",background:"radial-gradient(circle,#1e40af,#3b82f6,transparent 70%)",filter:"blur(100px)",pointerEvents:"none" }}/>
-
-      {/* decorative rings */}
-      {[560,740,920].map((s,i) => (
-        <div key={i} style={{
-          position:"absolute",top:"60%",left:"20%",transform:"translate(-50%,-50%)",
-          width:s,height:s,borderRadius:"50%",
-          border:"1px solid rgba(34,211,238,0.05)",pointerEvents:"none",
-        }}/>
-      ))}
+        style={{ position:"absolute",bottom:"-80px",right:"-80px",width:"min(500px,70vw)",height:"min(500px,70vw)",borderRadius:"50%",background:"radial-gradient(circle,#1e40af,#3b82f6,transparent 70%)",filter:"blur(100px)",pointerEvents:"none" }}/>
 
       <div style={{ maxWidth:1280,margin:"0 auto",padding:"0 clamp(16px,5vw,48px)",position:"relative",zIndex:10 }}>
 
@@ -279,32 +270,26 @@ export default function HealthcareAppsSolutions() {
           </p>
         </motion.div>
 
-        {/* two-column body */}
-        <div style={{ display:"grid",gridTemplateColumns:"1fr 1fr",gap:"clamp(32px,5vw,72px)",alignItems:"center" }}>
-
-          {/* LEFT: orbital diagram */}
-          <OrbitalDiagram/>
-
-          {/* RIGHT: solution checklist */}
-          <div style={{ display:"flex",flexDirection:"column",gap:10 }}>
-            {/* section label */}
+        {/* two-column body – responsive stacking */}
+        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "clamp(32px,5vw,72px)", alignItems: "center" }} className="healthcare-solutions-grid">
+          <OrbitalDiagram />
+          <div style={{ display: "flex", flexDirection: "column", gap: "clamp(8px,2vw,10px)" }}>
             <motion.div
               initial={{ opacity:0,y:16 }}
               whileInView={{ opacity:1,y:0 }}
               viewport={{ once:true,margin:"-40px" }}
               transition={{ duration:0.55 }}
-              style={{ display:"inline-flex",alignItems:"center",gap:8,marginBottom:8 }}
+              style={{ display: "inline-flex", alignItems: "center", gap: 8, marginBottom: 8, justifyContent: { xs: "center", sm: "flex-start" } }}
             >
-              <div style={{ height:1,width:28,background:"linear-gradient(90deg,#22d3ee,transparent)" }}/>
-              <span style={{ color:"rgba(34,211,238,0.60)",fontSize:11,fontWeight:700,letterSpacing:2.5,textTransform:"uppercase",fontFamily:"'DM Sans',sans-serif" }}>
+              <div style={{ height: 1, width: 28, background: "linear-gradient(90deg,#22d3ee,transparent)" }}/>
+              <span style={{ color: "rgba(34,211,238,0.60)", fontSize: 11, fontWeight: 700, letterSpacing: 2.5, textTransform: "uppercase", fontFamily: "'DM Sans',sans-serif" }}>
                 These solutions include
               </span>
-              <div style={{ height:1,width:28,background:"linear-gradient(90deg,transparent,#22d3ee)" }}/>
+              <div style={{ height: 1, width: 28, background: "linear-gradient(90deg,transparent,#22d3ee)" }}/>
             </motion.div>
 
             {solutions.map((s, i) => <SolutionItem key={s.label} solution={s} index={i}/>)}
 
-            {/* bottom CTA */}
             <motion.button
               initial={{ opacity:0,y:16 }}
               whileInView={{ opacity:1,y:0 }}
@@ -333,6 +318,32 @@ export default function HealthcareAppsSolutions() {
           </div>
         </div>
       </div>
+
+      <style>{`
+        @media (max-width: 900px) {
+          .healthcare-solutions-grid {
+            grid-template-columns: 1fr !important;
+            gap: 48px !important;
+          }
+          .healthcare-solutions-grid > div:first-child {
+            order: 1;
+          }
+          .healthcare-solutions-grid > div:last-child {
+            order: 2;
+          }
+          .healthcare-solutions-grid button {
+            align-self: center !important;
+            width: auto;
+            min-width: 240px;
+          }
+        }
+        @media (max-width: 480px) {
+          .healthcare-solutions-grid button {
+            width: 100%;
+            max-width: none;
+          }
+        }
+      `}</style>
     </section>
   );
 }

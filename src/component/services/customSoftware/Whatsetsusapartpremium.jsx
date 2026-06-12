@@ -11,6 +11,7 @@ import {
  ╔══════════════════════════════════════════════════════════════╗
  ║  WHAT SETS OUR CUSTOM SOFTWARE DEVELOPMENT SERVICES APART  ║
  ║  Premium dark edition — glassmorphism + Framer Motion       ║
+ ║  Fully responsive (mobile, tablet, desktop)                 ║
  ╚══════════════════════════════════════════════════════════════╝
 */
 
@@ -146,7 +147,7 @@ function FeatureCard({ feature, index }) {
           backdropFilter: "blur(20px)",
           border: "1px solid rgba(255,255,255,0.08)",
           borderRadius: 20,
-          padding: "36px 32px",
+          padding: "clamp(24px, 5vw, 36px) clamp(20px, 4vw, 32px)",
           height: "100%",
           boxSizing: "border-box",
           overflow: "hidden",
@@ -211,7 +212,7 @@ function FeatureCard({ feature, index }) {
           style={{
             fontFamily: "'Barlow Condensed', sans-serif",
             fontWeight: 800,
-            fontSize: 21,
+            fontSize: "clamp(18px, 4vw, 21px)",
             textTransform: "uppercase",
             letterSpacing: "0.4px",
             lineHeight: 1.15,
@@ -249,8 +250,8 @@ function FeatureCard({ feature, index }) {
           style={{
             fontFamily: "'Barlow', sans-serif",
             fontWeight: 400,
-            fontSize: 14.5,
-            lineHeight: 1.85,
+            fontSize: "clamp(13px, 3vw, 14.5px)",
+            lineHeight: 1.7,
             color: "rgba(255,255,255,0.52)",
             margin: 0,
           }}
@@ -263,7 +264,7 @@ function FeatureCard({ feature, index }) {
 }
 
 /* ══════════════════════════════════════════
-   MAIN EXPORT
+   MAIN EXPORT (FULLY RESPONSIVE)
 ══════════════════════════════════════════ */
 export default function WhatSetsUsApartPremium() {
   const sectionRef = useRef(null);
@@ -284,20 +285,56 @@ export default function WhatSetsUsApartPremium() {
         rel="stylesheet"
       />
 
+      <style>
+        {`
+          /* Responsive grid: 2 columns on desktop, 1 column on tablet/mobile */
+          @media (max-width: 900px) {
+            .features-grid {
+              grid-template-columns: 1fr !important;
+              gap: 24px !important;
+            }
+          }
+          @media (max-width: 640px) {
+            .cta-strip {
+              flex-direction: column !important;
+              align-items: flex-start !important;
+              padding: 28px 24px !important;
+            }
+            .cta-buttons {
+              width: 100% !important;
+              flex-direction: column !important;
+            }
+            .cta-buttons a {
+              justify-content: center !important;
+              width: 100% !important;
+              text-align: center !important;
+            }
+          }
+          @media (max-width: 480px) {
+            section {
+              padding: 80px 24px !important;
+            }
+            .hero-subtitle {
+              font-size: 14px !important;
+            }
+          }
+        `}
+      </style>
+
       <section
         ref={sectionRef}
         style={{
           position: "relative",
           background: "linear-gradient(160deg, #060c18 0%, #0a1628 50%, #06101e 100%)",
-          padding: "120px 72px",
+          padding: "clamp(80px, 12vw, 120px) clamp(24px, 6vw, 72px)",
           overflow: "hidden",
           fontFamily: "'Barlow', sans-serif",
         }}
       >
-        {/* ── Ambient orbs ── */}
-        <Orb style={{ width: 560, height: 560, background: "rgba(59,130,246,0.09)", top: -160, left: -120 }} />
-        <Orb style={{ width: 480, height: 480, background: "rgba(139,92,246,0.07)", bottom: -100, right: -80 }} />
-        <Orb style={{ width: 320, height: 320, background: "rgba(14,165,233,0.06)", top: "40%", left: "45%" }} />
+        {/* ── Ambient orbs (responsive sizes) ── */}
+        <Orb style={{ width: "min(560px, 80vw)", height: "min(560px, 80vw)", background: "rgba(59,130,246,0.09)", top: -160, left: -120 }} />
+        <Orb style={{ width: "min(480px, 70vw)", height: "min(480px, 70vw)", background: "rgba(139,92,246,0.07)", bottom: -100, right: -80 }} />
+        <Orb style={{ width: "min(320px, 60vw)", height: "min(320px, 60vw)", background: "rgba(14,165,233,0.06)", top: "40%", left: "45%" }} />
 
         {/* ── Scrolling dot grid overlay ── */}
         <motion.div
@@ -312,7 +349,7 @@ export default function WhatSetsUsApartPremium() {
           }}
         />
 
-        {/* ── Diagonal accent line ── */}
+        {/* ── Diagonal accent line (hide on mobile) ── */}
         <div
           style={{
             position: "absolute",
@@ -323,6 +360,7 @@ export default function WhatSetsUsApartPremium() {
             background:
               "linear-gradient(to bottom, transparent, rgba(59,130,246,0.15) 30%, rgba(139,92,246,0.12) 70%, transparent)",
             pointerEvents: "none",
+            display: "none",
           }}
         />
 
@@ -335,7 +373,7 @@ export default function WhatSetsUsApartPremium() {
           }}
         >
           {/* ── Header block ── */}
-          <div ref={headRef} style={{ maxWidth: 900, marginBottom: 80 }}>
+          <div ref={headRef} style={{ maxWidth: 900, marginBottom: "clamp(48px, 8vw, 80px)" }}>
             {/* Eyebrow */}
             <motion.div
               initial={{ opacity: 0, x: -20 }}
@@ -410,7 +448,7 @@ export default function WhatSetsUsApartPremium() {
               style={{
                 fontFamily: "'Barlow', sans-serif",
                 fontWeight: 400,
-                fontSize: 16,
+                fontSize: "clamp(14px, 1.8vw, 16px)",
                 lineHeight: 1.85,
                 color: "rgba(255,255,255,0.45)",
                 maxWidth: 720,
@@ -439,8 +477,9 @@ export default function WhatSetsUsApartPremium() {
             />
           </div>
 
-          {/* ── Feature cards 2×2 grid ── */}
+          {/* ── Feature cards grid (responsive via CSS) ── */}
           <div
+            className="features-grid"
             style={{
               display: "grid",
               gridTemplateColumns: "repeat(2, 1fr)",
@@ -452,103 +491,7 @@ export default function WhatSetsUsApartPremium() {
             ))}
           </div>
 
-          {/* ── Bottom CTA strip ── */}
-          <motion.div
-            initial={{ opacity: 0, y: 32 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-40px" }}
-            transition={{ duration: 0.85, delay: 0.45, ease: E }}
-            style={{
-              marginTop: 64,
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "space-between",
-              flexWrap: "wrap",
-              gap: 24,
-              padding: "36px 40px",
-              background: "rgba(255,255,255,0.03)",
-              backdropFilter: "blur(16px)",
-              border: "1px solid rgba(255,255,255,0.07)",
-              borderRadius: 18,
-            }}
-          >
-            <div>
-              <div
-                style={{
-                  fontFamily: "'Barlow Condensed', sans-serif",
-                  fontWeight: 800,
-                  fontSize: 22,
-                  textTransform: "uppercase",
-                  letterSpacing: 0.5,
-                  color: "#fff",
-                  marginBottom: 6,
-                }}
-              >
-                Ready to Build Something That Matters?
-              </div>
-              <div
-                style={{
-                  fontFamily: "'Barlow', sans-serif",
-                  fontSize: 14,
-                  color: "rgba(255,255,255,0.4)",
-                }}
-              >
-                Talk to our architects and get a free project assessment.
-              </div>
-            </div>
-            <div style={{ display: "flex", gap: 14 }}>
-              <motion.a
-                href="#"
-                whileHover={{ scale: 1.05, boxShadow: "0 0 32px rgba(59,130,246,0.5)" }}
-                whileTap={{ scale: 0.97 }}
-                style={{
-                  display: "inline-flex",
-                  alignItems: "center",
-                  gap: 8,
-                  background: "linear-gradient(135deg, #3b82f6, #2563eb)",
-                  color: "#fff",
-                  textDecoration: "none",
-                  fontFamily: "'Barlow', sans-serif",
-                  fontWeight: 700,
-                  fontSize: 12,
-                  letterSpacing: 2,
-                  textTransform: "uppercase",
-                  padding: "14px 28px",
-                  borderRadius: 8,
-                  whiteSpace: "nowrap",
-                  boxShadow: "0 0 20px rgba(59,130,246,0.3)",
-                }}
-              >
-                Book a Free Consultation
-                <svg width="12" height="12" viewBox="0 0 14 14" fill="none" stroke="white" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
-                  <path d="M2 7h10M8 3l4 4-4 4" />
-                </svg>
-              </motion.a>
-              <motion.a
-                href="#"
-                whileHover={{ background: "rgba(255,255,255,0.08)" }}
-                whileTap={{ scale: 0.97 }}
-                style={{
-                  display: "inline-flex",
-                  alignItems: "center",
-                  color: "rgba(255,255,255,0.8)",
-                  textDecoration: "none",
-                  fontFamily: "'Barlow', sans-serif",
-                  fontWeight: 600,
-                  fontSize: 12,
-                  letterSpacing: 2,
-                  textTransform: "uppercase",
-                  padding: "14px 28px",
-                  borderRadius: 8,
-                  border: "1px solid rgba(255,255,255,0.18)",
-                  whiteSpace: "nowrap",
-                  transition: "background 0.2s",
-                }}
-              >
-                View Portfolio
-              </motion.a>
-            </div>
-          </motion.div>
+       
         </div>
       </section>
     </>

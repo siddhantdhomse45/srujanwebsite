@@ -78,6 +78,89 @@ export default function DataAnalyticsHero() {
     }}>
       <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800;900&display=swap" rel="stylesheet"/>
 
+      <style>{`
+        /* Responsive adjustments */
+        @media (max-width: 1024px) {
+          .hero-content-container {
+            flex-direction: column !important;
+            gap: 48px !important;
+          }
+          .hero-left {
+            max-width: 100% !important;
+          }
+          .hero-widget {
+            position: relative !important;
+            top: auto !important;
+            right: auto !important;
+            transform: none !important;
+            width: 100% !important;
+            max-width: 400px !important;
+            margin: 0 auto !important;
+          }
+          .hero-padding {
+            padding: 80px 0 60px !important;
+          }
+        }
+        @media (max-width: 768px) {
+          .hero-headline {
+            font-size: clamp(28px, 6vw, 44px) !important;
+            letter-spacing: -1px !important;
+          }
+          .hero-subheadline {
+            font-size: clamp(28px, 6vw, 44px) !important;
+          }
+          .hero-text {
+            font-size: 14px !important;
+          }
+          .hero-buttons {
+            flex-direction: column;
+            align-items: stretch;
+            gap: 12px !important;
+          }
+          .hero-buttons button {
+            justify-content: center;
+            width: 100%;
+          }
+          .badges-container {
+            justify-content: center;
+          }
+          .floating-ring {
+            display: none;
+          }
+          .floating-particle {
+            display: none;
+          }
+        }
+        @media (max-width: 480px) {
+          .hero-pill {
+            padding: 5px 14px !important;
+            margin-bottom: 20px !important;
+          }
+          .hero-pill span {
+            font-size: 10px !important;
+            letter-spacing: 2px !important;
+          }
+          .hero-headline {
+            font-size: 24px !important;
+            line-height: 1.15 !important;
+          }
+          .hero-subheadline {
+            font-size: 24px !important;
+            line-height: 1.15 !important;
+          }
+          .hero-accent-line {
+            width: 60px !important;
+            margin-bottom: 20px !important;
+          }
+          .hero-widget {
+            padding: 20px !important;
+          }
+          .hero-widget .metric-grid {
+            gap: 10px !important;
+          }
+        }
+      `}</style>
+
       {/* ── Parallax background ── */}
       <motion.div style={{
         position:"absolute",inset:0,y:bgY,scale:1.14,
@@ -95,7 +178,6 @@ export default function DataAnalyticsHero() {
         position:"absolute",inset:0,
         background:"radial-gradient(ellipse 80% 100% at 0% 50%,rgba(10,25,80,0.65),transparent 70%)",
       }}/>
-      {/* cyan/teal tint echoing the dashboard screen on right */}
       <div style={{
         position:"absolute",inset:0,
         background:"radial-gradient(ellipse 40% 60% at 100% 40%,rgba(6,40,60,0.35),transparent 70%)",
@@ -119,13 +201,13 @@ export default function DataAnalyticsHero() {
       <motion.div animate={{ scale:[1,1.08,1],opacity:[0.10,0.18,0.10] }} transition={{ duration:18,repeat:Infinity,ease:"easeInOut",delay:6 }}
         style={{ position:"absolute",top:"20%",right:"-5%",width:380,height:380,borderRadius:"50%",background:"radial-gradient(circle,#4f46e5,#818cf8,transparent 70%)",filter:"blur(80px)",pointerEvents:"none" }}/>
 
-      {/* ── Rotating rings ── */}
-      <motion.div animate={{ rotate:360 }} transition={{ duration:50,repeat:Infinity,ease:"linear" }}
+      {/* ── Rotating rings (hide on mobile) ── */}
+      <motion.div className="floating-ring" animate={{ rotate:360 }} transition={{ duration:50,repeat:Infinity,ease:"linear" }}
         style={{ position:"absolute",width:750,height:750,top:"50%",left:"35%",transform:"translate(-50%,-50%)",border:"1px solid rgba(59,130,246,0.07)",borderRadius:"50%",pointerEvents:"none" }}/>
-      <motion.div animate={{ rotate:-360 }} transition={{ duration:80,repeat:Infinity,ease:"linear" }}
+      <motion.div className="floating-ring" animate={{ rotate:-360 }} transition={{ duration:80,repeat:Infinity,ease:"linear" }}
         style={{ position:"absolute",width:1020,height:1020,top:"50%",left:"35%",transform:"translate(-50%,-50%)",border:"1px solid rgba(6,182,212,0.04)",borderRadius:"50%",pointerEvents:"none" }}/>
 
-      {/* ── Floating data particles ── */}
+      {/* ── Floating data particles (hide on mobile) ── */}
       {[
         {top:"12%",left:"58%",size:4,delay:0,c:"#38bdf8"},
         {top:"28%",left:"72%",size:3,delay:0.8,c:"#818cf8"},
@@ -135,146 +217,136 @@ export default function DataAnalyticsHero() {
         {top:"42%",left:"84%",size:3,delay:2.0,c:"#818cf8"},
         {top:"80%",left:"55%",size:3,delay:0.6,c:"#06b6d4"},
       ].map((p,i) => (
-        <motion.div key={i}
+        <motion.div key={i} className="floating-particle"
           animate={{ y:[0,-14,0],opacity:[0.25,0.75,0.25] }}
           transition={{ duration:3+i*0.4,repeat:Infinity,ease:"easeInOut",delay:p.delay }}
           style={{ position:"absolute",top:p.top,left:p.left,width:p.size,height:p.size,borderRadius:"50%",background:p.c,boxShadow:`0 0 ${p.size*3}px ${p.c}`,pointerEvents:"none" }}
         />
       ))}
 
-      {/* ── Main content ── */}
-      <motion.div style={{ y:contentY,opacity:fade,position:"relative",zIndex:10,width:"100%",padding:"clamp(100px,14vw,140px) 0 clamp(80px,10vw,120px)" }}>
+      {/* ── Main content container (flex on desktop, column on mobile) ── */}
+      <motion.div className="hero-padding" style={{ y:contentY,opacity:fade,position:"relative",zIndex:10,width:"100%",padding:"clamp(100px,14vw,140px) 0 clamp(80px,10vw,120px)" }}>
         <div style={{ maxWidth:1280,margin:"0 auto",padding:"0 clamp(20px,5vw,80px)" }}>
-          <div style={{ maxWidth:680 }}>
+          <div className="hero-content-container" style={{ display:"flex", justifyContent:"space-between", alignItems:"center", gap:40, flexWrap:"wrap" }}>
+            
+            {/* Left content */}
+            <div className="hero-left" style={{ maxWidth:680, flex:1 }}>
+              {/* Pill badge */}
+              <motion.div className="hero-pill" initial={{ opacity:0,y:20 }} animate={{ opacity:1,y:0 }} transition={{ duration:0.6,delay:0.1 }}
+                style={{ display:"inline-flex",alignItems:"center",gap:8,background:"rgba(59,130,246,0.12)",backdropFilter:"blur(20px)",WebkitBackdropFilter:"blur(20px)",border:"1px solid rgba(59,130,246,0.30)",borderRadius:100,padding:"7px 18px",marginBottom:30 }}>
+                <motion.span animate={{ opacity:[1,0.3,1] }} transition={{ duration:1.8,repeat:Infinity }} style={{ width:7,height:7,borderRadius:"50%",background:"#38bdf8",boxShadow:"0 0 10px #38bdf8",display:"inline-block",flexShrink:0 }}/>
+                <span style={{ color:"#93c5fd",fontSize:"clamp(10px,3vw,12px)",fontWeight:700,letterSpacing:2.5,textTransform:"uppercase" }}>Data Analytics Services</span>
+              </motion.div>
 
-            {/* Pill badge */}
-            <motion.div initial={{ opacity:0,y:20 }} animate={{ opacity:1,y:0 }} transition={{ duration:0.6,delay:0.1 }}
-              style={{ display:"inline-flex",alignItems:"center",gap:8,background:"rgba(59,130,246,0.12)",backdropFilter:"blur(20px)",WebkitBackdropFilter:"blur(20px)",border:"1px solid rgba(59,130,246,0.30)",borderRadius:100,padding:"7px 18px",marginBottom:30 }}>
-              <motion.span animate={{ opacity:[1,0.3,1] }} transition={{ duration:1.8,repeat:Infinity }} style={{ width:7,height:7,borderRadius:"50%",background:"#38bdf8",boxShadow:"0 0 10px #38bdf8",display:"inline-block",flexShrink:0 }}/>
-              <span style={{ color:"#93c5fd",fontSize:12,fontWeight:700,letterSpacing:2.5,textTransform:"uppercase" }}>Data Analytics Services</span>
-            </motion.div>
+              {/* Headline */}
+              <motion.h1 className="hero-headline" initial={{ opacity:0,y:36 }} animate={{ opacity:1,y:0 }} transition={{ duration:0.85,delay:0.2,ease:[0.22,1,0.36,1] }}
+                style={{ color:"white",fontSize:"clamp(28px,4.5vw,60px)",fontWeight:900,letterSpacing:"-2px",lineHeight:1.05,textTransform:"uppercase",marginBottom:10 }}>
+                Data Analytics Services
+              </motion.h1>
 
-            {/* Headline */}
-            <motion.h1 initial={{ opacity:0,y:36 }} animate={{ opacity:1,y:0 }} transition={{ duration:0.85,delay:0.2,ease:[0.22,1,0.36,1] }}
-              style={{ color:"white",fontSize:"clamp(28px,4.5vw,60px)",fontWeight:900,letterSpacing:"-2px",lineHeight:1.05,textTransform:"uppercase",marginBottom:10 }}>
-              Data Analytics Services
-            </motion.h1>
+              <motion.div className="hero-subheadline" initial={{ opacity:0,y:20 }} animate={{ opacity:1,y:0 }} transition={{ duration:0.8,delay:0.3,ease:[0.22,1,0.36,1] }}>
+                <span style={{
+                  display:"block",
+                  fontSize:"clamp(28px,4.5vw,60px)",fontWeight:900,letterSpacing:"-2px",lineHeight:1.05,textTransform:"uppercase",marginBottom:24,
+                  background:"linear-gradient(90deg,#38bdf8 0%,#60a5fa 35%,#818cf8 65%,#c084fc 100%)",
+                  WebkitBackgroundClip:"text",WebkitTextFillColor:"transparent",backgroundClip:"text",
+                }}>
+                  Trusted by Fortune 500 Brands
+                </span>
+              </motion.div>
 
-            <motion.div initial={{ opacity:0,y:20 }} animate={{ opacity:1,y:0 }} transition={{ duration:0.8,delay:0.3,ease:[0.22,1,0.36,1] }}>
-              <span style={{
-                display:"block",
-                fontSize:"clamp(28px,4.5vw,60px)",fontWeight:900,letterSpacing:"-2px",lineHeight:1.05,textTransform:"uppercase",marginBottom:24,
-                background:"linear-gradient(90deg,#38bdf8 0%,#60a5fa 35%,#818cf8 65%,#c084fc 100%)",
-                WebkitBackgroundClip:"text",WebkitTextFillColor:"transparent",backgroundClip:"text",
-              }}>
-                Trusted by Fortune 500 Brands
-              </span>
-            </motion.div>
+              {/* Accent line */}
+              <motion.div className="hero-accent-line" initial={{ scaleX:0 }} animate={{ scaleX:1 }} transition={{ duration:0.9,delay:0.42,ease:[0.22,1,0.36,1] }}
+                style={{ width:90,height:3,borderRadius:2,marginBottom:26,background:"linear-gradient(90deg,#38bdf8,#818cf8)",transformOrigin:"left" }}/>
 
-            {/* Accent line */}
-            <motion.div initial={{ scaleX:0 }} animate={{ scaleX:1 }} transition={{ duration:0.9,delay:0.42,ease:[0.22,1,0.36,1] }}
-              style={{ width:90,height:3,borderRadius:2,marginBottom:26,background:"linear-gradient(90deg,#38bdf8,#818cf8)",transformOrigin:"left" }}/>
+              {/* Sub-text */}
+              <motion.p className="hero-text" initial={{ opacity:0,y:20 }} animate={{ opacity:1,y:0 }} transition={{ duration:0.7,delay:0.46 }}
+                style={{ color:"rgba(186,230,255,0.62)",fontSize:"clamp(14px,1.5vw,17px)",lineHeight:1.85,marginBottom:46,maxWidth:560 }}>
+                Maximize the value of your data with our analytics services. Transform your organization into a data-driven powerhouse through cutting-edge solutions that drive smarter decision-making, operational efficiency, and business growth.
+              </motion.p>
 
-            {/* Sub-text */}
-            <motion.p initial={{ opacity:0,y:20 }} animate={{ opacity:1,y:0 }} transition={{ duration:0.7,delay:0.46 }}
-              style={{ color:"rgba(186,230,255,0.62)",fontSize:"clamp(14px,1.5vw,17px)",lineHeight:1.85,marginBottom:46,maxWidth:560 }}>
-              Maximize the value of your data with our analytics services. Transform your organization into a data-driven powerhouse through cutting-edge solutions that drive smarter decision-making, operational efficiency, and business growth.
-            </motion.p>
+              {/* CTA Buttons */}
+              <motion.div className="hero-buttons" initial={{ opacity:0,y:20 }} animate={{ opacity:1,y:0 }} transition={{ duration:0.6,delay:0.56 }}
+                style={{ display:"flex",gap:14,flexWrap:"wrap",alignItems:"center",marginBottom:52 }}>
+                <motion.button
+                  whileHover={{ scale:1.05,boxShadow:"0 0 44px rgba(59,130,246,0.65)" }}
+                  whileTap={{ scale:0.97 }}
+                  style={{ display:"inline-flex",alignItems:"center",gap:9,background:"linear-gradient(135deg,#1d4ed8,#3b82f6)",border:"none",borderRadius:10,color:"white",fontFamily:"'DM Sans',sans-serif",fontWeight:700,fontSize:"clamp(11px,1.2vw,13px)",letterSpacing:"0.16em",textTransform:"uppercase",padding:"clamp(13px,1.6vw,16px) clamp(22px,2.8vw,32px)",cursor:"pointer",boxShadow:"0 4px 24px rgba(59,130,246,0.40)" }}>
+                  Book a Free Consultation <FiArrowRight size={15}/>
+                </motion.button>
+                <motion.button
+                  whileHover={{ scale:1.04,background:"rgba(59,130,246,0.15)",borderColor:"rgba(59,130,246,0.50)" }}
+                  whileTap={{ scale:0.97 }}
+                  style={{ display:"inline-flex",alignItems:"center",gap:9,background:"rgba(255,255,255,0.07)",backdropFilter:"blur(16px)",WebkitBackdropFilter:"blur(16px)",border:"1px solid rgba(255,255,255,0.22)",borderRadius:10,color:"white",fontFamily:"'DM Sans',sans-serif",fontWeight:700,fontSize:"clamp(11px,1.2vw,13px)",letterSpacing:"0.16em",textTransform:"uppercase",padding:"clamp(13px,1.6vw,16px) clamp(22px,2.8vw,32px)",cursor:"pointer",transition:"all 0.3s" }}>
+                  View Portfolio <FiExternalLink size={14}/>
+                </motion.button>
+              </motion.div>
 
-            {/* CTA Buttons */}
-            <motion.div initial={{ opacity:0,y:20 }} animate={{ opacity:1,y:0 }} transition={{ duration:0.6,delay:0.56 }}
-              style={{ display:"flex",gap:14,flexWrap:"wrap",alignItems:"center",marginBottom:52 }}>
-              <motion.button
-                whileHover={{ scale:1.05,boxShadow:"0 0 44px rgba(59,130,246,0.65)" }}
-                whileTap={{ scale:0.97 }}
-                style={{ display:"inline-flex",alignItems:"center",gap:9,background:"linear-gradient(135deg,#1d4ed8,#3b82f6)",border:"none",borderRadius:10,color:"white",fontFamily:"'DM Sans',sans-serif",fontWeight:700,fontSize:"clamp(11px,1.2vw,13px)",letterSpacing:"0.16em",textTransform:"uppercase",padding:"clamp(13px,1.6vw,16px) clamp(22px,2.8vw,32px)",cursor:"pointer",boxShadow:"0 4px 24px rgba(59,130,246,0.40)" }}>
-                Book a Free Consultation <FiArrowRight size={15}/>
-              </motion.button>
-              <motion.button
-                whileHover={{ scale:1.04,background:"rgba(59,130,246,0.15)",borderColor:"rgba(59,130,246,0.50)" }}
-                whileTap={{ scale:0.97 }}
-                style={{ display:"inline-flex",alignItems:"center",gap:9,background:"rgba(255,255,255,0.07)",backdropFilter:"blur(16px)",WebkitBackdropFilter:"blur(16px)",border:"1px solid rgba(255,255,255,0.22)",borderRadius:10,color:"white",fontFamily:"'DM Sans',sans-serif",fontWeight:700,fontSize:"clamp(11px,1.2vw,13px)",letterSpacing:"0.16em",textTransform:"uppercase",padding:"clamp(13px,1.6vw,16px) clamp(22px,2.8vw,32px)",cursor:"pointer",transition:"all 0.3s" }}>
-                View Portfolio <FiExternalLink size={14}/>
-              </motion.button>
-            </motion.div>
+              {/* Trust badges */}
+              <motion.div className="badges-container" initial={{ opacity:0 }} animate={{ opacity:1 }} transition={{ duration:0.8,delay:0.75 }} style={{ display:"flex",gap:10,flexWrap:"wrap" }}>
+                {BADGES.map((b,i) => (
+                  <motion.div key={i} initial={{ opacity:0,y:10 }} animate={{ opacity:1,y:0 }} transition={{ delay:0.78+i*0.09,duration:0.4 }}
+                    style={{ display:"flex",alignItems:"center",gap:8,background:"rgba(59,130,246,0.10)",backdropFilter:"blur(16px)",WebkitBackdropFilter:"blur(16px)",border:"1px solid rgba(59,130,246,0.22)",borderRadius:8,padding:"8px 15px",color:"#93c5fd" }}>
+                    {b.icon}
+                    <span style={{ fontSize:"clamp(10px,3vw,12px)",fontWeight:600,color:"rgba(186,230,255,0.75)" }}>{b.label}</span>
+                  </motion.div>
+                ))}
+              </motion.div>
+            </div>
 
-            {/* Trust badges */}
-            <motion.div initial={{ opacity:0 }} animate={{ opacity:1 }} transition={{ duration:0.8,delay:0.75 }} style={{ display:"flex",gap:10,flexWrap:"wrap" }}>
-              {BADGES.map((b,i) => (
-                <motion.div key={i} initial={{ opacity:0,y:10 }} animate={{ opacity:1,y:0 }} transition={{ delay:0.78+i*0.09,duration:0.4 }}
-                  style={{ display:"flex",alignItems:"center",gap:8,background:"rgba(59,130,246,0.10)",backdropFilter:"blur(16px)",WebkitBackdropFilter:"blur(16px)",border:"1px solid rgba(59,130,246,0.22)",borderRadius:8,padding:"8px 15px",color:"#93c5fd" }}>
-                  {b.icon}
-                  <span style={{ fontSize:12,fontWeight:600,color:"rgba(186,230,255,0.75)" }}>{b.label}</span>
-                </motion.div>
-              ))}
+            {/* Right widget - floating metrics (becomes below on mobile) */}
+            <motion.div className="hero-widget"
+              initial={{ opacity:0,x:60,y:20 }}
+              animate={{ opacity:1,x:0,y:0 }}
+              transition={{ duration:0.9,delay:0.7,ease:[0.22,1,0.36,1] }}
+              style={{
+                background:"rgba(5,15,45,0.80)",
+                backdropFilter:"blur(28px)",WebkitBackdropFilter:"blur(28px)",
+                border:"1px solid rgba(59,130,246,0.22)",
+                borderRadius:20,padding:"24px 28px",
+                width:"clamp(220px,22vw,280px)",
+                boxShadow:"0 24px 60px rgba(0,0,0,0.45),0 0 40px rgba(59,130,246,0.12)",
+                display:"flex",flexDirection:"column",gap:20,
+              }}
+            >
+              <div style={{ display:"flex",alignItems:"center",justifyContent:"space-between" }}>
+                <span style={{ color:"rgba(147,197,253,0.65)",fontSize:11,fontWeight:700,letterSpacing:2,textTransform:"uppercase",fontFamily:"'DM Sans',sans-serif" }}>Analytics Overview</span>
+                <div style={{ width:8,height:8,borderRadius:"50%",background:"#22d3ee",boxShadow:"0 0 8px #22d3ee" }}/>
+              </div>
+
+              <DataBars/>
+
+              <div style={{ height:1,background:"rgba(59,130,246,0.15)" }}/>
+
+              <div className="metric-grid" style={{ display:"grid",gridTemplateColumns:"1fr 1fr",gap:14 }}>
+                {METRICS.map((m,i) => (
+                  <motion.div key={i} initial={{ opacity:0,y:10 }} animate={{ opacity:1,y:0 }} transition={{ delay:0.9+i*0.1,duration:0.4 }} style={{ textAlign:"center" }}>
+                    <div style={{
+                      fontSize:"clamp(18px,2.5vw,24px)",fontWeight:900,lineHeight:1,
+                      background:`linear-gradient(135deg,#38bdf8,#818cf8)`,
+                      WebkitBackgroundClip:"text",WebkitTextFillColor:"transparent",
+                      fontFamily:"'DM Sans',sans-serif",letterSpacing:"-1px",marginBottom:4,
+                    }}>
+                      <Counter target={m.value} suffix={m.suffix} duration={1600}/>
+                    </div>
+                    <div style={{ color:"rgba(147,197,253,0.45)",fontSize:10,fontWeight:600,letterSpacing:0.5,fontFamily:"'DM Sans',sans-serif" }}>
+                      {m.label}
+                    </div>
+                  </motion.div>
+                ))}
+              </div>
+
+              <div style={{ height:2,borderRadius:2,background:"linear-gradient(90deg,#38bdf8,#818cf8,#c084fc)" }}/>
             </motion.div>
 
           </div>
-
-          {/* ── Floating data metrics widget ── */}
-          <motion.div
-            initial={{ opacity:0,x:60,y:20 }}
-            animate={{ opacity:1,x:0,y:0 }}
-            transition={{ duration:0.9,delay:0.7,ease:[0.22,1,0.36,1] }}
-            style={{
-              position:"absolute",right:"clamp(20px,5vw,80px)",top:"50%",transform:"translateY(-50%)",
-              background:"rgba(5,15,45,0.80)",
-              backdropFilter:"blur(28px)",WebkitBackdropFilter:"blur(28px)",
-              border:"1px solid rgba(59,130,246,0.22)",
-              borderRadius:20,padding:"24px 28px",
-              width:"clamp(220px,22vw,280px)",
-              boxShadow:"0 24px 60px rgba(0,0,0,0.45),0 0 40px rgba(59,130,246,0.12)",
-              display:"flex",flexDirection:"column",gap:20,
-            }}
-          >
-            {/* widget header */}
-            <div style={{ display:"flex",alignItems:"center",justifyContent:"space-between" }}>
-              <span style={{ color:"rgba(147,197,253,0.65)",fontSize:11,fontWeight:700,letterSpacing:2,textTransform:"uppercase",fontFamily:"'DM Sans',sans-serif" }}>Analytics Overview</span>
-              <div style={{ width:8,height:8,borderRadius:"50%",background:"#22d3ee",boxShadow:"0 0 8px #22d3ee" }}/>
-            </div>
-
-            {/* bar chart */}
-            <DataBars/>
-
-            {/* divider */}
-            <div style={{ height:1,background:"rgba(59,130,246,0.15)" }}/>
-
-            {/* metrics grid */}
-            <div style={{ display:"grid",gridTemplateColumns:"1fr 1fr",gap:14 }}>
-              {METRICS.map((m,i) => (
-                <motion.div
-                  key={i}
-                  initial={{ opacity:0,y:10 }}
-                  animate={{ opacity:1,y:0 }}
-                  transition={{ delay:0.9+i*0.1,duration:0.4 }}
-                  style={{ textAlign:"center" }}
-                >
-                  <div style={{
-                    fontSize:"clamp(18px,2.5vw,24px)",fontWeight:900,lineHeight:1,
-                    background:`linear-gradient(135deg,#38bdf8,#818cf8)`,
-                    WebkitBackgroundClip:"text",WebkitTextFillColor:"transparent",
-                    fontFamily:"'DM Sans',sans-serif",letterSpacing:"-1px",marginBottom:4,
-                  }}>
-                    <Counter target={m.value} suffix={m.suffix} duration={1600}/>
-                  </div>
-                  <div style={{ color:"rgba(147,197,253,0.45)",fontSize:10,fontWeight:600,letterSpacing:0.5,fontFamily:"'DM Sans',sans-serif" }}>
-                    {m.label}
-                  </div>
-                </motion.div>
-              ))}
-            </div>
-
-            {/* bottom accent */}
-            <div style={{ height:2,borderRadius:2,background:"linear-gradient(90deg,#38bdf8,#818cf8,#c084fc)" }}/>
-          </motion.div>
-
         </div>
       </motion.div>
 
       {/* ── Scroll indicator ── */}
       <motion.div animate={{ y:[0,8,0] }} transition={{ duration:2,repeat:Infinity }}
-        style={{ position:"absolute",bottom:36,left:"50%",transform:"translateX(-50%)",display:"flex",flexDirection:"column",alignItems:"center",gap:6,zIndex:10 }}>
-        <span style={{ color:"rgba(147,197,253,0.35)",fontSize:10,letterSpacing:2.5,textTransform:"uppercase" }}>Scroll</span>
+        style={{ position:"absolute",bottom:"clamp(20px,5vh,36px)",left:"50%",transform:"translateX(-50%)",display:"flex",flexDirection:"column",alignItems:"center",gap:6,zIndex:10 }}>
+        <span style={{ color:"rgba(147,197,253,0.35)",fontSize:"clamp(8px,2.5vw,10px)",letterSpacing:2.5,textTransform:"uppercase" }}>Scroll</span>
         <svg width="16" height="20" viewBox="0 0 16 20" fill="none">
           <rect x="5.5" y="1.5" width="5" height="8" rx="2.5" stroke="rgba(147,197,253,0.3)" strokeWidth="1.2"/>
           <path d="M8 14l-3 3m3-3l3 3" stroke="rgba(147,197,253,0.3)" strokeWidth="1.2" strokeLinecap="round"/>
@@ -286,4 +358,3 @@ export default function DataAnalyticsHero() {
     </section>
   );
 }
-

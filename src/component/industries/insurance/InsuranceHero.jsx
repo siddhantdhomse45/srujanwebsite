@@ -39,16 +39,15 @@ export default function InsuranceHero() {
           backgroundSize:"60px 60px",
         }} />
 
-        {/* Right-side abstract office silhouette shapes */}
-        {/* Person 1 silhouette */}
-        <div style={{
+        {/* Right-side abstract office silhouette shapes – hidden on mobile */}
+        <div className="silhouette-shapes" style={{
           position:"absolute", right:"8%", top:"10%", bottom:0,
           width:"28%",
           background:"linear-gradient(180deg,rgba(37,99,235,0.06) 0%,rgba(37,99,235,0.02) 100%)",
           borderRadius:"200px 200px 0 0",
           filter:"blur(2px)",
         }} />
-        <div style={{
+        <div className="silhouette-shapes" style={{
           position:"absolute", right:"24%", top:"18%", bottom:0,
           width:"18%",
           background:"linear-gradient(180deg,rgba(99,102,241,0.07) 0%,rgba(99,102,241,0.02) 100%)",
@@ -56,7 +55,7 @@ export default function InsuranceHero() {
           filter:"blur(2px)",
         }} />
 
-        {/* Diagonal lines - tech feel */}
+        {/* Diagonal lines */}
         <div style={{
           position:"absolute", right:0, top:0, bottom:0, width:"55%",
           backgroundImage:"repeating-linear-gradient(-45deg,rgba(59,130,246,0.02) 0px,rgba(59,130,246,0.02) 1px,transparent 1px,transparent 40px)",
@@ -68,33 +67,37 @@ export default function InsuranceHero() {
           background:"linear-gradient(to left,rgba(6,29,66,0.3),transparent)",
         }} />
 
-        {/* Floating particles */}
-        {[
-          {top:"12%",left:"52%",s:3,o:0.5},{top:"28%",left:"68%",s:2,o:0.35},
-          {top:"55%",left:"58%",s:4,o:0.25},{top:"72%",left:"74%",s:2,o:0.4},
-          {top:"18%",left:"78%",s:3,o:0.3},{top:"82%",left:"48%",s:2,o:0.2},
-          {top:"40%",left:"88%",s:2,o:0.3},{top:"65%",left:"86%",s:3,o:0.25},
-        ].map((d, i) => (
-          <div key={i} style={{
-            position:"absolute", top:d.top, left:d.left,
-            width:`${d.s}px`, height:`${d.s}px`,
-            borderRadius:"50%", background:"#60a5fa", opacity:d.o,
-          }} />
-        ))}
+        {/* Floating particles – hidden on mobile */}
+        <div className="particles">
+          {[
+            {top:"12%",left:"52%",s:3,o:0.5},{top:"28%",left:"68%",s:2,o:0.35},
+            {top:"55%",left:"58%",s:4,o:0.25},{top:"72%",left:"74%",s:2,o:0.4},
+            {top:"18%",left:"78%",s:3,o:0.3},{top:"82%",left:"48%",s:2,o:0.2},
+            {top:"40%",left:"88%",s:2,o:0.3},{top:"65%",left:"86%",s:3,o:0.25},
+          ].map((d, i) => (
+            <div key={i} style={{
+              position:"absolute", top:d.top, left:d.left,
+              width:`${d.s}px`, height:`${d.s}px`,
+              borderRadius:"50%", background:"#60a5fa", opacity:d.o,
+            }} />
+          ))}
+        </div>
 
         {/* Decorative horizontal lines */}
-        {[20,35,50,65,78].map((top,i) => (
-          <div key={i} style={{
-            position:"absolute", top:`${top}%`,
-            right:"5%", width:`${[120,80,140,90,110][i]}px`, height:"1px",
-            background:`linear-gradient(to left,rgba(59,130,246,${[0.3,0.2,0.4,0.15,0.25][i]}),transparent)`,
-          }} />
-        ))}
+        <div className="decor-lines">
+          {[20,35,50,65,78].map((top,i) => (
+            <div key={i} style={{
+              position:"absolute", top:`${top}%`,
+              right:"5%", width:`${[120,80,140,90,110][i]}px`, height:"1px",
+              background:`linear-gradient(to left,rgba(59,130,246,${[0.3,0.2,0.4,0.15,0.25][i]}),transparent)`,
+            }} />
+          ))}
+        </div>
       </div>
 
       {/* ── Main Content ── */}
-      <div style={{ maxWidth:"1200px", margin:"0 auto", padding:"0 48px", position:"relative", zIndex:10, width:"100%" }}>
-        <div style={{ maxWidth:"700px" }}>
+      <div style={{ maxWidth:"1200px", margin:"0 auto", padding:"0 clamp(20px,5vw,48px)", position:"relative", zIndex:10, width:"100%" }}>
+        <div style={{ maxWidth:"min(700px,100%)" }}>
 
           {/* Badge */}
           <div style={{ marginBottom:"28px", display:"flex", alignItems:"center", gap:"12px", flexWrap:"wrap" }}>
@@ -102,7 +105,7 @@ export default function InsuranceHero() {
               display:"inline-flex", alignItems:"center", gap:"8px",
               padding:"7px 18px", borderRadius:"6px",
               background:"linear-gradient(135deg,#1d4ed8,#2563eb)",
-              color:"white", fontSize:"11px", fontWeight:"800",
+              color:"white", fontSize:"clamp(10px,3vw,11px)", fontWeight:"800",
               letterSpacing:"0.2em", textTransform:"uppercase",
               boxShadow:"0 4px 16px rgba(37,99,235,0.5)",
             }}>
@@ -113,7 +116,7 @@ export default function InsuranceHero() {
               display:"inline-flex", alignItems:"center", gap:"6px",
               padding:"6px 14px", borderRadius:"6px",
               background:"rgba(16,185,129,0.12)", border:"1px solid rgba(16,185,129,0.3)",
-              color:"#34d399", fontSize:"11px", fontWeight:"700", letterSpacing:"0.1em",
+              color:"#34d399", fontSize:"clamp(10px,3vw,11px)", fontWeight:"700", letterSpacing:"0.1em",
             }}>
               <span style={{ width:5, height:5, borderRadius:"50%", background:"#10b981", display:"inline-block" }} />
               Trusted Globally
@@ -122,7 +125,7 @@ export default function InsuranceHero() {
 
           {/* Heading */}
           <h1 style={{
-            fontSize:"clamp(30px,5vw,62px)",
+            fontSize:"clamp(30px,6vw,62px)",
             fontWeight:"900",
             letterSpacing:"0.04em",
             textTransform:"uppercase",
@@ -149,7 +152,8 @@ export default function InsuranceHero() {
 
           {/* Description */}
           <p style={{
-            fontSize:"16px", lineHeight:"1.85",
+            fontSize:"clamp(14px,2.5vw,16px)",
+            lineHeight:"1.85",
             color:"rgba(148,163,184,0.9)",
             maxWidth:"580px", margin:"0 0 36px",
           }}>
@@ -161,7 +165,7 @@ export default function InsuranceHero() {
             {tags.map((tag, i) => (
               <span key={i} style={{
                 padding:"5px 14px", borderRadius:"8px",
-                fontSize:"11px", fontWeight:"700",
+                fontSize:"clamp(10px,2.5vw,11px)", fontWeight:"700",
                 letterSpacing:"0.1em", textTransform:"uppercase",
                 color:"#60a5fa",
                 background:"rgba(37,99,235,0.1)",
@@ -172,18 +176,19 @@ export default function InsuranceHero() {
             ))}
           </div>
 
-          {/* CTA Buttons */}
-          <div style={{ display:"flex", alignItems:"center", gap:"16px", flexWrap:"wrap", marginBottom:"56px" }}>
+          {/* CTA Buttons – responsive */}
+          <div className="hero-buttons" style={{ display:"flex", alignItems:"center", gap:"16px", flexWrap:"wrap", marginBottom:"56px" }}>
             <button
               onMouseEnter={() => setHovTalk(true)}
               onMouseLeave={() => setHovTalk(false)}
               style={{
                 display:"inline-flex", alignItems:"center", gap:"10px",
-                padding:"16px 36px", borderRadius:"10px", border:"none",
+                padding:"clamp(14px,2vw,16px) clamp(28px,4vw,36px)",
+                borderRadius:"10px", border:"none",
                 background: hovTalk
                   ? "linear-gradient(135deg,#2563eb,#4f46e5)"
                   : "linear-gradient(135deg,#1d4ed8,#2563eb)",
-                color:"white", fontSize:"13px", fontWeight:"800",
+                color:"white", fontSize:"clamp(12px,2vw,13px)", fontWeight:"800",
                 letterSpacing:"0.12em", textTransform:"uppercase", cursor:"pointer",
                 boxShadow: hovTalk ? "0 16px 48px -4px rgba(37,99,235,0.75)" : "0 8px 28px -4px rgba(37,99,235,0.55)",
                 transform: hovTalk ? "translateY(-3px)" : "translateY(0)",
@@ -201,11 +206,12 @@ export default function InsuranceHero() {
               onMouseLeave={() => setHovPortfolio(false)}
               style={{
                 display:"inline-flex", alignItems:"center", gap:"10px",
-                padding:"15px 32px", borderRadius:"10px",
+                padding:"clamp(13px,2vw,15px) clamp(28px,4vw,32px)",
+                borderRadius:"10px",
                 border: hovPortfolio ? "1.5px solid rgba(96,165,250,0.7)" : "1.5px solid rgba(255,255,255,0.15)",
                 background: hovPortfolio ? "rgba(37,99,235,0.15)" : "rgba(255,255,255,0.04)",
                 color: hovPortfolio ? "#93c5fd" : "rgba(255,255,255,0.8)",
-                fontSize:"13px", fontWeight:"800",
+                fontSize:"clamp(12px,2vw,13px)", fontWeight:"800",
                 letterSpacing:"0.12em", textTransform:"uppercase", cursor:"pointer",
                 boxShadow: hovPortfolio ? "0 0 24px rgba(37,99,235,0.25)" : "none",
                 transform: hovPortfolio ? "translateY(-3px)" : "translateY(0)",
@@ -219,32 +225,34 @@ export default function InsuranceHero() {
             </button>
           </div>
 
-          {/* Stats row */}
-          <div style={{
+          {/* Stats row – responsive */}
+          <div className="stats-row" style={{
             display:"flex", gap:"0",
-            padding:"28px 32px",
+            padding:"clamp(20px,4vw,28px) clamp(20px,4vw,32px)",
             borderRadius:"16px",
             background:"rgba(255,255,255,0.03)",
             border:"1px solid rgba(59,130,246,0.12)",
             backdropFilter:"blur(12px)",
             maxWidth:"580px",
+            flexWrap:"wrap",
           }}>
             {stats.map((s, i) => (
               <div key={i} style={{
                 flex:1,
                 textAlign:"center",
                 borderRight: i < stats.length - 1 ? "1px solid rgba(59,130,246,0.12)" : "none",
-                padding:"0 16px",
+                padding:"0 clamp(10px,2vw,16px)",
+                marginBottom: "8px",
               }}>
                 <div style={{
-                  fontSize:"26px", fontWeight:"900", lineHeight:1, marginBottom:"6px",
+                  fontSize:"clamp(22px,5vw,26px)", fontWeight:"900", lineHeight:1, marginBottom:"6px",
                   background:"linear-gradient(135deg,#ffffff,#60a5fa)",
                   WebkitBackgroundClip:"text", WebkitTextFillColor:"transparent",
                 }}>
                   {s.value}
                 </div>
                 <div style={{
-                  fontSize:"10px", fontWeight:"600", letterSpacing:"0.08em",
+                  fontSize:"clamp(9px,2.5vw,10px)", fontWeight:"600", letterSpacing:"0.08em",
                   textTransform:"uppercase", color:"rgba(100,116,139,0.8)",
                   lineHeight:1.3,
                 }}>
@@ -257,8 +265,8 @@ export default function InsuranceHero() {
         </div>
       </div>
 
-      {/* Right side floating info cards */}
-      <div style={{ position:"absolute", right:"4%", top:"50%", transform:"translateY(-50%)", display:"flex", flexDirection:"column", gap:"16px", zIndex:8 }}>
+      {/* Right side floating info cards – hidden on mobile/tablet */}
+      <div className="floating-cards" style={{ position:"absolute", right:"4%", top:"50%", transform:"translateY(-50%)", display:"flex", flexDirection:"column", gap:"16px", zIndex:8 }}>
         {[
           { icon:"🛡️", title:"Risk Management", sub:"AI-powered assessment" },
           { icon:"📋", title:"Policy Automation", sub:"End-to-end digital" },
@@ -283,6 +291,52 @@ export default function InsuranceHero() {
         ))}
       </div>
 
+      {/* Responsive CSS (media queries) */}
+      <style>{`
+        @media (max-width: 1024px) {
+          .floating-cards {
+            display: none !important;
+          }
+          .silhouette-shapes {
+            display: none !important;
+          }
+          .particles {
+            display: none !important;
+          }
+          .decor-lines {
+            display: none !important;
+          }
+        }
+
+        @media (max-width: 640px) {
+          .hero-buttons {
+            flex-direction: column;
+            align-items: stretch !important;
+            gap: 12px !important;
+          }
+          .hero-buttons button {
+            width: 100%;
+            justify-content: center;
+          }
+          .stats-row {
+            flex-direction: column;
+            gap: 16px;
+            align-items: center;
+          }
+          .stats-row > div {
+            border-right: none !important;
+            border-bottom: 1px solid rgba(59,130,246,0.12);
+            padding-bottom: 12px;
+            margin-bottom: 8px;
+            width: 100%;
+          }
+          .stats-row > div:last-child {
+            border-bottom: none;
+            padding-bottom: 0;
+            margin-bottom: 0;
+          }
+        }
+      `}</style>
     </section>
   );
 }

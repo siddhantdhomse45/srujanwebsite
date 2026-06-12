@@ -27,17 +27,32 @@ function VideoSection() {
     >
       <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
 
-      {/* Blueprint grid */}
-      <svg style={{ position:"absolute",inset:0,width:"100%",height:"100%",opacity:0.04,pointerEvents:"none" }} xmlns="http://www.w3.org/2000/svg">
+      <style>{`
+        @media (max-width: 1024px) {
+          .video-bg-orbs { display: none !important; }
+          .video-grid-pattern { display: none !important; }
+        }
+        @media (max-width: 640px) {
+          .video-card { width: 100% !important; }
+          .play-button { width: 56px !important; height: 56px !important; }
+          .play-button svg { width: 20px !important; height: 20px !important; }
+          .duration-badge { font-size: 10px !important; padding: 4px 10px !important; }
+          .top-label { font-size: 9px !important; padding: 4px 10px !important; }
+        }
+      `}</style>
+
+      {/* Blueprint grid & orbs – hidden on mobile */}
+      <svg className="video-grid-pattern" style={{ position:"absolute",inset:0,width:"100%",height:"100%",opacity:0.04,pointerEvents:"none" }} xmlns="http://www.w3.org/2000/svg">
         <defs><pattern id="vgrid" width="60" height="60" patternUnits="userSpaceOnUse"><path d="M 60 0 L 0 0 0 60" fill="none" stroke="white" strokeWidth="0.5"/></pattern></defs>
         <rect width="100%" height="100%" fill="url(#vgrid)"/>
       </svg>
 
-      {/* Orbs */}
-      <motion.div animate={{ scale:[1,1.1,1],opacity:[0.1,0.2,0.1] }} transition={{ duration:10,repeat:Infinity,ease:"easeInOut" }}
-        style={{ position:"absolute",top:-120,left:-80,width:500,height:500,borderRadius:"50%",background:"radial-gradient(circle,#1d4ed8,#2563eb,transparent 70%)",filter:"blur(90px)",pointerEvents:"none" }}/>
-      <motion.div animate={{ scale:[1,1.08,1],opacity:[0.08,0.16,0.08] }} transition={{ duration:14,repeat:Infinity,ease:"easeInOut",delay:4 }}
-        style={{ position:"absolute",bottom:-80,right:-60,width:420,height:420,borderRadius:"50%",background:"radial-gradient(circle,#4f46e5,#818cf8,transparent 70%)",filter:"blur(100px)",pointerEvents:"none" }}/>
+      <div className="video-bg-orbs">
+        <motion.div animate={{ scale:[1,1.1,1],opacity:[0.1,0.2,0.1] }} transition={{ duration:10,repeat:Infinity,ease:"easeInOut" }}
+          style={{ position:"absolute",top:-120,left:-80,width:500,height:500,borderRadius:"50%",background:"radial-gradient(circle,#1d4ed8,#2563eb,transparent 70%)",filter:"blur(90px)",pointerEvents:"none" }}/>
+        <motion.div animate={{ scale:[1,1.08,1],opacity:[0.08,0.16,0.08] }} transition={{ duration:14,repeat:Infinity,ease:"easeInOut",delay:4 }}
+          style={{ position:"absolute",bottom:-80,right:-60,width:420,height:420,borderRadius:"50%",background:"radial-gradient(circle,#4f46e5,#818cf8,transparent 70%)",filter:"blur(100px)",pointerEvents:"none" }}/>
+      </div>
 
       <div ref={ref} style={{ maxWidth:1100,margin:"0 auto",padding:"0 clamp(16px,5vw,48px)",position:"relative",zIndex:10 }}>
 
@@ -47,7 +62,7 @@ function VideoSection() {
           <div style={{ display:"inline-flex",alignItems:"center",gap:8,background:"rgba(59,130,246,0.12)",backdropFilter:"blur(20px)",border:"1px solid rgba(59,130,246,0.28)",borderRadius:100,padding:"6px 18px",marginBottom:20 }}>
             <motion.span animate={{ opacity:[1,0.3,1] }} transition={{ duration:1.8,repeat:Infinity }}
               style={{ width:6,height:6,borderRadius:"50%",background:"#60a5fa",boxShadow:"0 0 8px #60a5fa",display:"inline-block" }}/>
-            <span style={{ color:"#93c5fd",fontSize:11,fontWeight:700,letterSpacing:"0.2em",textTransform:"uppercase",fontFamily:"'DM Sans',sans-serif" }}>Our Approach</span>
+            <span style={{ color:"#93c5fd",fontSize:"clamp(10px, 2.5vw, 11px)",fontWeight:700,letterSpacing:"0.2em",textTransform:"uppercase",fontFamily:"'DM Sans',sans-serif" }}>Our Approach</span>
           </div>
           <h2 style={{ color:"white",fontSize:"clamp(26px,4.5vw,52px)",fontWeight:900,letterSpacing:"-1px",lineHeight:1.08,marginBottom:16,textTransform:"uppercase",fontFamily:"'DM Sans',sans-serif" }}>
             How We{" "}
@@ -61,13 +76,11 @@ function VideoSection() {
         </motion.div>
 
         {/* Video card */}
-        <motion.div initial={{ opacity:0,y:40,scale:0.97 }} animate={inView?{opacity:1,y:0,scale:1}:{}} transition={{ duration:0.8,delay:0.2,ease:[0.22,1,0.36,1] }}
+        <motion.div className="video-card" initial={{ opacity:0,y:40,scale:0.97 }} animate={inView?{opacity:1,y:0,scale:1}:{}} transition={{ duration:0.8,delay:0.2,ease:[0.22,1,0.36,1] }}
           style={{ maxWidth:720,margin:"0 auto",position:"relative" }}>
 
-          {/* Glow ring */}
           <div style={{ position:"absolute",inset:-2,borderRadius:22,background:"linear-gradient(135deg,rgba(37,99,235,0.4),rgba(99,102,241,0.2))",filter:"blur(12px)",zIndex:0,pointerEvents:"none" }}/>
 
-          {/* Card */}
           <div style={{ position:"relative",borderRadius:20,overflow:"hidden",border:"1.5px solid rgba(59,130,246,0.3)",boxShadow:"0 32px 80px rgba(0,0,0,0.65),0 0 0 1px rgba(59,130,246,0.1)",zIndex:1 }}>
             {playing ? (
               <div style={{ position:"relative",paddingTop:"56.25%",background:"#000" }}>
@@ -90,11 +103,9 @@ function VideoSection() {
                   alt="Hotel"
                   style={{ width:"100%",display:"block",height:"clamp(240px,35vw,420px)",objectFit:"cover",objectPosition:"center",filter:`brightness(${hov?0.45:0.38})`,transition:"filter 0.3s" }}
                 />
-                {/* Dark overlay */}
                 <div style={{ position:"absolute",inset:0,background:"linear-gradient(135deg,rgba(4,21,48,0.5),rgba(4,21,48,0.25))" }}/>
 
-                {/* Play button */}
-                <div style={{ position:"absolute",inset:0,display:"flex",alignItems:"center",justifyContent:"center" }}>
+                <div className="play-button" style={{ position:"absolute",inset:0,display:"flex",alignItems:"center",justifyContent:"center" }}>
                   <motion.div
                     whileHover={{ scale:1.12 }}
                     whileTap={{ scale:0.95 }}
@@ -103,7 +114,7 @@ function VideoSection() {
                       : ["0 0 0 0 rgba(37,99,235,0.35)","0 0 0 16px rgba(37,99,235,0)"] }}
                     transition={{ duration:1.6,repeat:Infinity,ease:"easeOut" }}
                     style={{
-                      width:72,height:72,borderRadius:"50%",
+                      width:"clamp(56px, 10vw, 72px)", height:"clamp(56px, 10vw, 72px)", borderRadius:"50%",
                       background:"linear-gradient(135deg,#1d4ed8,#4f46e5)",
                       display:"flex",alignItems:"center",justifyContent:"center",
                       boxShadow:"0 8px 32px rgba(37,99,235,0.6)",
@@ -114,13 +125,11 @@ function VideoSection() {
                   </motion.div>
                 </div>
 
-                {/* Duration badge */}
-                <div style={{ position:"absolute",bottom:16,right:16,padding:"5px 12px",borderRadius:8,background:"rgba(4,21,48,0.85)",backdropFilter:"blur(10px)",border:"1px solid rgba(59,130,246,0.25)",fontSize:11,fontWeight:700,color:"rgba(148,163,184,0.8)",fontFamily:"'DM Sans',sans-serif" }}>
+                <div className="duration-badge" style={{ position:"absolute",bottom:16,right:16,padding:"5px 12px",borderRadius:8,background:"rgba(4,21,48,0.85)",backdropFilter:"blur(10px)",border:"1px solid rgba(59,130,246,0.25)",fontSize:"clamp(9px, 2vw, 11px)",fontWeight:700,color:"rgba(148,163,184,0.8)",fontFamily:"'DM Sans',sans-serif" }}>
                   3:42
                 </div>
 
-                {/* Top label */}
-                <div style={{ position:"absolute",top:16,left:16,padding:"5px 14px",borderRadius:8,background:"rgba(4,21,48,0.85)",backdropFilter:"blur(10px)",border:"1px solid rgba(59,130,246,0.25)",fontSize:10,fontWeight:700,color:"#60a5fa",fontFamily:"'DM Sans',sans-serif",letterSpacing:"0.1em",textTransform:"uppercase" }}>
+                <div className="top-label" style={{ position:"absolute",top:16,left:16,padding:"5px 14px",borderRadius:8,background:"rgba(4,21,48,0.85)",backdropFilter:"blur(10px)",border:"1px solid rgba(59,130,246,0.25)",fontSize:"clamp(8px, 2vw, 10px)",fontWeight:700,color:"#60a5fa",fontFamily:"'DM Sans',sans-serif",letterSpacing:"0.1em",textTransform:"uppercase" }}>
                   Watch Overview
                 </div>
               </div>
@@ -128,7 +137,6 @@ function VideoSection() {
           </div>
         </motion.div>
 
-        {/* CTA link */}
         <motion.div initial={{ opacity:0,y:16 }} animate={inView?{opacity:1,y:0}:{}} transition={{ duration:0.6,delay:0.5 }}
           style={{ textAlign:"center",marginTop:40 }}>
           <motion.a
@@ -242,7 +250,7 @@ function ITSolutionRow({ solution, index, activeId, onActivate }) {
           {solution.icon}
         </div>
         <div style={{ flex:1 }}>
-          <div style={{ display:"flex",alignItems:"center",gap:10,marginBottom:6 }}>
+          <div style={{ display:"flex",alignItems:"center",gap:10,marginBottom:6,flexWrap:"wrap" }}>
             <span style={{
               fontFamily:"'DM Sans',sans-serif",
               fontSize:"clamp(13px,1.5vw,16px)",
@@ -254,7 +262,7 @@ function ITSolutionRow({ solution, index, activeId, onActivate }) {
               {solution.label}
             </span>
             {solution.featured && (
-              <span style={{ padding:"2px 8px",borderRadius:5,background:`${solution.accent}18`,border:`1px solid ${solution.accent}35`,fontSize:9,fontWeight:700,color:solution.accent,fontFamily:"'DM Sans',sans-serif",letterSpacing:"0.08em",textTransform:"uppercase",flexShrink:0 }}>
+              <span style={{ padding:"2px 8px",borderRadius:5,background:`${solution.accent}18`,border:`1px solid ${solution.accent}35`,fontSize:"clamp(8px, 2vw, 9px)",fontWeight:700,color:solution.accent,fontFamily:"'DM Sans',sans-serif",letterSpacing:"0.08em",textTransform:"uppercase",flexShrink:0 }}>
                 Popular
               </span>
             )}
@@ -299,25 +307,75 @@ function ITSolutionsSection() {
       borderTop:"1px solid rgba(59,130,246,0.08)",
       overflow:"hidden",
     }}>
-      <svg style={{ position:"absolute",inset:0,width:"100%",height:"100%",opacity:0.05,pointerEvents:"none" }} xmlns="http://www.w3.org/2000/svg">
+      <style>{`
+        @media (max-width: 1024px) {
+          .it-grid {
+            grid-template-columns: 1fr !important;
+            gap: 48px !important;
+          }
+          .it-bg-orbs, .it-grid-pattern, .it-dot-decor {
+            display: none !important;
+          }
+          .it-image-container {
+            order: 2;
+          }
+          .it-image-container img {
+            height: 320px !important;
+          }
+          .it-stats-badge {
+            bottom: 10px !important;
+            left: 10px !important;
+            padding: 8px 12px !important;
+          }
+          .it-stats-badge .badge-icon {
+            width: 28px !important;
+            height: 28px !important;
+          }
+          .it-stats-badge .badge-value {
+            font-size: 12px !important;
+          }
+          .it-stats-badge .badge-label {
+            font-size: 8px !important;
+          }
+        }
+        @media (max-width: 768px) {
+          .it-grid {
+            gap: 32px !important;
+          }
+          .it-image-container img {
+            height: 260px !important;
+          }
+        }
+        @media (max-width: 640px) {
+          .it-grid {
+            gap: 24px !important;
+          }
+          .it-image-container img {
+            height: 220px !important;
+          }
+        }
+      `}</style>
+
+      <svg className="it-grid-pattern" style={{ position:"absolute",inset:0,width:"100%",height:"100%",opacity:0.05,pointerEvents:"none" }} xmlns="http://www.w3.org/2000/svg">
         <defs><pattern id="itgrid" width="60" height="60" patternUnits="userSpaceOnUse"><path d="M 60 0 L 0 0 0 60" fill="none" stroke="white" strokeWidth="0.5"/></pattern></defs>
         <rect width="100%" height="100%" fill="url(#itgrid)"/>
       </svg>
 
-      <motion.div animate={{ scale:[1,1.1,1],opacity:[0.14,0.24,0.14] }} transition={{ duration:11,repeat:Infinity,ease:"easeInOut" }}
-        style={{ position:"absolute",top:-100,right:-80,width:520,height:520,borderRadius:"50%",background:"radial-gradient(circle,#1d4ed8,#2563eb,transparent 70%)",filter:"blur(90px)",pointerEvents:"none" }}/>
-      <motion.div animate={{ scale:[1,1.07,1],opacity:[0.1,0.18,0.1] }} transition={{ duration:15,repeat:Infinity,ease:"easeInOut",delay:5 }}
-        style={{ position:"absolute",bottom:-80,left:-60,width:460,height:460,borderRadius:"50%",background:"radial-gradient(circle,#4f46e5,#818cf8,transparent 70%)",filter:"blur(100px)",pointerEvents:"none" }}/>
+      <div className="it-bg-orbs">
+        <motion.div animate={{ scale:[1,1.1,1],opacity:[0.14,0.24,0.14] }} transition={{ duration:11,repeat:Infinity,ease:"easeInOut" }}
+          style={{ position:"absolute",top:-100,right:-80,width:520,height:520,borderRadius:"50%",background:"radial-gradient(circle,#1d4ed8,#2563eb,transparent 70%)",filter:"blur(90px)",pointerEvents:"none" }}/>
+        <motion.div animate={{ scale:[1,1.07,1],opacity:[0.1,0.18,0.1] }} transition={{ duration:15,repeat:Infinity,ease:"easeInOut",delay:5 }}
+          style={{ position:"absolute",bottom:-80,left:-60,width:460,height:460,borderRadius:"50%",background:"radial-gradient(circle,#4f46e5,#818cf8,transparent 70%)",filter:"blur(100px)",pointerEvents:"none" }}/>
+      </div>
 
       <div style={{ maxWidth:1280,margin:"0 auto",padding:"0 clamp(16px,5vw,48px)",position:"relative",zIndex:10 }}>
 
-        {/* Header */}
         <motion.div ref={headRef} initial={{ opacity:0,y:30 }} animate={headInView?{opacity:1,y:0}:{}} transition={{ duration:0.7 }}
           style={{ textAlign:"center",marginBottom:"clamp(40px,7vw,72px)" }}>
           <div style={{ display:"inline-flex",alignItems:"center",gap:8,background:"rgba(59,130,246,0.12)",backdropFilter:"blur(20px)",border:"1px solid rgba(59,130,246,0.28)",borderRadius:100,padding:"6px 18px",marginBottom:20 }}>
             <motion.span animate={{ opacity:[1,0.3,1] }} transition={{ duration:1.8,repeat:Infinity }}
               style={{ width:6,height:6,borderRadius:"50%",background:"#60a5fa",boxShadow:"0 0 8px #60a5fa",display:"inline-block" }}/>
-            <span style={{ color:"#93c5fd",fontSize:11,fontWeight:700,letterSpacing:"0.2em",textTransform:"uppercase",fontFamily:"'DM Sans',sans-serif" }}>Hospitality Tech</span>
+            <span style={{ color:"#93c5fd",fontSize:"clamp(10px, 2.5vw, 11px)",fontWeight:700,letterSpacing:"0.2em",textTransform:"uppercase",fontFamily:"'DM Sans',sans-serif" }}>Hospitality Tech</span>
           </div>
           <h2 style={{ color:"white",fontSize:"clamp(26px,4.5vw,52px)",fontWeight:900,letterSpacing:"-1px",lineHeight:1.08,marginBottom:20,textTransform:"uppercase",fontFamily:"'DM Sans',sans-serif" }}>
             Custom-Made{" "}
@@ -331,58 +389,51 @@ function ITSolutionsSection() {
           </p>
         </motion.div>
 
-        {/* 3-col grid */}
-        <div style={{
+        <div className="it-grid" style={{
           display:"grid",
           gridTemplateColumns:"1fr clamp(260px,32%,400px) clamp(240px,26%,320px)",
           gap:"clamp(24px,3.5vw,52px)",
           alignItems:"start",
         }}>
-
-          {/* LEFT: solution list */}
-          <div style={{ display:"flex",flexDirection:"column" }}>
+          <div className="it-left-list" style={{ display:"flex",flexDirection:"column" }}>
             {itSolutions.map((s, i) => (
               <ITSolutionRow key={s.id} solution={s} index={i} activeId={activeId} onActivate={setActiveId}/>
             ))}
           </div>
 
-          {/* CENTER: hotel image */}
-          <motion.div ref={imgRef} initial={{ opacity:0,y:40,scale:0.96 }} animate={imgInView?{opacity:1,y:0,scale:1}:{}} transition={{ duration:0.85,ease:[0.22,1,0.36,1] }}
-            style={{ position:"relative" }}>
-            <div style={{ borderRadius:20,overflow:"hidden",border:"1.5px solid rgba(59,130,246,0.25)",boxShadow:"0 28px 70px rgba(0,0,0,0.6),0 0 0 1px rgba(59,130,246,0.1)" }}>
+          <div className="it-image-container" style={{ position:"relative" }}>
+            <motion.div ref={imgRef} initial={{ opacity:0,y:40,scale:0.96 }} animate={imgInView?{opacity:1,y:0,scale:1}:{}} transition={{ duration:0.85,ease:[0.22,1,0.36,1] }}
+              style={{ borderRadius:20,overflow:"hidden",border:"1.5px solid rgba(59,130,246,0.25)",boxShadow:"0 28px 70px rgba(0,0,0,0.6),0 0 0 1px rgba(59,130,246,0.1)" }}>
               <img
                 src="https://images.unsplash.com/photo-1551882547-ff40c63fe5fa?w=800&q=80"
                 alt="Hotel guest with phone"
                 style={{ width:"100%",height:"clamp(320px,45vw,520px)",objectFit:"cover",objectPosition:"center top",filter:"brightness(0.6)",display:"block" }}
               />
               <div style={{ position:"absolute",inset:0,background:"linear-gradient(to bottom,transparent 40%,rgba(4,21,48,0.85))" }}/>
-            </div>
+            </motion.div>
 
-            {/* Dot grid decoration */}
-            <div style={{ position:"absolute",top:-20,right:-20,width:100,height:100,opacity:0.15,pointerEvents:"none",
+            <div className="it-dot-decor" style={{ position:"absolute",top:-20,right:-20,width:100,height:100,opacity:0.15,pointerEvents:"none",
               backgroundImage:"radial-gradient(circle,rgba(96,165,250,0.8) 1px,transparent 1px)",
               backgroundSize:"12px 12px" }}/>
-            <div style={{ position:"absolute",bottom:-20,left:-20,width:80,height:80,opacity:0.12,pointerEvents:"none",
+            <div className="it-dot-decor" style={{ position:"absolute",bottom:-20,left:-20,width:80,height:80,opacity:0.12,pointerEvents:"none",
               backgroundImage:"radial-gradient(circle,rgba(96,165,250,0.8) 1px,transparent 1px)",
               backgroundSize:"10px 10px" }}/>
 
-            {/* Stat badge */}
-            <motion.div
+            <motion.div className="it-stats-badge"
               initial={{ opacity:0,scale:0 }}
               animate={imgInView?{opacity:1,scale:1}:{}}
               transition={{ delay:0.9,type:"spring",stiffness:240,damping:16 }}
               style={{ position:"absolute",bottom:20,left:20,padding:"12px 16px",borderRadius:14,background:"rgba(4,21,48,0.9)",backdropFilter:"blur(14px)",border:"1px solid rgba(59,130,246,0.28)",boxShadow:"0 8px 32px rgba(0,0,0,0.4)",display:"flex",alignItems:"center",gap:12 }}>
-              <div style={{ width:36,height:36,borderRadius:"50%",background:"linear-gradient(135deg,#1d4ed8,#4f46e5)",display:"flex",alignItems:"center",justifyContent:"center" }}>
+              <div className="badge-icon" style={{ width:36,height:36,borderRadius:"50%",background:"linear-gradient(135deg,#1d4ed8,#4f46e5)",display:"flex",alignItems:"center",justifyContent:"center" }}>
                 <FiStar size={17} color="white" strokeWidth={2}/>
               </div>
               <div>
-                <div style={{ fontSize:14,fontWeight:900,background:"linear-gradient(135deg,#fff,#60a5fa)",WebkitBackgroundClip:"text",WebkitTextFillColor:"transparent",fontFamily:"'DM Sans',sans-serif" }}>4.9 / 5.0</div>
-                <div style={{ fontSize:10,color:"rgba(148,163,184,0.6)",fontFamily:"'DM Sans',sans-serif",letterSpacing:"0.06em" }}>Guest Satisfaction</div>
+                <div className="badge-value" style={{ fontSize:14,fontWeight:900,background:"linear-gradient(135deg,#fff,#60a5fa)",WebkitBackgroundClip:"text",WebkitTextFillColor:"transparent",fontFamily:"'DM Sans',sans-serif" }}>4.9 / 5.0</div>
+                <div className="badge-label" style={{ fontSize:10,color:"rgba(148,163,184,0.6)",fontFamily:"'DM Sans',sans-serif",letterSpacing:"0.06em" }}>Guest Satisfaction</div>
               </div>
             </motion.div>
-          </motion.div>
+          </div>
 
-          {/* RIGHT: active feature panel */}
           <AnimatePresence mode="wait">
             <motion.div
               key={activeId}
@@ -390,6 +441,7 @@ function ITSolutionsSection() {
               animate={{ opacity:1,x:0 }}
               exit={{ opacity:0,x:-20 }}
               transition={{ duration:0.4,ease:[0.22,1,0.36,1] }}
+              className="it-right-panel"
               style={{
                 borderRadius:22,padding:"clamp(22px,3vw,34px)",
                 background:`${activeFeature?.accent}0c`,
@@ -405,7 +457,7 @@ function ITSolutionsSection() {
                   <>
                     <div style={{ position:"absolute",top:-40,right:-20,width:180,height:180,borderRadius:"50%",background:`radial-gradient(circle,${f.accent}1a,transparent 70%)`,filter:"blur(28px)",pointerEvents:"none" }}/>
                     <div style={{ height:3,background:f.grad,borderRadius:2,marginBottom:22 }}/>
-                    <div style={{ display:"flex",alignItems:"center",gap:12,marginBottom:16 }}>
+                    <div style={{ display:"flex",alignItems:"center",gap:12,marginBottom:16,flexWrap:"wrap" }}>
                       <div style={{ width:48,height:48,borderRadius:14,background:f.grad,display:"flex",alignItems:"center",justifyContent:"center",color:"white",boxShadow:`0 6px 20px ${f.accent}45` }}>
                         {f.icon}
                       </div>
@@ -423,7 +475,7 @@ function ITSolutionsSection() {
                     <motion.button
                       whileHover={{ scale:1.04,boxShadow:`0 0 20px ${f.accent}40` }}
                       whileTap={{ scale:0.97 }}
-                      style={{ marginTop:22,display:"inline-flex",alignItems:"center",gap:8,padding:"11px 22px",borderRadius:10,background:f.grad,border:"none",color:"white",fontFamily:"'DM Sans',sans-serif",fontWeight:700,fontSize:12,cursor:"pointer",letterSpacing:"0.05em" }}
+                      style={{ marginTop:22,display:"inline-flex",alignItems:"center",gap:8,padding:"11px 22px",borderRadius:10,background:f.grad,border:"none",color:"white",fontFamily:"'DM Sans',sans-serif",fontWeight:700,fontSize:"clamp(11px,2vw,12px)",cursor:"pointer",letterSpacing:"0.05em" }}
                     >
                       Learn More <FiArrowRight size={13}/>
                     </motion.button>

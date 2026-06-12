@@ -75,7 +75,7 @@ const features = [
   },
 ];
 
-// Dashboard mockup component
+// Dashboard mockup component (responsive)
 const DashboardMockup = () => (
   <div style={{
     width: "100%",
@@ -150,21 +150,22 @@ export default function SupplyChain() {
       style={{
         background: "linear-gradient(135deg,#020b18 0%,#041530 45%,#061d42 75%,#020e24 100%)",
         minHeight: "100vh",
-        padding: "90px 48px 110px",
+        padding: "clamp(60px, 10vw, 90px) clamp(20px, 5vw, 48px) clamp(80px, 10vw, 110px)",
         fontFamily: "'DM Sans','Segoe UI',sans-serif",
         position: "relative",
         overflow: "hidden",
       }}
     >
-      {/* Ambient bg */}
-      <div style={{ position:"absolute", inset:0, pointerEvents:"none" }}>
-        <div style={{ position:"absolute", top:"-80px", left:"15%", width:"500px", height:"400px", borderRadius:"50%", background:"radial-gradient(ellipse,rgba(37,99,235,0.18),transparent 70%)" }} />
-        <div style={{ position:"absolute", bottom:"-80px", right:"10%", width:"440px", height:"360px", borderRadius:"50%", background:"radial-gradient(circle,rgba(99,102,241,0.12),transparent 70%)" }} />
+      {/* Ambient bg – hidden on narrow screens */}
+      <div className="ambient-bg" style={{ position:"absolute", inset:0, pointerEvents:"none" }}>
+        <div style={{ position:"absolute", top:"-80px", left:"15%", width:"min(500px, 70vw)", height:"min(400px, 60vh)", borderRadius:"50%", background:"radial-gradient(ellipse,rgba(37,99,235,0.18),transparent 70%)" }} />
+        <div style={{ position:"absolute", bottom:"-80px", right:"10%", width:"min(440px, 60vw)", height:"min(360px, 50vh)", borderRadius:"50%", background:"radial-gradient(circle,rgba(99,102,241,0.12),transparent 70%)" }} />
         <div style={{ position:"absolute", inset:0, backgroundImage:"linear-gradient(rgba(59,130,246,0.035) 1px,transparent 1px),linear-gradient(90deg,rgba(59,130,246,0.035) 1px,transparent 1px)", backgroundSize:"60px 60px" }} />
       </div>
 
       <div style={{ maxWidth:"1240px", margin:"0 auto", position:"relative", zIndex:1 }}>
-        <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:"80px", alignItems:"center" }}>
+        {/* Responsive two-column grid – stacks on ≤1024px */}
+        <div className="supply-grid" style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:"clamp(40px, 6vw, 80px)", alignItems:"center" }}>
 
           {/* ── LEFT: Content ── */}
           <div>
@@ -173,7 +174,7 @@ export default function SupplyChain() {
               display:"inline-flex", alignItems:"center", gap:"8px",
               padding:"6px 18px", borderRadius:"100px",
               background:"rgba(59,130,246,0.1)", border:"1px solid rgba(59,130,246,0.25)",
-              color:"#60a5fa", fontSize:"11px", fontWeight:"700",
+              color:"#60a5fa", fontSize:"clamp(10px, 2.5vw, 11px)", fontWeight:"700",
               letterSpacing:"0.2em", textTransform:"uppercase", marginBottom:"22px",
             }}>
               <span style={{ width:6, height:6, borderRadius:"50%", background:"#3b82f6", display:"inline-block" }} />
@@ -182,7 +183,7 @@ export default function SupplyChain() {
 
             {/* Heading */}
             <h2 style={{
-              fontSize:"clamp(26px,3.5vw,46px)", fontWeight:"900",
+              fontSize:"clamp(28px, 5vw, 46px)", fontWeight:"900",
               textTransform:"uppercase", letterSpacing:"0.04em",
               lineHeight:1.1, margin:"0 0 24px",
               color:"white",
@@ -200,18 +201,21 @@ export default function SupplyChain() {
 
             {/* Divider */}
             <div style={{ display:"flex", alignItems:"center", gap:"10px", marginBottom:"22px" }}>
-              <div style={{ height:"1px", width:"60px", background:"linear-gradient(to right,transparent,rgba(59,130,246,0.6))" }} />
+              <div style={{ height:"1px", width:"clamp(40px, 10vw, 60px)", background:"linear-gradient(to right,transparent,rgba(59,130,246,0.6))" }} />
               <div style={{ width:"5px", height:"5px", borderRadius:"50%", background:"#3b82f6" }} />
-              <div style={{ height:"1px", width:"60px", background:"linear-gradient(to left,transparent,rgba(59,130,246,0.6))" }} />
+              <div style={{ height:"1px", width:"clamp(40px, 10vw, 60px)", background:"linear-gradient(to left,transparent,rgba(59,130,246,0.6))" }} />
             </div>
 
             {/* Description */}
-            <p style={{ fontSize:"15px", lineHeight:"1.9", color:"rgba(148,163,184,0.88)", margin:"0 0 40px" }}>
+            <p style={{
+              fontSize:"clamp(14px, 2.5vw, 15px)", lineHeight:"1.9",
+              color:"rgba(148,163,184,0.88)", margin:"0 0 40px",
+            }}>
               Build a scalable supply chain management system to streamline operations, reduce operating costs, and grow faster. Combine Smart Contracts on blockchain with IoT sensors to automate delivery and introduce pinpoint tracking on the manufacturing line. Use IoT-driven logistics software solutions in warehousing, and optimize processes like inventory management, picking, and auditing.
             </p>
 
             {/* Features list */}
-            <div style={{ display:"flex", flexDirection:"column", gap:"4px" }}>
+            <div style={{ display:"flex", flexDirection:"column", gap:"clamp(8px, 2vw, 12px)" }}>
               {features.map((f, i) => {
                 const isHov = hovered === i;
                 return (
@@ -220,8 +224,8 @@ export default function SupplyChain() {
                     onMouseEnter={() => setHovered(i)}
                     onMouseLeave={() => setHovered(null)}
                     style={{
-                      display:"flex", alignItems:"center", gap:"18px",
-                      padding:"14px 20px",
+                      display:"flex", alignItems:"center", gap:"clamp(12px, 3vw, 18px)",
+                      padding:"clamp(12px, 2vw, 14px) clamp(16px, 3vw, 20px)",
                       borderRadius:"14px",
                       border: isHov ? "1px solid rgba(59,130,246,0.35)" : "1px solid rgba(255,255,255,0.05)",
                       background: isHov ? "linear-gradient(135deg,rgba(29,78,216,0.14),rgba(99,102,241,0.06))" : "rgba(255,255,255,0.02)",
@@ -243,7 +247,7 @@ export default function SupplyChain() {
 
                     {/* Icon */}
                     <div style={{
-                      width:"52px", height:"52px", borderRadius:"14px", flexShrink:0,
+                      width:"clamp(44px, 8vw, 52px)", height:"clamp(44px, 8vw, 52px)", borderRadius:"14px", flexShrink:0,
                       display:"flex", alignItems:"center", justifyContent:"center",
                       background: isHov ? "rgba(37,99,235,0.2)" : "rgba(255,255,255,0.04)",
                       border: isHov ? "1.5px solid rgba(59,130,246,0.4)" : "1.5px solid rgba(255,255,255,0.07)",
@@ -257,7 +261,7 @@ export default function SupplyChain() {
 
                     {/* Title */}
                     <span style={{
-                      fontSize:"15px", fontWeight:"700",
+                      fontSize:"clamp(13px, 2.5vw, 15px)", fontWeight:"700",
                       color: isHov ? "#f1f5f9" : "rgba(148,163,184,0.75)",
                       letterSpacing:"0.01em",
                       transition:"color 0.3s",
@@ -268,7 +272,7 @@ export default function SupplyChain() {
 
                     {/* Arrow */}
                     <div style={{
-                      width:"28px", height:"28px", borderRadius:"50%", flexShrink:0,
+                      width:"clamp(24px, 5vw, 28px)", height:"clamp(24px, 5vw, 28px)", borderRadius:"50%", flexShrink:0,
                       display:"flex", alignItems:"center", justifyContent:"center",
                       border: isHov ? "1.5px solid rgba(96,165,250,0.5)" : "1.5px solid rgba(255,255,255,0.06)",
                       background: isHov ? "rgba(37,99,235,0.2)" : "transparent",
@@ -285,8 +289,8 @@ export default function SupplyChain() {
             </div>
           </div>
 
-          {/* ── RIGHT: Dashboard mockup ── */}
-          <div style={{ position:"relative" }}>
+          {/* ── RIGHT: Dashboard mockup (responsive laptop frame + floating badges) ── */}
+          <div className="mockup-container" style={{ position:"relative" }}>
             {/* Laptop frame */}
             <div style={{ position:"relative" }}>
               {/* Glow behind laptop */}
@@ -316,59 +320,91 @@ export default function SupplyChain() {
               {/* Laptop base */}
               <div style={{
                 position:"relative", zIndex:1,
-                height:"18px",
+                height:"clamp(12px, 3vw, 18px)",
                 background:"linear-gradient(145deg,#1e293b,#0f172a)",
                 borderRadius:"0 0 8px 8px",
                 border:"1.5px solid rgba(59,130,246,0.2)",
                 borderTop:"none",
                 boxShadow:"0 8px 24px rgba(0,0,0,0.5)",
               }}>
-                <div style={{ width:"60px", height:"4px", borderRadius:"0 0 4px 4px", background:"rgba(255,255,255,0.08)", margin:"0 auto" }} />
+                <div style={{ width:"clamp(40px, 10vw, 60px)", height:"4px", borderRadius:"0 0 4px 4px", background:"rgba(255,255,255,0.08)", margin:"0 auto" }} />
               </div>
 
-              {/* Floating badges */}
-              <div style={{
+              {/* Floating badges – reposition on smaller screens */}
+              <div className="badge-top-right" style={{
                 position:"absolute", top:"-16px", right:"-16px", zIndex:3,
-                padding:"10px 16px", borderRadius:"12px",
+                padding:"clamp(6px, 2vw, 10px) clamp(12px, 3vw, 16px)", borderRadius:"12px",
                 background:"rgba(4,21,48,0.92)", border:"1px solid rgba(59,130,246,0.3)",
                 backdropFilter:"blur(12px)",
-                display:"flex", alignItems:"center", gap:"10px",
+                display:"flex", alignItems:"center", gap:"clamp(6px, 2vw, 10px)",
                 boxShadow:"0 8px 24px rgba(0,0,0,0.5)",
               }}>
-                <div style={{ width:28, height:28, borderRadius:"8px", background:"linear-gradient(135deg,#1d4ed8,#4f46e5)", display:"flex", alignItems:"center", justifyContent:"center" }}>
-                  <svg viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2.5" width="14" height="14">
+                <div style={{ width:"clamp(22px, 5vw, 28px)", height:"clamp(22px, 5vw, 28px)", borderRadius:"8px", background:"linear-gradient(135deg,#1d4ed8,#4f46e5)", display:"flex", alignItems:"center", justifyContent:"center" }}>
+                  <svg viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2.5" width="clamp(10px, 3vw, 14px)" height="clamp(10px, 3vw, 14px)">
                     <polyline points="22 12 18 12 15 21 9 3 6 12 2 12" />
                   </svg>
                 </div>
                 <div>
-                  <div style={{ fontSize:"11px", fontWeight:"800", color:"white" }}>Live Tracking</div>
-                  <div style={{ fontSize:"9px", color:"rgba(148,163,184,0.6)" }}>Real-time updates</div>
+                  <div style={{ fontSize:"clamp(10px, 2.5vw, 11px)", fontWeight:"800", color:"white" }}>Live Tracking</div>
+                  <div style={{ fontSize:"clamp(8px, 2vw, 9px)", color:"rgba(148,163,184,0.6)" }}>Real-time updates</div>
                 </div>
               </div>
 
-              <div style={{
+              <div className="badge-bottom-left" style={{
                 position:"absolute", bottom:"30px", left:"-16px", zIndex:3,
-                padding:"10px 16px", borderRadius:"12px",
+                padding:"clamp(6px, 2vw, 10px) clamp(12px, 3vw, 16px)", borderRadius:"12px",
                 background:"rgba(4,21,48,0.92)", border:"1px solid rgba(16,185,129,0.3)",
                 backdropFilter:"blur(12px)",
-                display:"flex", alignItems:"center", gap:"10px",
+                display:"flex", alignItems:"center", gap:"clamp(6px, 2vw, 10px)",
                 boxShadow:"0 8px 24px rgba(0,0,0,0.5)",
               }}>
-                <div style={{ width:28, height:28, borderRadius:"8px", background:"linear-gradient(135deg,#059669,#10b981)", display:"flex", alignItems:"center", justifyContent:"center" }}>
-                  <svg viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2.5" width="14" height="14">
+                <div style={{ width:"clamp(22px, 5vw, 28px)", height:"clamp(22px, 5vw, 28px)", borderRadius:"8px", background:"linear-gradient(135deg,#059669,#10b981)", display:"flex", alignItems:"center", justifyContent:"center" }}>
+                  <svg viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2.5" width="clamp(10px, 3vw, 14px)" height="clamp(10px, 3vw, 14px)">
                     <polyline points="20 6 9 17 4 12" />
                   </svg>
                 </div>
                 <div>
-                  <div style={{ fontSize:"11px", fontWeight:"800", color:"white" }}>98% On-Time</div>
-                  <div style={{ fontSize:"9px", color:"rgba(148,163,184,0.6)" }}>Delivery rate</div>
+                  <div style={{ fontSize:"clamp(10px, 2.5vw, 11px)", fontWeight:"800", color:"white" }}>98% On-Time</div>
+                  <div style={{ fontSize:"clamp(8px, 2vw, 9px)", color:"rgba(148,163,184,0.6)" }}>Delivery rate</div>
                 </div>
               </div>
             </div>
           </div>
-
         </div>
       </div>
+
+      {/* Responsive CSS media queries */}
+      <style>{`
+        @media (max-width: 1024px) {
+          .supply-grid {
+            grid-template-columns: 1fr !important;
+            gap: 48px !important;
+          }
+          .mockup-container {
+            order: -1;
+          }
+          .ambient-bg {
+            display: none !important;
+          }
+        }
+        @media (max-width: 768px) {
+          .badge-top-right {
+            position: absolute !important;
+            top: -8px !important;
+            right: -8px !important;
+          }
+          .badge-bottom-left {
+            position: absolute !important;
+            bottom: 20px !important;
+            left: -8px !important;
+          }
+        }
+        @media (max-width: 640px) {
+          .badge-top-right, .badge-bottom-left {
+            display: none !important;
+          }
+        }
+      `}</style>
     </section>
   );
 }

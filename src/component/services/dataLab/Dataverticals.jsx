@@ -93,18 +93,77 @@ export default function DataVerticals() {
       style={{
         background: "linear-gradient(135deg,#020b18 0%,#041530 45%,#061d42 75%,#020e24 100%)",
         minHeight: "100vh",
-        padding: "90px 40px 110px",
+        padding: "clamp(60px, 10vw, 90px) clamp(20px, 5vw, 40px) clamp(80px, 10vw, 110px)",
         fontFamily: "'DM Sans','Segoe UI',sans-serif",
         position: "relative",
         overflow: "hidden",
       }}
     >
+      <style>{`
+        @media (max-width: 1024px) {
+          .verticals-grid {
+            grid-template-columns: repeat(2, 1fr) !important;
+            gap: 16px !important;
+          }
+        }
+        @media (max-width: 768px) {
+          .verticals-grid {
+            grid-template-columns: 1fr !important;
+            gap: 20px !important;
+          }
+          .header-description {
+            font-size: 14px !important;
+            padding: 0 16px !important;
+          }
+          .card-icon {
+            width: 50px !important;
+            height: 50px !important;
+          }
+          .card-icon svg {
+            width: 44px !important;
+            height: 44px !important;
+          }
+          .card-title {
+            font-size: 18px !important;
+          }
+          .card-description {
+            font-size: 13px !important;
+            line-height: 1.7 !important;
+          }
+          .cta-button {
+            padding: 14px 32px !important;
+            font-size: 13px !important;
+          }
+        }
+        @media (max-width: 480px) {
+          .verticals-grid {
+            gap: 16px !important;
+          }
+          .card-padding {
+            padding: 28px 20px 24px !important;
+          }
+          .icon-row {
+            margin-bottom: 18px !important;
+          }
+          .card-number {
+            font-size: 10px !important;
+            padding: 3px 8px !important;
+          }
+          .card-bottom {
+            padding-top: 12px !important;
+          }
+          .arrow-icon {
+            width: 28px !important;
+            height: 28px !important;
+          }
+        }
+      `}</style>
+
       {/* Ambient background */}
       <div style={{ position:"absolute", inset:0, pointerEvents:"none" }}>
         <div style={{ position:"absolute", top:"-100px", left:"30%", width:"560px", height:"400px", borderRadius:"50%", background:"radial-gradient(ellipse,rgba(37,99,235,0.2),transparent 70%)" }} />
         <div style={{ position:"absolute", bottom:"-100px", right:"20%", width:"460px", height:"400px", borderRadius:"50%", background:"radial-gradient(circle,rgba(99,102,241,0.15),transparent 70%)" }} />
         <div style={{ position:"absolute", top:"50%", left:"-60px", width:"280px", height:"280px", borderRadius:"50%", background:"radial-gradient(circle,rgba(14,165,233,0.1),transparent 70%)" }} />
-        {/* grid */}
         <div style={{
           position:"absolute", inset:0,
           backgroundImage:"linear-gradient(rgba(59,130,246,0.04) 1px,transparent 1px),linear-gradient(90deg,rgba(59,130,246,0.04) 1px,transparent 1px)",
@@ -114,8 +173,8 @@ export default function DataVerticals() {
 
       <div style={{ maxWidth:"1200px", margin:"0 auto", position:"relative", zIndex:1 }}>
 
-        {/* ── Header ── */}
-        <div style={{ textAlign:"center", marginBottom:"72px" }}>
+        {/* Header */}
+        <div style={{ textAlign:"center", marginBottom:"clamp(48px, 8vw, 72px)" }}>
           <span style={{
             display:"inline-flex", alignItems:"center", gap:"8px",
             padding:"6px 18px", borderRadius:"100px",
@@ -148,13 +207,13 @@ export default function DataVerticals() {
             <div style={{ height:"1px", width:"80px", background:"linear-gradient(to left,transparent,rgba(59,130,246,0.6))" }} />
           </div>
 
-          <p style={{ maxWidth:"780px", margin:"0 auto", fontSize:"16px", lineHeight:"1.85", color:"rgba(148,163,184,0.85)" }}>
+          <p className="header-description" style={{ maxWidth:"780px", margin:"0 auto", fontSize:"16px", lineHeight:"1.85", color:"rgba(148,163,184,0.85)" }}>
             From fast-growing startups to well-established enterprises, we empower businesses with data-driven insights that fuel smarter decision-making. Our extensive industry experience enables us to develop custom analytics solutions that transform raw data into actionable intelligence.
           </p>
         </div>
 
-        {/* ── Verticals Grid ── */}
-        <div style={{
+        {/* Verticals Grid - responsive via CSS */}
+        <div className="verticals-grid" style={{
           display:"grid",
           gridTemplateColumns:"repeat(3,1fr)",
           gap:"16px",
@@ -182,7 +241,6 @@ export default function DataVerticals() {
                   position:"relative",
                 }}
               >
-                {/* Top color bar */}
                 <div style={{
                   height:"3px",
                   background: isHov
@@ -191,13 +249,11 @@ export default function DataVerticals() {
                   transition:"all 0.4s ease",
                 }} />
 
-                <div style={{ padding:"36px 32px 32px" }}>
-                  {/* Number + Icon row */}
-                  <div style={{ display:"flex", alignItems:"flex-start", justifyContent:"space-between", marginBottom:"24px" }}>
-                    {/* Icon circle */}
-                    <div style={{
-                      width:"60px",
-                      height:"60px",
+                <div className="card-padding" style={{ padding:"clamp(28px, 5vw, 36px) clamp(24px, 4vw, 32px) clamp(24px, 4vw, 32px)" }}>
+                  <div className="icon-row" style={{ display:"flex", alignItems:"flex-start", justifyContent:"space-between", marginBottom:"24px" }}>
+                    <div className="card-icon" style={{
+                      width:"clamp(50px, 8vw, 60px)",
+                      height:"clamp(50px, 8vw, 60px)",
                       borderRadius:"50%",
                       border: isHov ? "1.5px solid rgba(59,130,246,0.5)" : "1.5px solid rgba(255,255,255,0.08)",
                       display:"flex",
@@ -212,9 +268,8 @@ export default function DataVerticals() {
                       {v.icon}
                     </div>
 
-                    {/* Number tag */}
-                    <span style={{
-                      fontSize:"12px",
+                    <span className="card-number" style={{
+                      fontSize:"clamp(10px, 2vw, 12px)",
                       fontWeight:"900",
                       letterSpacing:"0.15em",
                       padding:"4px 10px",
@@ -228,9 +283,8 @@ export default function DataVerticals() {
                     </span>
                   </div>
 
-                  {/* Title */}
-                  <h3 style={{
-                    fontSize:"20px",
+                  <h3 className="card-title" style={{
+                    fontSize:"clamp(18px, 3.5vw, 20px)",
                     fontWeight:"800",
                     color: isHov ? "#f1f5f9" : "rgba(226,232,240,0.75)",
                     marginBottom:"12px",
@@ -240,9 +294,8 @@ export default function DataVerticals() {
                     {v.title}
                   </h3>
 
-                  {/* Description */}
-                  <p style={{
-                    fontSize:"14px",
+                  <p className="card-description" style={{
+                    fontSize:"clamp(13px, 2.5vw, 14px)",
                     lineHeight:"1.85",
                     color: isHov ? "rgba(148,163,184,0.9)" : "rgba(100,116,139,0.8)",
                     margin:"0 0 20px",
@@ -251,8 +304,7 @@ export default function DataVerticals() {
                     {v.description}
                   </p>
 
-                  {/* Bottom row */}
-                  <div style={{
+                  <div className="card-bottom" style={{
                     display:"flex",
                     alignItems:"center",
                     justifyContent:"space-between",
@@ -261,7 +313,7 @@ export default function DataVerticals() {
                     transition:"border-color 0.3s",
                   }}>
                     <span style={{
-                      fontSize:"12px",
+                      fontSize:"clamp(10px, 2vw, 12px)",
                       fontWeight:"700",
                       letterSpacing:"0.12em",
                       textTransform:"uppercase",
@@ -270,9 +322,9 @@ export default function DataVerticals() {
                     }}>
                       Explore Solutions
                     </span>
-                    <div style={{
-                      width:"32px",
-                      height:"32px",
+                    <div className="arrow-icon" style={{
+                      width:"clamp(28px, 5vw, 32px)",
+                      height:"clamp(28px, 5vw, 32px)",
                       borderRadius:"50%",
                       border: isHov ? "1.5px solid rgba(96,165,250,0.5)" : "1.5px solid rgba(255,255,255,0.07)",
                       display:"flex",
@@ -289,7 +341,6 @@ export default function DataVerticals() {
                   </div>
                 </div>
 
-                {/* Corner glow on hover */}
                 {isHov && (
                   <div style={{
                     position:"absolute", top:0, left:0, right:0, bottom:0, borderRadius:"20px",
@@ -302,14 +353,15 @@ export default function DataVerticals() {
           })}
         </div>
 
-        {/* ── CTA ── */}
-        <div style={{ textAlign:"center", marginTop:"64px" }}>
-          <button
+        {/* CTA */}
+        <div style={{ textAlign:"center", marginTop:"clamp(48px, 8vw, 64px)" }}>
+          <button className="cta-button"
             style={{
               display:"inline-flex", alignItems:"center", gap:"12px",
-              padding:"16px 42px", borderRadius:"14px", border:"none",
+              padding:"clamp(14px, 2.5vw, 16px) clamp(32px, 5vw, 42px)",
+              borderRadius:"14px", border:"none",
               background:"linear-gradient(135deg,#1d4ed8,#2563eb,#4f46e5)",
-              color:"white", fontSize:"15px", fontWeight:"800",
+              color:"white", fontSize:"clamp(13px, 2vw, 15px)", fontWeight:"800",
               letterSpacing:"0.05em", cursor:"pointer",
               boxShadow:"0 8px 32px -4px rgba(37,99,235,0.6)",
               transition:"all 0.3s ease",

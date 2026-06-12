@@ -90,7 +90,6 @@ function SolutionRow({ solution, index, activeId, onActivate }) {
         position: "relative", overflow: "hidden",
       }}
     >
-      {/* Active left accent */}
       {isActive && (
         <motion.div
           layoutId="activeBarHosp"
@@ -101,7 +100,6 @@ function SolutionRow({ solution, index, activeId, onActivate }) {
         />
       )}
 
-      {/* Icon */}
       <div style={{
         width: 40, height: 40, borderRadius: 10, flexShrink: 0,
         background: isActive ? solution.grad : `${solution.accent}12`,
@@ -114,7 +112,6 @@ function SolutionRow({ solution, index, activeId, onActivate }) {
         {solution.icon}
       </div>
 
-      {/* Label */}
       <div style={{ flex: 1 }}>
         <span style={{
           fontFamily: "'DM Sans',sans-serif",
@@ -145,7 +142,6 @@ function SolutionRow({ solution, index, activeId, onActivate }) {
         </AnimatePresence>
       </div>
 
-      {/* Chevron */}
       <motion.div
         animate={{ rotate: isActive ? 90 : 0, x: isActive ? 3 : 0 }}
         transition={{ duration: 0.3 }}
@@ -157,7 +153,7 @@ function SolutionRow({ solution, index, activeId, onActivate }) {
   );
 }
 
-/* ── Device mockup (tablet + phone) ── */
+/* ── Device mockup (responsive tablet + phone) ── */
 function DeviceMockup() {
   const ref = useRef(null);
   const inView = useInView(ref, { once: true, margin: "-60px" });
@@ -168,30 +164,28 @@ function DeviceMockup() {
       initial={{ opacity: 0, x: -40, scale: 0.96 }}
       animate={inView ? { opacity: 1, x: 0, scale: 1 } : {}}
       transition={{ duration: 0.85, ease: [0.22, 1, 0.36, 1] }}
-      style={{ position: "relative", height: 500, width: "100%" }}
+      className="devices-container"
+      style={{ position: "relative", height: "clamp(420px, 70vh, 500px)", width: "100%" }}
     >
-      {/* Glow behind devices */}
       <div style={{
         position: "absolute", top: "50%", left: "50%",
         transform: "translate(-50%,-50%)",
-        width: 360, height: 360, borderRadius: "50%",
+        width: "clamp(240px, 60vw, 360px)", height: "clamp(240px, 60vw, 360px)",
+        borderRadius: "50%",
         background: "radial-gradient(circle,rgba(37,99,235,0.2),transparent 70%)",
         pointerEvents: "none",
       }} />
 
-      {/* Tablet */}
-      <motion.div
-        style={{
-          position: "absolute", left: 0, top: 20,
-          width: 320, height: 420,
-          borderRadius: 22,
-          background: "rgba(4,21,48,0.95)",
-          border: "1.5px solid rgba(59,130,246,0.25)",
-          boxShadow: "0 28px 70px rgba(0,0,0,0.65), 0 0 0 1px rgba(59,130,246,0.1)",
-          overflow: "hidden", zIndex: 1,
-        }}
-      >
-        {/* Tablet status bar */}
+      {/* Tablet – hidden on very narrow screens */}
+      <div className="mockup-tablet" style={{
+        position: "absolute", left: "clamp(0%, 2%, 20px)", top: 20,
+        width: "clamp(260px, 50vw, 320px)", height: "clamp(360px, 60vw, 420px)",
+        borderRadius: 22,
+        background: "rgba(4,21,48,0.95)",
+        border: "1.5px solid rgba(59,130,246,0.25)",
+        boxShadow: "0 28px 70px rgba(0,0,0,0.65), 0 0 0 1px rgba(59,130,246,0.1)",
+        overflow: "hidden", zIndex: 1,
+      }}>
         <div style={{
           background: "rgba(2,11,24,0.98)", padding: "10px 16px",
           display: "flex", alignItems: "center", justifyContent: "space-between",
@@ -202,10 +196,8 @@ function DeviceMockup() {
             <div style={{ width: 8, height: 8, borderRadius: "50%", background: "#f59e0b" }} />
             <div style={{ width: 8, height: 8, borderRadius: "50%", background: "#22c55e" }} />
           </div>
-          <span style={{ fontSize: 9, color: "rgba(148,163,184,0.4)", fontFamily: "'DM Sans',sans-serif" }}>15 MIN · ETA · TODAY · TABL</span>
+          <span style={{ fontSize: 9, color: "rgba(148,163,184,0.4)" }}>15 MIN · ETA · TODAY · TABL</span>
         </div>
-
-        {/* Tablet content */}
         <div style={{ position: "relative", height: "calc(100% - 36px)" }}>
           <img
             src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=700&q=80"
@@ -216,36 +208,33 @@ function DeviceMockup() {
             position: "absolute", top: 0, left: 0, right: 0, height: "55%",
             background: "linear-gradient(to bottom,rgba(2,11,24,0.3),rgba(2,11,24,0.6))",
           }} />
-          {/* Overlay text */}
           <div style={{ position: "absolute", top: "30%", left: 16, right: 16 }}>
-            <div style={{ fontSize: 16, fontWeight: 900, color: "white", fontFamily: "Georgia,serif", fontStyle: "italic", marginBottom: 4 }}>Café Salle</div>
-            <div style={{ fontSize: 9, color: "rgba(255,255,255,0.55)", fontFamily: "'DM Sans',sans-serif" }}>A two Michelin-star restaurant serving mind-blowing 180 degree river views</div>
+            <div style={{ fontSize: "clamp(12px, 2.5vw, 16px)", fontWeight: 900, color: "white", fontFamily: "Georgia,serif", fontStyle: "italic", marginBottom: 4 }}>Café Salle</div>
+            <div style={{ fontSize: "clamp(7px, 1.8vw, 9px)", color: "rgba(255,255,255,0.55)" }}>A two Michelin-star restaurant serving mind-blowing 180 degree river views</div>
           </div>
-          {/* Bottom info panel */}
           <div style={{ padding: "14px 16px", background: "linear-gradient(180deg,#0a1628,#041530)" }}>
-            <div style={{ fontSize: 9, color: "rgba(148,163,184,0.5)", fontFamily: "'DM Sans',sans-serif", marginBottom: 8 }}>MENU</div>
+            <div style={{ fontSize: "clamp(7px, 1.8vw, 9px)", color: "rgba(148,163,184,0.5)", marginBottom: 8 }}>MENU</div>
             <div style={{ display: "flex", gap: 6, marginBottom: 10 }}>
-              {["Full Menu (3)"].map((m) => (
-                <div key={m} style={{ padding: "4px 10px", borderRadius: 6, background: "rgba(37,99,235,0.2)", border: "1px solid rgba(59,130,246,0.3)", fontSize: 9, color: "#60a5fa", fontFamily: "'DM Sans',sans-serif", fontWeight: 700 }}>{m}</div>
-              ))}
+              <div style={{ padding: "4px 10px", borderRadius: 6, background: "rgba(37,99,235,0.2)", border: "1px solid rgba(59,130,246,0.3)", fontSize: "clamp(7px, 1.8vw, 9px)", color: "#60a5fa", fontWeight: 700 }}>Full Menu (3)</div>
             </div>
             <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 6 }}>
-              <span style={{ fontSize: 9, color: "rgba(148,163,184,0.5)", fontFamily: "'DM Sans',sans-serif" }}>Chef Profile</span>
-              <span style={{ fontSize: 9, color: "rgba(148,163,184,0.7)", fontFamily: "'DM Sans',sans-serif" }}>Vincent Thierry</span>
+              <span style={{ fontSize: "clamp(7px, 1.8vw, 9px)", color: "rgba(148,163,184,0.5)" }}>Chef Profile</span>
+              <span style={{ fontSize: "clamp(7px, 1.8vw, 9px)", color: "rgba(148,163,184,0.7)" }}>Vincent Thierry</span>
             </div>
-            <div style={{ fontSize: 9, color: "rgba(148,163,184,0.4)", fontFamily: "'DM Sans',sans-serif", marginTop: 8 }}>ADDRESS</div>
-            <div style={{ fontSize: 8, color: "rgba(148,163,184,0.55)", fontFamily: "'DM Sans',sans-serif", lineHeight: 1.5, marginTop: 2 }}>41st Floor, Siara Tower Bangkok 105 Silom Road</div>
+            <div style={{ fontSize: "clamp(7px, 1.8vw, 9px)", color: "rgba(148,163,184,0.4)", marginTop: 8 }}>ADDRESS</div>
+            <div style={{ fontSize: "clamp(6px, 1.5vw, 8px)", color: "rgba(148,163,184,0.55)", lineHeight: 1.5, marginTop: 2 }}>41st Floor, Siara Tower Bangkok 105 Silom Road</div>
           </div>
         </div>
-      </motion.div>
+      </div>
 
       {/* Phone */}
       <motion.div
         animate={{ y: [0, -8, 0] }}
         transition={{ duration: 4.5, repeat: Infinity, ease: "easeInOut" }}
+        className="mockup-phone"
         style={{
-          position: "absolute", right: 20, top: 60,
-          width: 185, height: 380,
+          position: "absolute", right: "clamp(5px, 3%, 20px)", top: 60,
+          width: "clamp(150px, 28vw, 185px)", height: "clamp(320px, 60vw, 380px)",
           borderRadius: 32,
           background: "rgba(4,21,48,0.97)",
           border: "1.5px solid rgba(59,130,246,0.3)",
@@ -253,18 +242,15 @@ function DeviceMockup() {
           overflow: "hidden", zIndex: 2,
         }}
       >
-        {/* Status bar */}
         <div style={{
           background: "rgba(2,11,24,0.99)", padding: "10px 14px 8px",
           display: "flex", alignItems: "center", justifyContent: "space-between",
           borderBottom: "1px solid rgba(59,130,246,0.1)",
         }}>
-          <span style={{ fontSize: 8, color: "rgba(148,163,184,0.4)", fontWeight: 700, fontFamily: "'DM Sans',sans-serif" }}>9:41</span>
+          <span style={{ fontSize: 8, color: "rgba(148,163,184,0.4)", fontWeight: 700 }}>9:41</span>
           <div style={{ width: 28, height: 4, borderRadius: 2, background: "rgba(255,255,255,0.15)" }} />
-          <span style={{ fontSize: 8, color: "rgba(148,163,184,0.4)", fontFamily: "'DM Sans',sans-serif" }}>58%</span>
+          <span style={{ fontSize: 8, color: "rgba(148,163,184,0.4)" }}>58%</span>
         </div>
-
-        {/* Hero image */}
         <div style={{ height: 110, overflow: "hidden", position: "relative" }}>
           <img
             src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=400&q=80"
@@ -273,17 +259,14 @@ function DeviceMockup() {
           />
           <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to bottom,transparent,rgba(4,21,48,0.8))" }} />
           <div style={{ position: "absolute", bottom: 10, left: 12, right: 12 }}>
-            <div style={{ fontSize: 11, fontWeight: 900, color: "white", fontFamily: "Georgia,serif", fontStyle: "italic" }}>Café Salle</div>
+            <div style={{ fontSize: "clamp(9px, 2.5vw, 11px)", fontWeight: 900, color: "white", fontFamily: "Georgia,serif", fontStyle: "italic" }}>Café Salle</div>
           </div>
         </div>
-
-        {/* Time slots */}
         <div style={{ padding: "10px 12px", borderBottom: "1px solid rgba(59,130,246,0.08)" }}>
           <div style={{ display: "flex", gap: 4, justifyContent: "center" }}>
             {["19:00", "19:15", "19:30", "19:45"].map((t, i) => (
               <div key={t} style={{
-                padding: "4px 6px", borderRadius: 6, fontSize: 8, fontWeight: 700,
-                fontFamily: "'DM Sans',sans-serif",
+                padding: "4px 6px", borderRadius: 6, fontSize: "clamp(6px, 1.8vw, 8px)", fontWeight: 700,
                 background: i === 1 ? "linear-gradient(135deg,#1d4ed8,#4f46e5)" : "rgba(255,255,255,0.04)",
                 border: i === 1 ? "none" : "1px solid rgba(59,130,246,0.15)",
                 color: i === 1 ? "white" : "rgba(148,163,184,0.5)",
@@ -291,42 +274,36 @@ function DeviceMockup() {
             ))}
           </div>
         </div>
-
-        {/* People selector */}
         <div style={{ padding: "10px 12px", borderBottom: "1px solid rgba(59,130,246,0.08)" }}>
-          <div style={{ fontSize: 8, color: "rgba(148,163,184,0.4)", fontFamily: "'DM Sans',sans-serif", marginBottom: 6 }}>PEOPLE</div>
+          <div style={{ fontSize: "clamp(6px, 1.8vw, 8px)", color: "rgba(148,163,184,0.4)", marginBottom: 6 }}>PEOPLE</div>
           <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
             <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
-              <div style={{ width: 22, height: 22, borderRadius: "50%", border: "1px solid rgba(59,130,246,0.3)", display: "flex", alignItems: "center", justifyContent: "center", color: "#60a5fa", fontSize: 14, cursor: "pointer" }}>−</div>
-              <span style={{ fontSize: 14, fontWeight: 800, color: "white", fontFamily: "'DM Sans',sans-serif" }}>4</span>
-              <div style={{ width: 22, height: 22, borderRadius: "50%", border: "1px solid rgba(59,130,246,0.3)", display: "flex", alignItems: "center", justifyContent: "center", color: "#60a5fa", fontSize: 14, cursor: "pointer" }}>+</div>
+              <div style={{ width: 22, height: 22, borderRadius: "50%", border: "1px solid rgba(59,130,246,0.3)", display: "flex", alignItems: "center", justifyContent: "center", color: "#60a5fa", fontSize: 14 }}>−</div>
+              <span style={{ fontSize: "clamp(12px, 3vw, 14px)", fontWeight: 800, color: "white" }}>4</span>
+              <div style={{ width: 22, height: 22, borderRadius: "50%", border: "1px solid rgba(59,130,246,0.3)", display: "flex", alignItems: "center", justifyContent: "center", color: "#60a5fa", fontSize: 14 }}>+</div>
             </div>
-            <div style={{ padding: "7px 14px", borderRadius: 8, background: "linear-gradient(135deg,#1d4ed8,#4f46e5)", fontSize: 9, fontWeight: 800, color: "white", fontFamily: "'DM Sans',sans-serif", letterSpacing: "0.05em" }}>BOOK NOW</div>
+            <div style={{ padding: "7px 14px", borderRadius: 8, background: "linear-gradient(135deg,#1d4ed8,#4f46e5)", fontSize: "clamp(7px, 2vw, 9px)", fontWeight: 800, color: "white", letterSpacing: "0.05em" }}>BOOK NOW</div>
           </div>
         </div>
-
-        {/* See availability */}
         <div style={{ padding: "8px 12px", borderBottom: "1px solid rgba(59,130,246,0.08)", display: "flex", alignItems: "center", justifyContent: "space-between" }}>
-          <span style={{ fontSize: 9, color: "#60a5fa", fontFamily: "'DM Sans',sans-serif", fontWeight: 600 }}>See Future Availability</span>
+          <span style={{ fontSize: "clamp(7px, 2vw, 9px)", color: "#60a5fa", fontWeight: 600 }}>See Future Availability</span>
           <FiChevronRight size={12} color="#60a5fa" />
         </div>
-
-        {/* Actions */}
         <div style={{ padding: "10px 12px 14px" }}>
           {[["Phone", "+66 (0) 626 5555"], ["Address", "41st Floor, Siara Tower"]].map(([label, val]) => (
             <div key={label} style={{ marginBottom: 8 }}>
-              <div style={{ fontSize: 8, color: "rgba(148,163,184,0.35)", fontFamily: "'DM Sans',sans-serif", letterSpacing: "0.08em" }}>{label.toUpperCase()}</div>
-              <div style={{ fontSize: 9, color: "rgba(148,163,184,0.65)", fontFamily: "'DM Sans',sans-serif", marginTop: 2 }}>{val}</div>
+              <div style={{ fontSize: "clamp(6px, 1.8vw, 8px)", color: "rgba(148,163,184,0.35)", letterSpacing: "0.08em" }}>{label.toUpperCase()}</div>
+              <div style={{ fontSize: "clamp(7px, 2vw, 9px)", color: "rgba(148,163,184,0.65)", marginTop: 2 }}>{val}</div>
             </div>
           ))}
         </div>
       </motion.div>
 
-      {/* Rating badge */}
       <motion.div
         initial={{ opacity: 0, scale: 0 }}
         animate={inView ? { opacity: 1, scale: 1 } : {}}
         transition={{ delay: 0.9, type: "spring", stiffness: 240, damping: 16 }}
+        className="rating-badge"
         style={{
           position: "absolute", top: -12, right: 10,
           padding: "7px 14px", borderRadius: 10,
@@ -336,20 +313,9 @@ function DeviceMockup() {
         }}
       >
         <FiGift size={13} color="white" strokeWidth={2} />
-        <span style={{ color: "white", fontSize: 10, fontWeight: 700, fontFamily: "'DM Sans',sans-serif" }}>Loyalty Ready</span>
+        <span style={{ color: "white", fontSize: "clamp(8px, 2vw, 10px)", fontWeight: 700 }}>Loyalty Ready</span>
       </motion.div>
     </motion.div>
-  );
-}
-
-/* ── Decorative circles ── */
-function DecorativeCircles() {
-  return (
-    <div style={{ position: "absolute", top: "50%", left: "50%", transform: "translate(-50%,-50%)", pointerEvents: "none", zIndex: 0 }}>
-      {[500, 700, 900].map((size, i) => (
-        <div key={i} style={{ position: "absolute", width: size, height: size, borderRadius: "50%", border: "1px solid rgba(59,130,246,0.05)", top: "50%", left: "50%", transform: "translate(-50%,-50%)" }} />
-      ))}
-    </div>
   );
 }
 
@@ -371,29 +337,33 @@ export default function HospitalitySolutions() {
     }}>
       <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
 
-      {/* Blueprint grid */}
+      {/* background grid & orbs – hidden on mobile via CSS */}
       <svg style={{ position: "absolute", inset: 0, width: "100%", height: "100%", opacity: 0.05, pointerEvents: "none" }} xmlns="http://www.w3.org/2000/svg">
         <defs><pattern id="hospgrid" width="60" height="60" patternUnits="userSpaceOnUse"><path d="M 60 0 L 0 0 0 60" fill="none" stroke="white" strokeWidth="0.5" /></pattern></defs>
         <rect width="100%" height="100%" fill="url(#hospgrid)" />
       </svg>
+      <div className="bg-orbs">
+        <motion.div
+          animate={{ scale: [1, 1.12, 1], opacity: [0.15, 0.26, 0.15] }}
+          transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
+          style={{ position: "absolute", top: -120, left: -80, width: 560, height: 560, borderRadius: "50%", background: "radial-gradient(circle,#1d4ed8,#2563eb,transparent 70%)", filter: "blur(90px)", pointerEvents: "none" }}
+        />
+        <motion.div
+          animate={{ scale: [1, 1.08, 1], opacity: [0.12, 0.22, 0.12] }}
+          transition={{ duration: 14, repeat: Infinity, ease: "easeInOut", delay: 4 }}
+          style={{ position: "absolute", bottom: -80, right: -60, width: 480, height: 480, borderRadius: "50%", background: "radial-gradient(circle,#4f46e5,#818cf8,transparent 70%)", filter: "blur(100px)", pointerEvents: "none" }}
+        />
+      </div>
 
-      {/* Animated orbs */}
-      <motion.div
-        animate={{ scale: [1, 1.12, 1], opacity: [0.15, 0.26, 0.15] }}
-        transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
-        style={{ position: "absolute", top: -120, left: -80, width: 560, height: 560, borderRadius: "50%", background: "radial-gradient(circle,#1d4ed8,#2563eb,transparent 70%)", filter: "blur(90px)", pointerEvents: "none" }}
-      />
-      <motion.div
-        animate={{ scale: [1, 1.08, 1], opacity: [0.12, 0.22, 0.12] }}
-        transition={{ duration: 14, repeat: Infinity, ease: "easeInOut", delay: 4 }}
-        style={{ position: "absolute", bottom: -80, right: -60, width: 480, height: 480, borderRadius: "50%", background: "radial-gradient(circle,#4f46e5,#818cf8,transparent 70%)", filter: "blur(100px)", pointerEvents: "none" }}
-      />
-
-      <DecorativeCircles />
+      <div className="decor-circles" style={{ position: "absolute", top: "50%", left: "50%", transform: "translate(-50%,-50%)", pointerEvents: "none", zIndex: 0 }}>
+        {[500, 700, 900].map((size, i) => (
+          <div key={i} style={{ position: "absolute", width: size, height: size, borderRadius: "50%", border: "1px solid rgba(59,130,246,0.05)", top: "50%", left: "50%", transform: "translate(-50%,-50%)" }} />
+        ))}
+      </div>
 
       <div style={{ maxWidth: 1280, margin: "0 auto", padding: "0 clamp(16px,5vw,48px)", position: "relative", zIndex: 10 }}>
 
-        {/* ── Header ── */}
+        {/* Header */}
         <motion.div
           ref={headRef}
           initial={{ opacity: 0, y: 30 }}
@@ -407,40 +377,35 @@ export default function HospitalitySolutions() {
               transition={{ duration: 1.8, repeat: Infinity }}
               style={{ width: 6, height: 6, borderRadius: "50%", background: "#60a5fa", boxShadow: "0 0 8px #60a5fa", display: "inline-block" }}
             />
-            <span style={{ color: "#93c5fd", fontSize: 12, fontWeight: 700, letterSpacing: "0.2em", textTransform: "uppercase", fontFamily: "'DM Sans',sans-serif" }}>Hospitality Tech</span>
+            <span style={{ color: "#93c5fd", fontSize: "clamp(10px, 2.5vw, 12px)", fontWeight: 700, letterSpacing: "0.2em", textTransform: "uppercase" }}>Hospitality Tech</span>
           </div>
-          <h2 style={{ color: "white", fontSize: "clamp(26px,4.5vw,52px)", fontWeight: 900, letterSpacing: "-1px", lineHeight: 1.08, marginBottom: 20, textTransform: "uppercase", fontFamily: "'DM Sans',sans-serif" }}>
+          <h2 style={{ color: "white", fontSize: "clamp(26px, 4.5vw, 52px)", fontWeight: 900, letterSpacing: "-1px", lineHeight: 1.08, marginBottom: 20, textTransform: "uppercase" }}>
             Hospitality{" "}
             <span style={{ background: "linear-gradient(90deg,#60a5fa,#a5b4fc,#7dd3fc)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>
               Software Solutions
             </span>
             <br />and Services
           </h2>
-          <p style={{ color: "rgba(186,230,255,0.50)", fontSize: "clamp(14px,1.6vw,17px)", lineHeight: 1.9, maxWidth: 680, margin: "0 auto", fontFamily: "'DM Sans',sans-serif" }}>
+          <p style={{ color: "rgba(186,230,255,0.50)", fontSize: "clamp(14px, 1.6vw, 17px)", lineHeight: 1.9, maxWidth: 680, margin: "0 auto" }}>
             End-to-end technology solutions built for hotels, restaurants, and travel brands — from impactful mobile applications to comprehensive custom-made systems that leading brands rely on.
           </p>
         </motion.div>
 
-        {/* ── 3-column body ── */}
-        <div style={{
+        {/* 3‑column body – responsive stacking */}
+        <div className="hosp-three-col" style={{
           display: "grid",
           gridTemplateColumns: "clamp(260px,30%,360px) 1fr clamp(260px,28%,340px)",
           gap: "clamp(24px,3.5vw,52px)",
           alignItems: "start",
         }}>
-
-          {/* LEFT: device mockup */}
           <DeviceMockup />
-
-          {/* CENTER: solution list */}
           <div>
-            {/* Featured card */}
             <motion.div
               initial={{ opacity: 0, y: 24 }}
               animate={headInView ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.6, delay: 0.2 }}
               style={{
-                borderRadius: 18, padding: "24px 28px",
+                borderRadius: 18, padding: "clamp(20px, 3vw, 24px) clamp(20px, 4vw, 28px)",
                 background: "rgba(4,21,48,0.75)",
                 border: "1px solid rgba(59,130,246,0.25)",
                 backdropFilter: "blur(16px)",
@@ -451,18 +416,17 @@ export default function HospitalitySolutions() {
               onClick={() => setActiveId("legacy")}
             >
               <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 14 }}>
-                <div style={{ width: 42, height: 42, borderRadius: 12, background: "linear-gradient(135deg,#1d4ed8,#38bdf8)", display: "flex", alignItems: "center", justifyContent: "center", color: "white", boxShadow: "0 4px 16px rgba(37,99,235,0.45)" }}>
+                <div style={{ width: "clamp(36px, 6vw, 42px)", height: "clamp(36px, 6vw, 42px)", borderRadius: 12, background: "linear-gradient(135deg,#1d4ed8,#38bdf8)", display: "flex", alignItems: "center", justifyContent: "center", color: "white", boxShadow: "0 4px 16px rgba(37,99,235,0.45)" }}>
                   <FiRefreshCw size={20} strokeWidth={1.6} />
                 </div>
-                <h3 style={{ fontSize: "clamp(14px,1.6vw,17px)", fontWeight: 800, color: "white", margin: 0, fontFamily: "'DM Sans',sans-serif" }}>Legacy System Transformation</h3>
+                <h3 style={{ fontSize: "clamp(14px, 1.6vw, 17px)", fontWeight: 800, color: "white", margin: 0 }}>Legacy System Transformation</h3>
               </div>
               <div style={{ height: 2, background: "linear-gradient(90deg,#2563eb,#38bdf8)", borderRadius: 2, marginBottom: 14 }} />
-              <p style={{ fontSize: "clamp(12px,1.3vw,14px)", lineHeight: 1.8, color: "rgba(186,230,255,0.60)", margin: 0, fontFamily: "'DM Sans',sans-serif" }}>
+              <p style={{ fontSize: "clamp(12px, 1.3vw, 14px)", lineHeight: 1.8, color: "rgba(186,230,255,0.60)", margin: 0 }}>
                 Hospitality modernization can be an open-ended journey to streamline process efficiency, improve business performance, and create new ways of serving your clients. Fully automated migration uses technology to convert legacy code and data to modern solutions, allowing hospitality organizations to tackle modernization initiatives that align with business objectives.
               </p>
             </motion.div>
 
-            {/* Other rows */}
             <div style={{ display: "flex", flexDirection: "column" }}>
               {solutions.filter((s) => !s.featured).map((s, i) => (
                 <SolutionRow key={s.id} solution={s} index={i} activeId={activeId} onActivate={setActiveId} />
@@ -470,7 +434,6 @@ export default function HospitalitySolutions() {
             </div>
           </div>
 
-          {/* RIGHT: active feature panel */}
           <AnimatePresence mode="wait">
             <motion.div
               key={activeId}
@@ -478,39 +441,39 @@ export default function HospitalitySolutions() {
               animate={{ opacity: 1, x: 0 }}
               exit={{ opacity: 0, x: -20 }}
               transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
+              className="right-panel"
               style={{
-                borderRadius: 22, padding: "clamp(22px,3vw,34px)",
+                borderRadius: 22, padding: "clamp(22px, 3vw, 34px)",
                 background: `${activeFeature?.accent}0c`,
                 border: `1px solid ${activeFeature?.accent}30`,
                 backdropFilter: "blur(20px)",
                 boxShadow: `0 16px 40px rgba(0,0,0,0.3),0 0 30px ${activeFeature?.accent}0e`,
                 position: "relative", overflow: "hidden",
-                top: 0,
               }}
             >
               {activeFeature && (
                 <>
                   <div style={{ position: "absolute", top: -40, right: -20, width: 180, height: 180, borderRadius: "50%", background: `radial-gradient(circle,${activeFeature.accent}1a,transparent 70%)`, filter: "blur(28px)", pointerEvents: "none" }} />
                   <div style={{ height: 3, background: activeFeature.grad, borderRadius: 2, marginBottom: 22 }} />
-                  <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 16 }}>
+                  <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 16, flexWrap: "wrap" }}>
                     <div style={{ width: 48, height: 48, borderRadius: 14, background: activeFeature.grad, display: "flex", alignItems: "center", justifyContent: "center", color: "white", boxShadow: `0 6px 20px ${activeFeature.accent}45` }}>
                       {activeFeature.icon}
                     </div>
                     <div style={{ display: "inline-flex", alignItems: "center", gap: 6, background: `${activeFeature.accent}14`, border: `1px solid ${activeFeature.accent}30`, borderRadius: 8, padding: "4px 12px" }}>
                       <span style={{ width: 5, height: 5, borderRadius: "50%", background: activeFeature.accent, boxShadow: `0 0 6px ${activeFeature.accent}`, flexShrink: 0 }} />
-                      <span style={{ color: activeFeature.accent, fontSize: 10, fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", fontFamily: "'DM Sans',sans-serif" }}>Featured</span>
+                      <span style={{ color: activeFeature.accent, fontSize: 10, fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase" }}>Featured</span>
                     </div>
                   </div>
-                  <h3 style={{ fontSize: "clamp(14px,1.8vw,19px)", fontWeight: 800, lineHeight: 1.3, marginBottom: 12, background: activeFeature.grad, WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", fontFamily: "'DM Sans',sans-serif" }}>
+                  <h3 style={{ fontSize: "clamp(14px, 1.8vw, 19px)", fontWeight: 800, lineHeight: 1.3, marginBottom: 12, background: activeFeature.grad, WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>
                     {activeFeature.label}
                   </h3>
-                  <p style={{ color: "rgba(186,230,255,0.55)", fontSize: "clamp(12px,1.3vw,14px)", lineHeight: 1.8, margin: 0, fontFamily: "'DM Sans',sans-serif" }}>
+                  <p style={{ color: "rgba(186,230,255,0.55)", fontSize: "clamp(12px, 1.3vw, 14px)", lineHeight: 1.8, margin: 0 }}>
                     {activeFeature.desc}
                   </p>
                   <motion.button
                     whileHover={{ scale: 1.04, boxShadow: `0 0 20px ${activeFeature.accent}40` }}
                     whileTap={{ scale: 0.97 }}
-                    style={{ marginTop: 22, display: "inline-flex", alignItems: "center", gap: 8, padding: "11px 22px", borderRadius: 10, background: activeFeature.grad, border: "none", color: "white", fontFamily: "'DM Sans',sans-serif", fontWeight: 700, fontSize: 12, cursor: "pointer", letterSpacing: "0.05em" }}
+                    style={{ marginTop: 22, display: "inline-flex", alignItems: "center", gap: 8, padding: "11px 22px", borderRadius: 10, background: activeFeature.grad, border: "none", color: "white", fontWeight: 700, fontSize: "clamp(11px, 2vw, 12px)", cursor: "pointer", letterSpacing: "0.05em" }}
                   >
                     Learn More <FiArrowRight size={13} />
                   </motion.button>
@@ -520,6 +483,63 @@ export default function HospitalitySolutions() {
           </AnimatePresence>
         </div>
       </div>
+
+      <style>{`
+        @media (max-width: 1024px) {
+          .hosp-three-col {
+            grid-template-columns: 1fr !important;
+            gap: 48px !important;
+          }
+          .bg-orbs, .decor-circles {
+            display: none !important;
+          }
+          .mockup-tablet {
+            display: none !important;
+          }
+          .mockup-phone {
+            position: relative !important;
+            margin: 0 auto !important;
+            right: auto !important;
+            top: auto !important;
+          }
+          .devices-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: auto !important;
+            height: auto !important;
+            margin-bottom: 20px;
+          }
+          .rating-badge {
+            top: 0 !important;
+            right: 0 !important;
+          }
+          .right-panel {
+            order: 3;
+          }
+        }
+        @media (max-width: 640px) {
+          .mockup-phone {
+            width: 160px !important;
+            height: 340px !important;
+          }
+          .solution-row {
+            padding: 12px 16px !important;
+          }
+        }
+        @media (max-width: 480px) {
+          .mockup-phone {
+            width: 140px !important;
+            height: 300px !important;
+          }
+          .rating-badge {
+            padding: 4px 10px !important;
+          }
+          .rating-badge span {
+            font-size: 8px !important;
+          }
+        }
+      `}</style>
     </section>
   );
 }

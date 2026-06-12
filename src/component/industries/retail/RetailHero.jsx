@@ -72,30 +72,32 @@ export default function RetailHero() {
         pointerEvents: "none",
       }} />
 
-      {/* Floating particles */}
-      {[
-        { top: "18%", left: "50%", size: 3, opacity: 0.4 },
-        { top: "35%", left: "65%", size: 2, opacity: 0.3 },
-        { top: "60%", left: "55%", size: 4, opacity: 0.2 },
-        { top: "72%", left: "72%", size: 2, opacity: 0.3 },
-        { top: "22%", left: "78%", size: 3, opacity: 0.25 },
-        { top: "82%", left: "48%", size: 2, opacity: 0.2 },
-      ].map((d, i) => (
-        <div key={i} style={{
-          position: "absolute", top: d.top, left: d.left,
-          width: `${d.size}px`, height: `${d.size}px`,
-          borderRadius: "50%", background: "#60a5fa",
-          opacity: d.opacity, pointerEvents: "none",
-        }} />
-      ))}
+      {/* Floating particles – hidden on mobile via media query */}
+      <div className="particles-container">
+        {[
+          { top: "18%", left: "50%", size: 3, opacity: 0.4 },
+          { top: "35%", left: "65%", size: 2, opacity: 0.3 },
+          { top: "60%", left: "55%", size: 4, opacity: 0.2 },
+          { top: "72%", left: "72%", size: 2, opacity: 0.3 },
+          { top: "22%", left: "78%", size: 3, opacity: 0.25 },
+          { top: "82%", left: "48%", size: 2, opacity: 0.2 },
+        ].map((d, i) => (
+          <div key={i} style={{
+            position: "absolute", top: d.top, left: d.left,
+            width: `${d.size}px`, height: `${d.size}px`,
+            borderRadius: "50%", background: "#60a5fa",
+            opacity: d.opacity, pointerEvents: "none",
+          }} />
+        ))}
+      </div>
 
       {/* ── Content ── */}
       <div style={{
         maxWidth: "1200px", margin: "0 auto",
-        padding: "0 48px",
+        padding: "0 clamp(20px, 5vw, 48px)",
         position: "relative", zIndex: 10, width: "100%",
       }}>
-        <div style={{ maxWidth: "680px" }}>
+        <div style={{ maxWidth: "min(680px, 100%)" }}>
 
           {/* Category badge */}
           <div style={{ marginBottom: "24px" }}>
@@ -103,7 +105,7 @@ export default function RetailHero() {
               display: "inline-flex", alignItems: "center", gap: "8px",
               padding: "7px 18px", borderRadius: "6px",
               background: "linear-gradient(135deg,#1d4ed8,#2563eb)",
-              color: "white", fontSize: "11px", fontWeight: "800",
+              color: "white", fontSize: "clamp(10px, 3vw, 11px)", fontWeight: "800",
               letterSpacing: "0.2em", textTransform: "uppercase",
               boxShadow: "0 4px 16px rgba(37,99,235,0.5)",
             }}>
@@ -117,7 +119,7 @@ export default function RetailHero() {
 
           {/* Main heading */}
           <h1 style={{
-            fontSize: "clamp(32px,5vw,62px)",
+            fontSize: "clamp(32px, 6vw, 62px)",
             fontWeight: "900",
             letterSpacing: "0.04em",
             textTransform: "uppercase",
@@ -147,7 +149,8 @@ export default function RetailHero() {
 
           {/* Description */}
           <p style={{
-            fontSize: "16px", lineHeight: "1.85",
+            fontSize: "clamp(14px, 2.5vw, 16px)",
+            lineHeight: "1.85",
             color: "rgba(148,163,184,0.9)",
             maxWidth: "560px", margin: "0 0 44px",
           }}>
@@ -158,7 +161,7 @@ export default function RetailHero() {
           </p>
 
           {/* CTA Buttons */}
-          <div style={{ display: "flex", alignItems: "center", gap: "16px", flexWrap: "wrap" }}>
+          <div className="hero-buttons" style={{ display: "flex", alignItems: "center", gap: "16px", flexWrap: "wrap" }}>
 
             {/* Primary */}
             <button
@@ -166,11 +169,12 @@ export default function RetailHero() {
               onMouseLeave={() => setHovBtn1(false)}
               style={{
                 display: "inline-flex", alignItems: "center", gap: "10px",
-                padding: "16px 32px", borderRadius: "10px", border: "none",
+                padding: "clamp(14px, 2vw, 16px) clamp(28px, 4vw, 32px)",
+                borderRadius: "10px", border: "none",
                 background: hovBtn1
                   ? "linear-gradient(135deg,#2563eb,#4f46e5)"
                   : "linear-gradient(135deg,#1d4ed8,#2563eb)",
-                color: "white", fontSize: "13px", fontWeight: "800",
+                color: "white", fontSize: "clamp(12px, 2vw, 13px)", fontWeight: "800",
                 letterSpacing: "0.12em", textTransform: "uppercase",
                 cursor: "pointer",
                 boxShadow: hovBtn1
@@ -192,11 +196,12 @@ export default function RetailHero() {
               onMouseLeave={() => setHovBtn2(false)}
               style={{
                 display: "inline-flex", alignItems: "center", gap: "10px",
-                padding: "15px 32px", borderRadius: "10px",
+                padding: "clamp(13px, 2vw, 15px) clamp(28px, 4vw, 32px)",
+                borderRadius: "10px",
                 border: hovBtn2 ? "1.5px solid rgba(96,165,250,0.7)" : "1.5px solid rgba(255,255,255,0.2)",
                 background: hovBtn2 ? "rgba(37,99,235,0.15)" : "rgba(255,255,255,0.04)",
                 color: hovBtn2 ? "#93c5fd" : "rgba(255,255,255,0.8)",
-                fontSize: "13px", fontWeight: "800",
+                fontSize: "clamp(12px, 2vw, 13px)", fontWeight: "800",
                 letterSpacing: "0.12em", textTransform: "uppercase",
                 cursor: "pointer",
                 boxShadow: hovBtn2 ? "0 0 24px rgba(37,99,235,0.2)" : "none",
@@ -212,11 +217,13 @@ export default function RetailHero() {
             </button>
           </div>
 
-          {/* Stats row */}
-          <div style={{
-            display: "flex", alignItems: "center", gap: "32px",
-            marginTop: "56px", paddingTop: "32px",
+          {/* Stats row – responsive */}
+          <div className="stats-row" style={{
+            display: "flex", alignItems: "center", gap: "clamp(24px, 5vw, 32px)",
+            marginTop: "clamp(40px, 8vw, 56px)",
+            paddingTop: "clamp(24px, 4vw, 32px)",
             borderTop: "1px solid rgba(59,130,246,0.15)",
+            flexWrap: "wrap",
           }}>
             {[
               { value: "300+", label: "Retail Clients" },
@@ -225,7 +232,7 @@ export default function RetailHero() {
             ].map((stat, i) => (
               <div key={i} style={{ display: "flex", flexDirection: "column", gap: "4px" }}>
                 <span style={{
-                  fontSize: "26px", fontWeight: "900",
+                  fontSize: "clamp(22px, 5vw, 26px)", fontWeight: "900",
                   background: "linear-gradient(135deg,#ffffff,#60a5fa)",
                   WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent",
                   lineHeight: 1,
@@ -233,7 +240,7 @@ export default function RetailHero() {
                   {stat.value}
                 </span>
                 <span style={{
-                  fontSize: "12px", fontWeight: "600",
+                  fontSize: "clamp(10px, 2.5vw, 12px)", fontWeight: "600",
                   letterSpacing: "0.08em", textTransform: "uppercase",
                   color: "rgba(100,116,139,0.8)",
                 }}>
@@ -245,8 +252,8 @@ export default function RetailHero() {
         </div>
       </div>
 
-      {/* ── Right side decorative lines + badges ── */}
-      <div style={{
+      {/* ── Right side decorative lines + badges (hidden on mobile) ── */}
+      <div className="decorative-side" style={{
         position: "absolute", right: 0, top: "50%",
         transform: "translateY(-50%)",
         width: "40%", height: "80%",
@@ -315,6 +322,47 @@ export default function RetailHero() {
           </div>
         </div>
       </div>
+
+      {/* Responsive CSS (media queries) */}
+      <style>{`
+        /* Hide decorative side and floating particles on small screens */
+        @media (max-width: 900px) {
+          .decorative-side {
+            display: none !important;
+          }
+          .particles-container {
+            display: none !important;
+          }
+        }
+
+        /* Buttons become full width on very small phones */
+        @media (max-width: 520px) {
+          .hero-buttons {
+            flex-direction: column;
+            align-items: stretch !important;
+            gap: 12px !important;
+          }
+          .hero-buttons button {
+            width: 100%;
+            justify-content: center;
+          }
+        }
+
+        /* Stats row wrap with balanced spacing */
+        @media (max-width: 640px) {
+          .stats-row {
+            justify-content: space-between;
+            gap: 20px;
+          }
+        }
+        @media (max-width: 480px) {
+          .stats-row {
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 16px;
+          }
+        }
+      `}</style>
     </section>
   );
 }

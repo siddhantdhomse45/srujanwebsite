@@ -108,7 +108,7 @@ function BulletItem({ text, accent, index }) {
       </div>
       <span style={{
         color:"rgba(186,230,255,0.65)",
-        fontSize:"clamp(13px,1.4vw,15px)", lineHeight:1.7,
+        fontSize:"clamp(13px, 1.4vw, 15px)", lineHeight:1.7,
         fontFamily:"'DM Sans',sans-serif",
       }}>
         {text}
@@ -131,25 +131,27 @@ function SolutionRow({ solution, index, isLast }) {
         transition={{ duration:0.65, delay:0.05, ease:[0.22,1,0.36,1] }}
         onMouseEnter={() => setHovered(true)}
         onMouseLeave={() => setHovered(false)}
+        className="sol-row"
         style={{
           display:"grid",
-          gridTemplateColumns:"clamp(180px,22%,260px) 1fr",
-          gap:"clamp(24px,4vw,48px)",
-          padding:"clamp(28px,3.5vw,40px) clamp(20px,3vw,36px)",
-          borderRadius:20,
+          gridTemplateColumns: "clamp(180px, 22%, 260px) 1fr",
+          gap: "clamp(24px, 4vw, 48px)",
+          padding: "clamp(28px, 3.5vw, 40px) clamp(20px, 3vw, 36px)",
+          borderRadius: 20,
           background: hovered
             ? `linear-gradient(145deg,${solution.accent}0d,rgba(255,255,255,0.05))`
             : "rgba(255,255,255,0.02)",
           border: hovered
             ? `1px solid ${solution.accent}35`
             : "1px solid rgba(59,130,246,0.10)",
-          backdropFilter:"blur(20px)", WebkitBackdropFilter:"blur(20px)",
+          backdropFilter: "blur(20px)",
+          WebkitBackdropFilter: "blur(20px)",
           boxShadow: hovered
             ? `0 20px 50px rgba(0,0,0,0.28),0 0 36px ${solution.accent}10`
             : "none",
-          transition:"all 0.4s cubic-bezier(0.22,1,0.36,1)",
-          position:"relative", overflow:"hidden",
-          alignItems:"start",
+          transition: "all 0.4s cubic-bezier(0.22,1,0.36,1)",
+          position: "relative", overflow: "hidden",
+          alignItems: "start",
         }}
       >
         {/* left accent strip */}
@@ -172,22 +174,22 @@ function SolutionRow({ solution, index, isLast }) {
         }}/>
 
         {/* LEFT: icon + title */}
-        <div style={{ display:"flex", flexDirection:"column", gap:14, paddingLeft:16 }}>
+        <div className="sol-left" style={{ display:"flex", flexDirection:"column", gap:14, paddingLeft:16 }}>
           <div style={{
             width:48, height:48, borderRadius:14, flexShrink:0,
             background: hovered ? solution.grad : `${solution.accent}15`,
-            border:`1px solid ${solution.accent}${hovered?"00":"28"}`,
+            border: `1px solid ${solution.accent}${hovered ? "00" : "28"}`,
             display:"flex", alignItems:"center", justifyContent:"center",
             color: hovered ? "white" : solution.accent,
             boxShadow: hovered ? `0 6px 20px ${solution.accent}40` : "none",
-            transition:"all 0.4s cubic-bezier(0.22,1,0.36,1)",
+            transition: "all 0.4s cubic-bezier(0.22,1,0.36,1)",
           }}>
             {solution.icon}
           </div>
 
           <h3 style={{
             margin:0,
-            fontSize:"clamp(14px,1.6vw,17px)", fontWeight:800,
+            fontSize:"clamp(14px, 1.6vw, 17px)", fontWeight:800,
             background: solution.grad,
             WebkitBackgroundClip:"text", WebkitTextFillColor:"transparent",
             letterSpacing:"-0.3px", lineHeight:1.3,
@@ -281,11 +283,11 @@ export default function FinancialIndustrySoftware() {
           </p>
         </motion.div>
 
-        {/* ── two-column layout ── */}
-        <div style={{ display:"grid",gridTemplateColumns:"1fr clamp(280px,36%,480px)",gap:"clamp(24px,4vw,56px)",alignItems:"start" }}>
+        {/* ── two-column layout (responsive) ── */}
+        <div className="fin-grid" style={{ display:"grid", gridTemplateColumns:"1fr clamp(280px,36%,480px)", gap:"clamp(24px,4vw,56px)", alignItems:"start" }}>
 
           {/* LEFT: solution rows */}
-          <div style={{ display:"flex",flexDirection:"column",gap:8 }}>
+          <div style={{ display:"flex", flexDirection:"column", gap:8 }}>
             {solutions.map((sol, i) => (
               <SolutionRow
                 key={sol.id}
@@ -297,7 +299,7 @@ export default function FinancialIndustrySoftware() {
           </div>
 
           {/* RIGHT: sticky image + quick stats */}
-          <div style={{ position:"sticky",top:80,display:"flex",flexDirection:"column",gap:20 }}>
+          <div className="fin-right" style={{ position:"sticky", top:80, display:"flex", flexDirection:"column", gap:20 }}>
             <motion.div
               ref={imgRef}
               initial={{ opacity:0, x:40, scale:0.96 }}
@@ -313,28 +315,24 @@ export default function FinancialIndustrySoftware() {
               <img
                 src="https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=900&q=85"
                 alt="Financial software team"
-                style={{ width:"100%",height:"clamp(220px,28vw,360px)",objectFit:"cover",display:"block" }}
+                style={{ width:"100%", height:"clamp(220px,28vw,360px)", objectFit:"cover", display:"block" }}
               />
-              {/* image overlay */}
-              <div style={{ position:"absolute",inset:0,background:"linear-gradient(to bottom,transparent 50%,rgba(4,13,26,0.85))" }}/>
-
-              {/* floating badge on image */}
+              <div style={{ position:"absolute", inset:0, background:"linear-gradient(to bottom,transparent 50%,rgba(4,13,26,0.85))" }}/>
               <div style={{
-                position:"absolute",bottom:16,left:16,right:16,
-                display:"flex",alignItems:"center",gap:10,
-                background:"rgba(5,15,45,0.88)",backdropFilter:"blur(16px)",
+                position:"absolute", bottom:16, left:16, right:16,
+                display:"flex", alignItems:"center", gap:10,
+                background:"rgba(5,15,45,0.88)", backdropFilter:"blur(16px)",
                 border:"1px solid rgba(59,130,246,0.20)",
-                borderRadius:12,padding:"10px 16px",
+                borderRadius:12, padding:"10px 16px",
               }}>
-                <div style={{ width:8,height:8,borderRadius:"50%",background:"#22d3ee",boxShadow:"0 0 8px #22d3ee",flexShrink:0 }}/>
-                <span style={{ color:"rgba(186,230,255,0.75)",fontSize:12,fontWeight:600,fontFamily:"'DM Sans',sans-serif" }}>
+                <div style={{ width:8, height:8, borderRadius:"50%", background:"#22d3ee", boxShadow:"0 0 8px #22d3ee", flexShrink:0 }}/>
+                <span style={{ color:"rgba(186,230,255,0.75)", fontSize:12, fontWeight:600, fontFamily:"'DM Sans',sans-serif" }}>
                   Trusted by 100+ Financial Institutions
                 </span>
               </div>
             </motion.div>
 
-            {/* quick stats */}
-            <div style={{ display:"grid",gridTemplateColumns:"1fr 1fr",gap:12 }}>
+            <div className="fin-stats" style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:12 }}>
               {[
                 { val:"RBI", label:"Compliance Ready",   accent:"#38bdf8", grad:"linear-gradient(135deg,#1d4ed8,#38bdf8)" },
                 { val:"PCI", label:"DSS Certified",      accent:"#818cf8", grad:"linear-gradient(135deg,#6366f1,#818cf8)" },
@@ -347,42 +345,84 @@ export default function FinancialIndustrySoftware() {
                   animate={imgInView ? { opacity:1,y:0 } : {}}
                   transition={{ delay:0.3+i*0.1,duration:0.5 }}
                   style={{
-                    borderRadius:14,padding:"14px 16px",textAlign:"center",
+                    borderRadius:14, padding:"clamp(10px, 2vw, 14px) clamp(12px, 2vw, 16px)", textAlign:"center",
                     background:"rgba(255,255,255,0.03)",
                     border:`1px solid ${s.accent}22`,
                     backdropFilter:"blur(16px)",
                   }}
                 >
-                  <div style={{ fontSize:18,fontWeight:900,letterSpacing:"-0.5px",background:s.grad,WebkitBackgroundClip:"text",WebkitTextFillColor:"transparent",fontFamily:"'DM Sans',sans-serif",marginBottom:4 }}>
+                  <div style={{ fontSize:"clamp(16px, 3vw, 18px)", fontWeight:900, letterSpacing:"-0.5px", background:s.grad, WebkitBackgroundClip:"text", WebkitTextFillColor:"transparent", fontFamily:"'DM Sans',sans-serif", marginBottom:4 }}>
                     {s.val}
                   </div>
-                  <div style={{ color:"rgba(186,230,255,0.45)",fontSize:11,fontWeight:600,fontFamily:"'DM Sans',sans-serif" }}>
+                  <div style={{ color:"rgba(186,230,255,0.45)", fontSize:"clamp(10px, 2.5vw, 11px)", fontWeight:600, fontFamily:"'DM Sans',sans-serif" }}>
                     {s.label}
                   </div>
                 </motion.div>
               ))}
             </div>
 
-            {/* CTA */}
             <motion.button
-              whileHover={{ scale:1.04,boxShadow:"0 0 40px rgba(59,130,246,0.50)" }}
+              whileHover={{ scale:1.04, boxShadow:"0 0 40px rgba(59,130,246,0.50)" }}
               whileTap={{ scale:0.97 }}
               style={{
-                display:"flex",alignItems:"center",justifyContent:"center",gap:9,
-                padding:"clamp(13px,1.8vw,16px)",borderRadius:12,
+                display:"flex", alignItems:"center", justifyContent:"center", gap:9,
+                padding:"clamp(13px, 1.8vw, 16px)", borderRadius:12,
                 background:"linear-gradient(135deg,#1d4ed8,#3b82f6)",
-                border:"none",color:"white",
-                fontFamily:"'DM Sans',sans-serif",fontWeight:700,
-                fontSize:"clamp(12px,1.4vw,14px)",letterSpacing:"0.14em",textTransform:"uppercase",
-                cursor:"pointer",boxShadow:"0 4px 24px rgba(59,130,246,0.35)",
+                border:"none", color:"white",
+                fontFamily:"'DM Sans',sans-serif", fontWeight:700,
+                fontSize:"clamp(12px, 1.4vw, 14px)", letterSpacing:"0.14em", textTransform:"uppercase",
+                cursor:"pointer", boxShadow:"0 4px 24px rgba(59,130,246,0.35)",
               }}
             >
               Discuss Your Project <FiArrowRight size={15}/>
             </motion.button>
           </div>
-
         </div>
       </div>
+
+      <style>{`
+        /* Main grid → single column on tablet/mobile */
+        @media (max-width: 1024px) {
+          .fin-grid {
+            grid-template-columns: 1fr !important;
+            gap: 48px !important;
+          }
+          .fin-right {
+            position: static !important;
+          }
+        }
+
+        /* Each solution row → vertical stack on small screens */
+        @media (max-width: 768px) {
+          .sol-row {
+            grid-template-columns: 1fr !important;
+            gap: 24px !important;
+            padding: 24px 20px !important;
+          }
+          .sol-left {
+            padding-left: 0 !important;
+            align-items: center !important;
+            text-align: center;
+          }
+          .sol-left button {
+            margin-left: auto;
+            margin-right: auto;
+          }
+        }
+
+        /* Stats grid: two columns on tablet, optionally one column on very small phones */
+        @media (max-width: 640px) {
+          .fin-stats {
+            grid-template-columns: 1fr 1fr !important;
+            gap: 10px !important;
+          }
+        }
+        @media (max-width: 480px) {
+          .fin-stats {
+            grid-template-columns: 1fr !important;
+          }
+        }
+      `}</style>
     </section>
   );
 }

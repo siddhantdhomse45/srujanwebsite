@@ -1,4 +1,4 @@
-import  { useRef, useState } from "react";
+import { useRef, useState } from "react";
 import { motion, useInView } from "framer-motion";
 
 /* ─── Scroll-reveal helper ──────────────────────────────── */
@@ -61,141 +61,370 @@ export default function WhyChooseUs() {
     <section
       style={{
         position: "relative",
-        padding: "120px 0 130px",
+        padding: "clamp(64px, 8vw, 120px) 0 clamp(80px, 10vw, 130px)",
         background: "linear-gradient(160deg,#020d1e 0%,#04152d 45%,#060e20 100%)",
         overflow: "hidden",
-        fontFamily: "'DM Sans',sans-serif",
+        fontFamily: "'DM Sans', sans-serif",
       }}
     >
-      {/* ─── Fonts + utility CSS ─────────────────────── */}
       <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;0,9..40,800;1,9..40,400&family=Syne:wght@700;800&display=swap');
-        *, *::before, *::after { box-sizing: border-box; }
+        @import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&family=Syne:wght@700;800&display=swap');
+        * { box-sizing: border-box; }
 
-        /* Layout */
-        .wc-inner  { max-width: 1220px; margin: 0 auto; padding: 0 64px; position: relative; z-index: 10; }
-        .wc-cols   { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: start; margin-top: 80px; }
+        /* base container */
+        .wc-inner {
+          max-width: 1220px;
+          margin: 0 auto;
+          padding: 0 clamp(20px, 5vw, 64px);
+          position: relative;
+          z-index: 10;
+        }
 
-        /* Stats strip */
-        .wc-stats  { display: grid; grid-template-columns: repeat(4,1fr); gap: 2px; border-radius: 18px; overflow: hidden; border: 1px solid rgba(255,255,255,0.07); margin-top: 56px; }
-        .wc-stat   {
-          padding: 24px 20px; text-align: center;
+        /* responsive grid */
+        .wc-cols {
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+          gap: 60px;
+          align-items: start;
+          margin-top: 60px;
+        }
+
+        /* stats strip */
+        .wc-stats {
+          display: grid;
+          grid-template-columns: repeat(4, 1fr);
+          gap: 2px;
+          border-radius: 18px;
+          overflow: hidden;
+          border: 1px solid rgba(255,255,255,0.07);
+          margin-top: 48px;
+          background: rgba(255,255,255,0.02);
+        }
+        .wc-stat {
+          padding: clamp(16px, 3vw, 24px) clamp(12px, 2vw, 20px);
+          text-align: center;
           background: rgba(255,255,255,0.025);
-          backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
-          transition: background 0.3s ease;
+          backdrop-filter: blur(16px);
+          transition: background 0.3s;
           cursor: default;
         }
         .wc-stat:hover { background: rgba(255,255,255,0.05); }
 
-        /* Feature rows */
-        .wc-feat-list { display: flex; flex-direction: column; gap: 10px; }
+        /* feature cards – improved gap */
+        .wc-feat-list {
+          display: flex;
+          flex-direction: column;
+          gap: 16px;
+        }
         .wc-feat {
           display: grid;
           grid-template-columns: 36px 1fr;
           align-items: center;
-          gap: 14px;
-          padding: 16px 18px 16px 16px;
-          border-radius: 14px;
+          gap: 16px;
+          padding: 18px 20px 18px 16px;
+          border-radius: 20px;
           border: 1px solid rgba(255,255,255,0.06);
           background: rgba(255,255,255,0.022);
           cursor: default;
           position: relative;
-          overflow: hidden;
-          transition:
-            background 0.32s ease,
-            border-color 0.32s ease,
-            transform 0.32s cubic-bezier(0.22,1,0.36,1),
-            box-shadow 0.32s ease;
+          transition: all 0.32s cubic-bezier(0.22,1,0.36,1);
         }
-        .wc-feat:hover { transform: translateX(5px); background: rgba(255,255,255,0.045); }
-
-        /* Animated left accent */
+        .wc-feat:hover {
+          transform: translateX(8px);
+          background: rgba(255,255,255,0.045);
+          border-color: rgba(255,255,255,0.12);
+        }
         .wc-feat-bar {
-          position: absolute; left: 0; top: 0; bottom: 0; width: 3px;
-          border-radius: 0 3px 3px 0;
+          position: absolute;
+          left: 0; top: 0; bottom: 0;
+          width: 4px;
+          border-radius: 0 4px 4px 0;
           opacity: 0;
-          transition: opacity 0.3s ease;
+          transition: opacity 0.3s;
         }
         .wc-feat:hover .wc-feat-bar { opacity: 1; }
 
-        /* Phone column */
+        /* phone column – remove sticky on mobile */
         .wc-phones-col {
-          position: sticky; top: 100px;
-          display: flex; flex-direction: column; align-items: center; gap: 20px;
-          padding-top: 4px;
+          position: sticky;
+          top: 100px;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          gap: 24px;
         }
         .wc-phones-stack {
           position: relative;
-          width: 100%; height: 480px;
-          display: flex; align-items: center; justify-content: center;
+          width: 100%;
+          height: clamp(380px, 60vw, 480px);
+          display: flex;
+          align-items: center;
+          justify-content: center;
         }
         .wc-phone {
           position: absolute;
           border-radius: 36px;
           overflow: hidden;
-          box-shadow:
-            0 40px 100px rgba(0,0,0,0.65),
-            0 0 0 1px rgba(255,255,255,0.09),
-            inset 0 1px 0 rgba(255,255,255,0.14);
+          box-shadow: 0 40px 100px rgba(0,0,0,0.65), 0 0 0 1px rgba(255,255,255,0.09), inset 0 1px 0 rgba(255,255,255,0.14);
         }
         .wc-phone img {
-          width: 100%; height: 100%;
-          object-fit: cover; display: block;
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+          display: block;
         }
-        .wc-phone-back  { width: 210px; height: 400px; left: 20px; top: 40px; z-index: 1; filter: brightness(0.65) saturate(0.7); transform: rotate(3deg); }
-        .wc-phone-front { width: 230px; height: 440px; right: 20px; top: 0; z-index: 2; }
-
-        /* Badge pills */
-        .wc-badges { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 36px; padding-top: 28px; border-top: 1px solid rgba(255,255,255,0.06); }
-        .wc-badge {
-          display: inline-flex; align-items: center; gap: 5px;
-          padding: 5px 12px; border-radius: 100px;
-          background: rgba(255,255,255,0.035);
-          border: 1px solid rgba(255,255,255,0.07);
-          color: rgba(148,163,184,0.6);
-          font-size: 11px; font-weight: 600; letter-spacing: 0.5px; text-transform: uppercase;
-          transition: background 0.25s, border-color 0.25s, color 0.25s;
-          cursor: default;
+        .wc-phone-back {
+          width: 180px;
+          height: 340px;
+          left: 0;
+          top: 40px;
+          z-index: 1;
+          filter: brightness(0.65) saturate(0.7);
+          transform: rotate(3deg);
         }
-        .wc-badge:hover { background: rgba(255,255,255,0.07); border-color: rgba(255,255,255,0.14); color: rgba(255,255,255,0.8); }
+        .wc-phone-front {
+          width: 200px;
+          height: 380px;
+          right: 0;
+          top: 0;
+          z-index: 2;
+        }
 
-        /* Floating chip */
+        /* floating chips */
         .wc-chip {
           position: absolute;
           background: rgba(7,15,38,0.88);
-          backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+          backdrop-filter: blur(20px);
           border: 1px solid rgba(255,255,255,0.12);
           border-radius: 14px;
-          padding: 10px 14px;
-          display: flex; align-items: center; gap: 10px;
+          padding: 8px 12px;
+          display: flex;
+          align-items: center;
+          gap: 8px;
           box-shadow: 0 12px 40px rgba(0,0,0,0.55);
           white-space: nowrap;
           z-index: 5;
         }
-
-        /* Responsive */
-        @media (max-width: 1024px) {
-          .wc-inner  { padding: 0 32px; }
-          .wc-cols   { grid-template-columns: 1fr; gap: 56px; }
-          .wc-phones-col { position: static; }
-          .wc-stats  { grid-template-columns: repeat(2,1fr); }
+        .wc-chip > div:first-child {
+          width: 8px;
+          height: 8px;
+          border-radius: 50%;
+          flex-shrink: 0;
         }
-        @media (max-width: 560px) {
-          .wc-inner  { padding: 0 18px; }
-          .wc-stats  { grid-template-columns: 1fr 1fr; }
-          .wc-phones-stack { height: 380px; }
-          .wc-phone-back  { width: 165px; height: 315px; }
-          .wc-phone-front { width: 185px; height: 355px; }
+        .wc-chip div:first-child + div div:first-child {
+          font-size: 11px;
+          font-weight: 700;
+          line-height: 1.2;
+          color: white;
+        }
+        .wc-chip div:first-child + div div:last-child {
+          font-size: 9px;
+          color: rgba(148,163,184,0.55);
+        }
+
+        /* badges */
+        .wc-badges {
+          display: flex;
+          flex-wrap: wrap;
+          gap: 10px;
+          margin-top: 28px;
+          padding-top: 24px;
+          border-top: 1px solid rgba(255,255,255,0.06);
+        }
+        .wc-badge {
+          display: inline-flex;
+          align-items: center;
+          gap: 6px;
+          padding: 5px 12px;
+          border-radius: 100px;
+          background: rgba(255,255,255,0.035);
+          border: 1px solid rgba(255,255,255,0.07);
+          color: rgba(148,163,184,0.6);
+          font-size: 10px;
+          font-weight: 600;
+          letter-spacing: 0.5px;
+          text-transform: uppercase;
+          transition: all 0.25s;
+          cursor: default;
+        }
+        .wc-badge:hover {
+          background: rgba(255,255,255,0.07);
+          border-color: rgba(255,255,255,0.14);
+          color: rgba(255,255,255,0.8);
+        }
+
+        /* ========== RESPONSIVE BREAKPOINTS ========== */
+        @media (max-width: 1024px) {
+          .wc-cols {
+            grid-template-columns: 1fr;
+            gap: 48px;
+            margin-top: 48px;
+          }
+          .wc-phones-col {
+            position: static; /* remove sticky on tablet */
+          }
+          .wc-stats {
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1px;
+          }
+          .wc-phone-back {
+            width: 160px;
+            height: 300px;
+            left: 5%;
+          }
+          .wc-phone-front {
+            width: 180px;
+            height: 340px;
+            right: 5%;
+          }
+          .wc-feat-list {
+            gap: 14px;
+          }
+        }
+
+        @media (max-width: 768px) {
+          .wc-inner {
+            padding: 0 24px;
+          }
+          .wc-cols {
+            gap: 40px;
+            margin-top: 40px;
+          }
+          .wc-feat-list {
+            gap: 12px;
+          }
+          .wc-feat {
+            padding: 14px 16px;
+            gap: 12px;
+          }
+          .wc-feat:hover {
+            transform: translateX(4px);
+          }
+          .wc-stats {
+            margin-top: 36px;
+          }
+          .wc-phone-back {
+            width: 140px;
+            height: 260px;
+            left: 0;
+            top: 30px;
+          }
+          .wc-phone-front {
+            width: 160px;
+            height: 300px;
+            right: 0;
+          }
+          .wc-phones-stack {
+            height: 340px;
+          }
+          .wc-chip {
+            padding: 6px 10px;
+            white-space: normal;
+            max-width: 85%;
+          }
+          .wc-chip div:first-child + div div:first-child {
+            font-size: 10px;
+          }
+          .wc-chip div:first-child + div div:last-child {
+            font-size: 8px;
+          }
+        }
+
+        @media (max-width: 640px) {
+          .wc-inner {
+            padding: 0 20px;
+          }
+          .wc-cols {
+            gap: 36px;
+          }
+          .wc-feat-list {
+            gap: 10px;
+          }
+          .wc-feat {
+            grid-template-columns: 28px 1fr;
+            gap: 10px;
+            padding: 12px 14px;
+            border-radius: 16px;
+          }
+          .wc-feat > div:first-child {
+            width: 28px;
+            height: 28px;
+          }
+          .wc-feat > div:first-child svg {
+            width: 12px;
+            height: 12px;
+          }
+          .wc-phone-back {
+            width: 110px;
+            height: 210px;
+            top: 25px;
+          }
+          .wc-phone-front {
+            width: 130px;
+            height: 250px;
+          }
+          .wc-phones-stack {
+            height: 280px;
+          }
+          .wc-stats {
+            grid-template-columns: 1fr 1fr;
+            gap: 1px;
+          }
+          .wc-stat {
+            padding: 12px 8px;
+          }
+          .wc-badges {
+            gap: 8px;
+            margin-top: 20px;
+          }
+          .wc-badge {
+            padding: 4px 10px;
+            font-size: 9px;
+          }
+        }
+
+        @media (max-width: 480px) {
+          .wc-inner {
+            padding: 0 16px;
+          }
+          .wc-feat {
+            padding: 10px 12px;
+          }
+          .wc-feat-list {
+            gap: 8px;
+          }
+          .wc-phone-back {
+            width: 95px;
+            height: 180px;
+          }
+          .wc-phone-front {
+            width: 115px;
+            height: 220px;
+          }
+          .wc-phones-stack {
+            height: 250px;
+          }
+          .wc-chip {
+            padding: 5px 8px;
+            border-radius: 10px;
+          }
+          .wc-chip div:first-child + div div:first-child {
+            font-size: 9px;
+          }
+          .wc-chip div:first-child + div div:last-child {
+            font-size: 7px;
+          }
         }
       `}</style>
 
-      {/* ── Ambient orbs ──────────────────────────────── */}
+      {/* Ambient orbs (responsive) */}
       <motion.div
         animate={{ scale: [1,1.13,1], opacity: [0.10,0.20,0.10] }}
         transition={{ duration: 12, repeat: Infinity, ease: "easeInOut" }}
         style={{
           position: "absolute", top: "-10%", left: "-8%",
-          width: 580, height: 580, borderRadius: "50%",
+          width: "min(580px, 80vw)", height: "min(580px, 80vw)",
+          borderRadius: "50%",
           background: "radial-gradient(circle,#1d4ed8,#0ea5e9,transparent 70%)",
           filter: "blur(90px)", pointerEvents: "none",
         }}
@@ -205,13 +434,14 @@ export default function WhyChooseUs() {
         transition={{ duration: 15, repeat: Infinity, ease: "easeInOut", delay: 3.5 }}
         style={{
           position: "absolute", bottom: "-10%", right: "-6%",
-          width: 520, height: 520, borderRadius: "50%",
+          width: "min(520px, 70vw)", height: "min(520px, 70vw)",
+          borderRadius: "50%",
           background: "radial-gradient(circle,#7c3aed,#0ea5e9,transparent 70%)",
           filter: "blur(100px)", pointerEvents: "none",
         }}
       />
 
-      {/* ── Grid texture ──────────────────────────────── */}
+      {/* Grid pattern */}
       <svg style={{ position:"absolute",inset:0,width:"100%",height:"100%",opacity:0.04,pointerEvents:"none" }} xmlns="http://www.w3.org/2000/svg">
         <defs>
           <pattern id="wc-grid" width="60" height="60" patternUnits="userSpaceOnUse">
@@ -223,50 +453,46 @@ export default function WhyChooseUs() {
 
       <div className="wc-inner">
 
-        {/* ══ HEADER ════════════════════════════════════ */}
+        {/* Header */}
         <div style={{ textAlign: "center", maxWidth: 860, margin: "0 auto" }}>
-
-          {/* Badge */}
           <Rev>
             <div style={{
               display: "inline-flex", alignItems: "center", gap: 8,
               background: "rgba(255,255,255,0.05)",
-              backdropFilter: "blur(24px)", WebkitBackdropFilter: "blur(24px)",
+              backdropFilter: "blur(24px)",
               border: "1px solid rgba(255,255,255,0.10)",
-              borderRadius: 100, padding: "6px 18px", marginBottom: 28,
+              borderRadius: 100, padding: "5px 16px", marginBottom: 24,
             }}>
               <span style={{ width:6, height:6, borderRadius:"50%", background:"#22d3ee", boxShadow:"0 0 8px #22d3ee", display:"inline-block" }} />
-              <span style={{ color:"rgba(255,255,255,0.6)", fontSize:12, fontWeight:600, letterSpacing:2.5, textTransform:"uppercase" }}>
+              <span style={{ color:"rgba(255,255,255,0.6)", fontSize: "clamp(10px, 3vw, 12px)", fontWeight:600, letterSpacing:2.5, textTransform:"uppercase" }}>
                 Why Choose Us
               </span>
             </div>
           </Rev>
 
-          {/* Headline */}
           <Rev delay={0.1}>
             <h2 style={{
-              fontFamily: "'Syne',sans-serif",
-              fontSize: "clamp(1.9rem,4.2vw,3.4rem)",
+              fontFamily: "'Syne', sans-serif",
+              fontSize: "clamp(28px, 6vw, 54px)",
               fontWeight: 800, letterSpacing: "-1.5px", lineHeight: 1.08,
-              color: "white", margin: "0 0 24px",
+              color: "white", margin: "0 0 20px",
             }}>
               Why Choose{" "}
               <span style={{
                 background: "linear-gradient(90deg,#38bdf8,#818cf8,#c084fc)",
-                WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text",
+                WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent",
               }}>
-                Intellectsoft
+                Srujan Infotech
               </span>{" "}
               for Your Mobile App Development Project?
             </h2>
           </Rev>
 
-          {/* Sub */}
           <Rev delay={0.18}>
             <p style={{
               color: "rgba(148,163,184,0.65)",
-              fontSize: "clamp(14px,1.4vw,17px)",
-              lineHeight: 1.82, margin: 0,
+              fontSize: "clamp(14px, 3.5vw, 17px)",
+              lineHeight: 1.7, margin: 0,
             }}>
               We offer a full cycle of application design, integration and management services.
               Whether it's a consumer app or a transformative enterprise-class solution, we lead
@@ -275,26 +501,27 @@ export default function WhyChooseUs() {
           </Rev>
         </div>
 
-        {/* ══ STATS STRIP ══════════════════════════════ */}
+        {/* Stats strip */}
         <Rev delay={0.22}>
           <div className="wc-stats">
             {stats.map(({ value, label }, i) => (
-              <motion.div
-                key={label}
-                className="wc-stat"
-                whileHover={{ scale: 1.02 }}
-              >
+              <motion.div key={label} className="wc-stat" whileHover={{ scale: 1.02 }}>
                 <div style={{
-                  fontFamily: "'Syne',sans-serif",
-                  fontSize: "clamp(1.6rem,2.8vw,2.4rem)",
+                  fontFamily: "'Syne', sans-serif",
+                  fontSize: "clamp(24px, 4.5vw, 38px)",
                   fontWeight: 800, lineHeight: 1,
-                  background: ["linear-gradient(135deg,#0369a1,#38bdf8)", "linear-gradient(135deg,#4338ca,#818cf8)", "linear-gradient(135deg,#059669,#34d399)", "linear-gradient(135deg,#c2410c,#fb923c)"][i],
-                  WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text",
+                  background: [
+                    "linear-gradient(135deg,#0369a1,#38bdf8)",
+                    "linear-gradient(135deg,#4338ca,#818cf8)",
+                    "linear-gradient(135deg,#059669,#34d399)",
+                    "linear-gradient(135deg,#c2410c,#fb923c)"
+                  ][i],
+                  WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent",
                   marginBottom: 5,
                 }}>
                   {value}
                 </div>
-                <div style={{ color:"rgba(148,163,184,0.50)", fontSize:11, fontWeight:600, letterSpacing:2, textTransform:"uppercase" }}>
+                <div style={{ color:"rgba(148,163,184,0.50)", fontSize: "clamp(9px, 2.5vw, 11px)", fontWeight:600, letterSpacing:1.5, textTransform:"uppercase" }}>
                   {label}
                 </div>
               </motion.div>
@@ -302,58 +529,54 @@ export default function WhyChooseUs() {
           </div>
         </Rev>
 
-        {/* ══ TWO-COLUMN BODY ══════════════════════════ */}
+        {/* Two columns */}
         <div className="wc-cols">
 
-          {/* LEFT — feature list ─────────────────────── */}
+          {/* Feature list */}
           <motion.div
             className="wc-feat-list"
             initial="hidden"
             whileInView="show"
             viewport={{ once: true, margin: "-60px" }}
-            variants={{ hidden:{}, show:{ transition:{ staggerChildren:0.065 } } }}
+            variants={{
+              hidden: {},
+              show: { transition: { staggerChildren: 0.065 } }
+            }}
           >
             {features.map((feat, i) => (
               <motion.div
                 key={i}
                 className="wc-feat"
                 variants={{
-                  hidden: { opacity:0, x:-28 },
-                  show:   { opacity:1, x:0, transition:{ duration:0.65, ease:[0.22,1,0.36,1] } },
+                  hidden: { opacity: 0, x: -28 },
+                  show: { opacity: 1, x: 0, transition: { duration: 0.65, ease: [0.22,1,0.36,1] } }
                 }}
                 onMouseEnter={() => setActiveIdx(i)}
                 onMouseLeave={() => setActiveIdx(null)}
                 style={{
                   borderColor: activeIdx === i ? `${feat.color}38` : "rgba(255,255,255,0.06)",
-                  boxShadow: activeIdx === i
-                    ? `0 8px 32px rgba(0,0,0,0.35), 0 0 22px ${feat.color}14`
-                    : "none",
+                  boxShadow: activeIdx === i ? `0 8px 32px rgba(0,0,0,0.35), 0 0 22px ${feat.color}14` : "none",
                 }}
               >
-                {/* Left bar */}
                 <div className="wc-feat-bar" style={{ background: feat.grad }} />
-
-                {/* Check icon */}
                 <div style={{
                   width: 36, height: 36, borderRadius: 11, flexShrink: 0,
                   display: "flex", alignItems: "center", justifyContent: "center",
                   background: `linear-gradient(135deg,${feat.color}1a,${feat.color}08)`,
                   border: `1px solid ${feat.color}30`,
                   boxShadow: activeIdx === i ? `0 0 18px ${feat.color}28` : "none",
-                  transition: "box-shadow 0.3s ease",
+                  transition: "box-shadow 0.3s",
                 }}>
                   <svg width="15" height="15" fill="none" viewBox="0 0 24 24">
                     <path d="M5 13l4 4L19 7" stroke={feat.color} strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
                   </svg>
                 </div>
-
-                {/* Text */}
-                <div style={{ position:"relative", zIndex:1 }}>
+                <div style={{ position: "relative", zIndex: 1 }}>
                   <div style={{
                     color: activeIdx === i ? "rgba(255,255,255,0.95)" : "rgba(226,232,240,0.82)",
-                    fontSize: "clamp(13px,1.2vw,15px)",
+                    fontSize: "clamp(13px, 3.2vw, 15px)",
                     fontWeight: 600, lineHeight: 1.4,
-                    marginBottom: feat.sub ? 3 : 0,
+                    marginBottom: feat.sub ? 4 : 0,
                     transition: "color 0.25s",
                   }}>
                     {feat.title}
@@ -361,20 +584,18 @@ export default function WhyChooseUs() {
                   {feat.sub && (
                     <div style={{
                       color: "rgba(148,163,184,0.48)",
-                      fontSize: "clamp(11px,1vw,13px)",
-                      fontWeight: 400, lineHeight: 1.5,
+                      fontSize: "clamp(11px, 2.8vw, 13px)",
+                      fontWeight: 400,
                     }}>
                       {feat.sub}
                     </div>
                   )}
                 </div>
-
-                {/* Ghost number */}
                 <div style={{
-                  position: "absolute", right: 16, top:"50%", transform:"translateY(-50%)",
-                  fontFamily: "'Syne',sans-serif",
-                  fontSize: 44, fontWeight: 800, lineHeight: 1,
-                  color: activeIdx === i ? `${feat.color}10` : `${feat.color}06`,
+                  position: "absolute", right: "clamp(12px, 2vw, 20px)", top: "50%", transform: "translateY(-50%)",
+                  fontFamily: "'Syne', sans-serif",
+                  fontSize: "clamp(28px, 5vw, 44px)", fontWeight: 800,
+                  color: activeIdx === i ? `${feat.color}18` : `${feat.color}08`,
                   userSelect: "none", pointerEvents: "none",
                   transition: "color 0.3s",
                 }}>
@@ -383,130 +604,91 @@ export default function WhyChooseUs() {
               </motion.div>
             ))}
 
-            {/* Compliance badges */}
+            {/* Badges */}
             <Rev delay={0.15}>
               <div className="wc-badges">
-                <div style={{ width:"100%", marginBottom:8 }}>
-                  <span style={{ color:"rgba(148,163,184,0.35)", fontSize:10, fontWeight:700, letterSpacing:2.5, textTransform:"uppercase" }}>
+                <div style={{ width: "100%", marginBottom: 8 }}>
+                  <span style={{ color:"rgba(148,163,184,0.35)", fontSize:"clamp(9px, 2.8vw, 11px)", fontWeight:700, letterSpacing:2, textTransform:"uppercase" }}>
                     Certifications &amp; Compliance
                   </span>
                 </div>
                 {badges.map(({ label, icon }) => (
                   <div key={label} className="wc-badge">
-                    <span style={{ fontSize:12 }}>{icon}</span>
-                    {label}
+                    <span>{icon}</span> {label}
                   </div>
                 ))}
               </div>
             </Rev>
           </motion.div>
 
-          {/* RIGHT — phone mockups ───────────────────── */}
+          {/* Phone mockups column */}
           <div className="wc-phones-col">
-            <Rev x={48} y={0} style={{ width:"100%" }}>
+            <Rev x={48} y={0} style={{ width: "100%" }}>
               <div className="wc-phones-stack">
-
                 {/* Glow halo */}
                 <div style={{
-                  position: "absolute", top:"50%", left:"50%",
+                  position: "absolute", top: "50%", left: "50%",
                   transform: "translate(-50%,-50%)",
-                  width: 340, height: 340, borderRadius: "50%",
-                  background: "radial-gradient(circle,rgba(56,189,248,0.12),rgba(129,140,248,0.08),transparent 70%)",
+                  width: "min(340px, 80vw)", height: "min(340px, 80vw)",
+                  borderRadius: "50%",
+                  background: "radial-gradient(circle, rgba(56,189,248,0.12), rgba(129,140,248,0.08), transparent 70%)",
                   filter: "blur(48px)", pointerEvents: "none",
                 }} />
-
-                {/* Dot grid top-right */}
-                <svg style={{ position:"absolute", top:-16, right:-10, opacity:0.12, pointerEvents:"none" }} width="110" height="110" viewBox="0 0 110 110" xmlns="http://www.w3.org/2000/svg">
-                  {Array.from({length:6}).map((_,r) => Array.from({length:6}).map((_,c) => (
-                    <circle key={`${r}-${c}`} cx={c*18+9} cy={r*18+9} r="1.4" fill="white" />
-                  )))}
-                </svg>
-                {/* Dot grid bottom-left */}
-                <svg style={{ position:"absolute", bottom:-16, left:-10, opacity:0.09, pointerEvents:"none" }} width="90" height="90" viewBox="0 0 90 90" xmlns="http://www.w3.org/2000/svg">
-                  {Array.from({length:5}).map((_,r) => Array.from({length:5}).map((_,c) => (
-                    <circle key={`${r}-${c}`} cx={c*18+9} cy={r*18+9} r="1.4" fill="white" />
-                  )))}
-                </svg>
 
                 {/* Back phone */}
                 <motion.div
                   className="wc-phone wc-phone-back"
-                  animate={{ y: [0,-12,0] }}
+                  animate={{ y: [0, -12, 0] }}
                   transition={{ duration: 7, repeat: Infinity, ease: "easeInOut", delay: 1 }}
                 >
                   <img src={PHONE_SCREENS[0]} alt="App UI 1" />
                   <div style={{
-                    position:"absolute", inset:0,
-                    background: "linear-gradient(to bottom,rgba(56,189,248,0.06),transparent 50%,rgba(0,0,0,0.30))",
+                    position: "absolute", inset: 0,
+                    background: "linear-gradient(to bottom, rgba(56,189,248,0.06), transparent 50%, rgba(0,0,0,0.30))",
                   }} />
                 </motion.div>
 
                 {/* Front phone */}
                 <motion.div
                   className="wc-phone wc-phone-front"
-                  animate={{ y: [0,-16,0] }}
+                  animate={{ y: [0, -16, 0] }}
                   transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
                 >
                   <img src={PHONE_SCREENS[1]} alt="App UI 2" />
                   <div style={{
-                    position:"absolute", inset:0,
-                    background: "linear-gradient(to bottom,rgba(129,140,248,0.06),transparent 50%,rgba(0,0,0,0.25))",
+                    position: "absolute", inset: 0,
+                    background: "linear-gradient(to bottom, rgba(129,140,248,0.06), transparent 50%, rgba(0,0,0,0.25))",
                   }} />
 
-                  {/* Floating stat chip — bottom */}
+                  {/* Bottom floating chip */}
                   <motion.div
                     className="wc-chip"
-                    style={{ bottom:28, left:"50%", transform:"translateX(-50%)" }}
-                    animate={{ y:[0,-5,0] }}
-                    transition={{ duration:3.2, repeat:Infinity, ease:"easeInOut", delay:0.5 }}
+                    style={{ bottom: "clamp(8px, 3vw, 28px)", left: "50%", transform: "translateX(-50%)" }}
+                    animate={{ y: [0, -5, 0] }}
+                    transition={{ duration: 3.2, repeat: Infinity, ease: "easeInOut", delay: 0.5 }}
                   >
-                    <div style={{
-                      width:8, height:8, borderRadius:"50%",
-                      background:"#34d399", boxShadow:"0 0 8px #34d399", flexShrink:0,
-                    }} />
+                    <div style={{ background: "#34d399", boxShadow: "0 0 8px #34d399" }} />
                     <div>
-                      <div style={{ color:"white", fontSize:12, fontWeight:700, lineHeight:1.2 }}>600+ Apps Delivered</div>
-                      <div style={{ color:"rgba(148,163,184,0.55)", fontSize:10 }}>Across 9 Offices Worldwide</div>
+                      <div>600+ Apps Delivered</div>
+                      <div>Across 9 Offices Worldwide</div>
                     </div>
                   </motion.div>
                 </motion.div>
 
-                {/* Floating stat chip — top-left */}
+                {/* Top-left floating chip */}
                 <motion.div
                   className="wc-chip"
-                  style={{ top:12, left:0 }}
-                  animate={{ y:[0,-6,0] }}
-                  transition={{ duration:4, repeat:Infinity, ease:"easeInOut", delay:2 }}
+                  style={{ top: "clamp(4px, 2vw, 12px)", left: "clamp(-10px, -2vw, 0)" }}
+                  animate={{ y: [0, -6, 0] }}
+                  transition={{ duration: 4, repeat: Infinity, ease: "easeInOut", delay: 2 }}
                 >
-                  <div style={{ width:8, height:8, borderRadius:"50%", background:"#818cf8", boxShadow:"0 0 8px #818cf8", flexShrink:0 }} />
+                  <div style={{ background: "#818cf8", boxShadow: "0 0 8px #818cf8" }} />
                   <div>
-                    <div style={{ color:"white", fontSize:12, fontWeight:700, lineHeight:1.2 }}>17+ Yrs Experience</div>
-                    <div style={{ color:"rgba(148,163,184,0.55)", fontSize:10 }}>Since iOS & Android Launch</div>
+                    <div>17+ Yrs Experience</div>
+                    <div>Since iOS & Android Launch</div>
                   </div>
                 </motion.div>
               </div>
-            </Rev>
-
-            {/* CTA button */}
-            <Rev delay={0.2} y={20}>
-              <motion.a
-                href="#contact"
-                whileHover={{ scale:1.05, y:-2 }}
-                whileTap={{ scale:0.97 }}
-                style={{
-                  display: "inline-flex", alignItems:"center", gap:10,
-                  padding: "14px 32px", borderRadius:16,
-                  background: "linear-gradient(135deg,#0369a1,#38bdf8)",
-                  color:"white", fontWeight:700, fontSize:15,
-                  textDecoration:"none",
-                  boxShadow:"0 0 36px rgba(56,189,248,0.28), 0 4px 24px rgba(0,0,0,0.4)",
-                }}
-              >
-                Start Your Project
-                <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
-                </svg>
-              </motion.a>
             </Rev>
           </div>
         </div>

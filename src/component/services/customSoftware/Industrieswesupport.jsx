@@ -497,74 +497,7 @@ export default function IndustriesWeSupportPremium() {
             ))}
           </div>
 
-          {/* ── Bottom CTA strip ── */}
-          <motion.div
-            initial={{ opacity: 0, y: 28 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-30px" }}
-            transition={{ duration: 0.85, delay: 0.3, ease: E }}
-            style={{
-              marginTop: 64,
-              display: "flex", alignItems: "center",
-              justifyContent: "space-between",
-              flexWrap: "wrap", gap: 24,
-              padding: "32px 40px",
-              background: "rgba(255,255,255,0.025)",
-              backdropFilter: "blur(16px)",
-              border: "1px solid rgba(255,255,255,0.07)",
-              borderRadius: 16,
-            }}
-          >
-            <div>
-              <div style={{
-                fontFamily: "'Barlow Condensed', sans-serif",
-                fontWeight: 800, fontSize: 20,
-                textTransform: "uppercase", letterSpacing: 0.5,
-                color: "#fff", marginBottom: 5,
-              }}>
-                Don't see your industry?
-              </div>
-              <div style={{ fontFamily: "'Barlow', sans-serif", fontSize: 13.5, color: "rgba(255,255,255,0.38)" }}>
-                We build for any vertical — let's talk about your specific needs.
-              </div>
-            </div>
-            <div style={{ display: "flex", gap: 12 }}>
-              <motion.a
-                href="#"
-                whileHover={{ scale: 1.05, boxShadow: "0 0 28px rgba(59,130,246,0.5)" }}
-                whileTap={{ scale: 0.97 }}
-                style={{
-                  display: "inline-flex", alignItems: "center", gap: 8,
-                  background: "linear-gradient(135deg, #3b82f6, #1d4ed8)",
-                  color: "#fff", textDecoration: "none",
-                  fontFamily: "'Barlow', sans-serif", fontWeight: 700,
-                  fontSize: 11, letterSpacing: 2, textTransform: "uppercase",
-                  padding: "13px 26px", borderRadius: 8, whiteSpace: "nowrap",
-                  boxShadow: "0 0 18px rgba(59,130,246,0.28)",
-                }}
-              >
-                Book a Consultation
-                <svg width="11" height="11" viewBox="0 0 12 12" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                  <path d="M2 6h8M7 3l3 3-3 3" />
-                </svg>
-              </motion.a>
-              <motion.a
-                href="#"
-                whileHover={{ background: "rgba(255,255,255,0.08)" }}
-                whileTap={{ scale: 0.97 }}
-                style={{
-                  display: "inline-flex", alignItems: "center",
-                  color: "rgba(255,255,255,0.72)", textDecoration: "none",
-                  fontFamily: "'Barlow', sans-serif", fontWeight: 600,
-                  fontSize: 11, letterSpacing: 2, textTransform: "uppercase",
-                  padding: "13px 26px", borderRadius: 8, whiteSpace: "nowrap",
-                  border: "1px solid rgba(255,255,255,0.14)", transition: "background 0.2s",
-                }}
-              >
-                View All Work
-              </motion.a>
-            </div>
-          </motion.div>
+        
         </div>
       </section>
     </>

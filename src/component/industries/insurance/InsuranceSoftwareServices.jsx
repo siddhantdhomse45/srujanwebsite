@@ -106,13 +106,25 @@ const services = [
   },
 ];
 
-// Mock app screens for the left panel
+// Mock app screens for the left panel (responsive)
 const AppMockup = () => (
-  <div style={{ position:"relative", width:"100%", height:"100%", display:"flex", alignItems:"center", justifyContent:"center" }}>
-    {/* Tablet */}
-    <div style={{
-      position:"absolute", left:"8%", top:"50%", transform:"translateY(-50%)",
-      width:"220px", height:"170px",
+  <div style={{
+    position:"relative",
+    width:"100%", height:"100%",
+    display:"flex",
+    alignItems:"center",
+    justifyContent:"center",
+    minHeight: "clamp(320px, 50vh, 480px)",
+  }}>
+    {/* Tablet (left) – hidden on very narrow screens */}
+    <div className="mockup-tablet" style={{
+      position:"absolute",
+      left:"clamp(0%, 5%, 8%)",
+      top:"50%",
+      transform:"translateY(-50%)",
+      width:"clamp(160px, 25vw, 220px)",
+      height:"auto",
+      aspectRatio:"220/170",
       background:"linear-gradient(145deg,rgba(15,35,80,0.9),rgba(8,20,50,0.95))",
       borderRadius:"12px",
       border:"1px solid rgba(59,130,246,0.3)",
@@ -135,17 +147,18 @@ const AppMockup = () => (
       </div>
     </div>
 
-    {/* Phone - front */}
-    <div style={{
+    {/* Phone – front (main) */}
+    <div className="mockup-phone" style={{
       position:"relative",
-      width:"140px", height:"280px",
+      width:"clamp(120px, 22vw, 140px)",
+      aspectRatio:"140/280",
       background:"linear-gradient(145deg,rgba(8,15,40,0.95),rgba(4,10,30,0.98))",
       borderRadius:"24px",
       border:"2px solid rgba(59,130,246,0.4)",
       boxShadow:"0 30px 80px rgba(0,0,0,0.6), 0 0 40px rgba(37,99,235,0.2)",
       overflow:"hidden",
       zIndex:3,
-      marginLeft:"60px",
+      marginLeft:"clamp(20px, 5%, 60px)",
     }}>
       {/* Status bar */}
       <div style={{ height:"28px", background:"rgba(37,99,235,0.4)", display:"flex", alignItems:"center", justifyContent:"space-between", padding:"0 12px" }}>
@@ -179,13 +192,14 @@ const AppMockup = () => (
       </div>
     </div>
 
-    {/* Dot pattern decoration */}
-    <div style={{
+    {/* Dot pattern decoration – hidden on small screens */}
+    <div className="mockup-dots" style={{
       position:"absolute", left:"0", bottom:"10%",
       display:"grid", gridTemplateColumns:"repeat(6,1fr)", gap:"8px",
+      opacity:0.6,
     }}>
       {Array(24).fill(0).map((_,i) => (
-        <div key={i} style={{ width:4, height:4, borderRadius:"50%", background:"rgba(59,130,246,0.3)" }} />
+        <div key={i} style={{ width:4, height:4, borderRadius:"50%", background:"rgba(59,130,246,0.5)" }} />
       ))}
     </div>
   </div>
@@ -197,16 +211,16 @@ export default function InsuranceSoftwareServices() {
   return (
     <section
       style={{
-               background: "linear-gradient(135deg,#020b18 0%,#041530 40%,#061d42 70%,#020e24 100%)",
-        minHeight:"100vh",
-        padding:"80px 40px 100px",
-        fontFamily:"'DM Sans','Segoe UI',sans-serif",
-        position:"relative",
-        overflow:"hidden",
+        background: "linear-gradient(135deg,#020b18 0%,#041530 40%,#061d42 70%,#020e24 100%)",
+        minHeight: "100vh",
+        padding: "clamp(60px, 10vw, 80px) clamp(20px, 5vw, 40px) clamp(80px, 10vw, 100px)",
+        fontFamily: "'DM Sans','Segoe UI',sans-serif",
+        position: "relative",
+        overflow: "hidden",
       }}
     >
-      {/* Wave decoration */}
-      <div style={{ position:"absolute", inset:0, pointerEvents:"none", opacity:0.1 }}>
+      {/* Wave decoration – hidden on mobile */}
+      <div className="wave-bg" style={{ position:"absolute", inset:0, pointerEvents:"none", opacity:0.1 }}>
         <svg width="100%" height="100%" viewBox="0 0 1440 900" preserveAspectRatio="xMidYMid slice">
           {[0,70,140,210,280,350].map((o,i) => (
             <path key={i}
@@ -216,9 +230,9 @@ export default function InsuranceSoftwareServices() {
         </svg>
       </div>
       {/* Top glow */}
-      <div style={{ position:"absolute", top:"-80px", left:"50%", transform:"translateX(-50%)", width:"700px", height:"300px", pointerEvents:"none", background:"radial-gradient(ellipse,rgba(255,255,255,0.12),transparent 70%)" }} />
-      {/* Dot grid */}
-      <div style={{
+      <div style={{ position:"absolute", top:"-80px", left:"50%", transform:"translateX(-50%)", width:"clamp(400px, 70vw, 700px)", height:"300px", pointerEvents:"none", background:"radial-gradient(ellipse,rgba(255,255,255,0.12),transparent 70%)" }} />
+      {/* Dot grid – hidden on narrow screens */}
+      <div className="side-dots" style={{
         position:"absolute", left:"2%", top:"30%",
         display:"grid", gridTemplateColumns:"repeat(8,1fr)", gap:"14px",
         opacity:0.25, pointerEvents:"none",
@@ -230,10 +244,10 @@ export default function InsuranceSoftwareServices() {
 
       <div style={{ maxWidth:"1200px", margin:"0 auto", position:"relative", zIndex:1 }}>
 
-        {/* ── Header ── */}
-        <div style={{ textAlign:"center", marginBottom:"60px" }}>
+        {/* Header */}
+        <div style={{ textAlign:"center", marginBottom:"clamp(48px, 8vw, 60px)" }}>
           <h2 style={{
-            fontSize:"clamp(26px,4vw,50px)", fontWeight:"900",
+            fontSize:"clamp(26px, 5vw, 50px)", fontWeight:"900",
             textTransform:"uppercase", color:"white",
             letterSpacing:"0.05em", lineHeight:1.15,
             margin:"0 0 20px", textShadow:"0 2px 24px rgba(0,0,0,0.2)",
@@ -245,16 +259,16 @@ export default function InsuranceSoftwareServices() {
             <div style={{ width:"9px", height:"9px", borderRadius:"50%", background:"white" }} />
             <div style={{ width:"56px", height:"3px", borderRadius:"2px", background:"rgba(255,255,255,0.9)" }} />
           </div>
-          <p style={{ maxWidth:"720px", margin:"0 auto", fontSize:"16px", lineHeight:"1.85", color:"rgba(255,255,255,0.82)" }}>
+          <p style={{ maxWidth:"720px", margin:"0 auto", fontSize:"clamp(14px, 2.5vw, 16px)", lineHeight:"1.85", color:"rgba(255,255,255,0.82)" }}>
             Get custom insurance software and rely on our digitalization services and expertise to boost your organizational efficiency, reduce costs, and ensure a top-quality experience for your end user.
           </p>
         </div>
 
-        {/* ── Two-column layout ── */}
-        <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:"48px", alignItems:"start" }}>
+        {/* Two‑column layout → stacks on mobile */}
+        <div className="services-grid" style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:"clamp(32px, 5vw, 48px)", alignItems:"start" }}>
 
           {/* Left: App mockup */}
-          <div style={{ position:"relative", height:"480px" }}>
+          <div style={{ position:"relative", height:"clamp(320px, 50vh, 480px)", width:"100%" }}>
             <AppMockup />
           </div>
 
@@ -281,14 +295,14 @@ export default function InsuranceSoftwareServices() {
                   <div style={{
                     display:"flex", alignItems:"center",
                     justifyContent:"space-between",
-                    padding: isAct ? "20px 24px 4px" : "14px 20px",
+                    padding: isAct ? "clamp(16px, 3vw, 20px) clamp(20px, 4vw, 24px) 4px" : "clamp(12px, 2.5vw, 14px) clamp(16px, 3vw, 20px)",
                     borderBottom: isAct ? "none" : "1px solid rgba(255,255,255,0.12)",
                     transition:"all 0.3s",
                   }}>
-                    <div style={{ display:"flex", alignItems:"center", gap:"14px" }}>
+                    <div style={{ display:"flex", alignItems:"center", gap:"clamp(10px, 2vw, 14px)" }}>
                       {/* Icon */}
                       <div style={{
-                        width:"38px", height:"38px", borderRadius:"10px", flexShrink:0,
+                        width:"clamp(32px, 6vw, 38px)", height:"clamp(32px, 6vw, 38px)", borderRadius:"10px", flexShrink:0,
                         display:"flex", alignItems:"center", justifyContent:"center",
                         background: isAct ? "rgba(29,78,216,0.1)" : "rgba(255,255,255,0.12)",
                         color: isAct ? "#1d4ed8" : "rgba(255,255,255,0.8)",
@@ -297,7 +311,7 @@ export default function InsuranceSoftwareServices() {
                         {s.icon}
                       </div>
                       <span style={{
-                        fontSize:"15px", fontWeight:"700",
+                        fontSize:"clamp(13px, 2.5vw, 15px)", fontWeight:"700",
                         color: isAct ? "#0f172a" : "rgba(255,255,255,0.92)",
                         letterSpacing:"0.01em",
                         transition:"color 0.3s",
@@ -308,7 +322,7 @@ export default function InsuranceSoftwareServices() {
 
                     {/* Chevron */}
                     <div style={{
-                      width:"26px", height:"26px", borderRadius:"50%",
+                      width:"clamp(22px, 4vw, 26px)", height:"clamp(22px, 4vw, 26px)", borderRadius:"50%",
                       display:"flex", alignItems:"center", justifyContent:"center",
                       background: isAct ? "rgba(29,78,216,0.1)" : "rgba(255,255,255,0.15)",
                       flexShrink:0,
@@ -323,13 +337,13 @@ export default function InsuranceSoftwareServices() {
 
                   {/* Expanded content */}
                   {isAct && (
-                    <div style={{ padding:"4px 24px 20px 76px" }}>
-                      <p style={{ fontSize:"13px", lineHeight:"1.85", color:"#475569", margin:0 }}>
+                    <div style={{ padding:"4px clamp(20px, 4vw, 24px) clamp(16px, 3vw, 20px) clamp(40px, 6vw, 60px)" }}>
+                      <p style={{ fontSize:"clamp(12px, 2.2vw, 13px)", lineHeight:"1.85", color:"#475569", margin:0 }}>
                         {s.description}
                       </p>
                       <div style={{ marginTop:"14px", display:"flex", alignItems:"center", gap:"8px" }}>
                         <span style={{
-                          fontSize:"11px", fontWeight:"700", letterSpacing:"0.12em",
+                          fontSize:"clamp(10px, 2vw, 11px)", fontWeight:"700", letterSpacing:"0.12em",
                           textTransform:"uppercase", color:"#1d4ed8",
                         }}>
                           Learn More
@@ -346,6 +360,48 @@ export default function InsuranceSoftwareServices() {
           </div>
         </div>
       </div>
+
+      {/* Responsive CSS (media queries) */}
+      <style>{`
+        @media (max-width: 900px) {
+          .services-grid {
+            grid-template-columns: 1fr !important;
+            gap: 40px !important;
+          }
+          .services-grid > div:first-child {
+            order: 2;
+          }
+          .services-grid > div:last-child {
+            order: 1;
+          }
+          .mockup-tablet {
+            display: none !important;
+          }
+          .mockup-phone {
+            margin-left: auto !important;
+            margin-right: auto !important;
+          }
+          .mockup-dots {
+            display: none !important;
+          }
+          .wave-bg {
+            display: none !important;
+          }
+          .side-dots {
+            display: none !important;
+          }
+        }
+        @media (max-width: 640px) {
+          .mockup-phone {
+            width: 130px !important;
+          }
+        }
+        @media (max-width: 480px) {
+          .mockup-phone {
+            width: 110px !important;
+          }
+        }
+      `}</style>
     </section>
   );
 }

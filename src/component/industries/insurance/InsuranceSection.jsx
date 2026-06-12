@@ -52,14 +52,14 @@ export default function InsuranceSection() {
     <section
       style={{
         background: "linear-gradient(135deg,#020b18 0%,#041530 40%,#061d42 70%,#020e24 100%)",
-        padding: "80px 40px 100px",
+        padding: "clamp(60px, 10vw, 80px) clamp(20px, 5vw, 40px) clamp(80px, 10vw, 100px)",
         fontFamily: "'DM Sans','Segoe UI',sans-serif",
         position: "relative",
         overflow: "hidden",
       }}
     >
-      {/* Wave decoration */}
-      <div style={{ position: "absolute", inset: 0, pointerEvents: "none", opacity: 0.1 }}>
+      {/* Wave decoration – hidden on mobile */}
+      <div className="wave-bg" style={{ position: "absolute", inset: 0, pointerEvents: "none", opacity: 0.1 }}>
         <svg width="100%" height="100%" viewBox="0 0 1440 600" preserveAspectRatio="xMidYMid slice">
           {[0, 70, 140, 210].map((o, i) => (
             <path
@@ -73,16 +73,16 @@ export default function InsuranceSection() {
         </svg>
       </div>
 
-      {/* Top glow */}
+      {/* Top glow – responsive size */}
       <div style={{
         position: "absolute", top: "-80px", left: "50%",
-        transform: "translateX(-50%)", width: "700px", height: "300px",
+        transform: "translateX(-50%)", width: "clamp(400px, 70vw, 700px)", height: "300px",
         pointerEvents: "none",
         background: "radial-gradient(ellipse,rgba(255,255,255,0.12),transparent 70%)",
       }} />
 
-      {/* Dot grid left */}
-      <div style={{
+      {/* Dot grids – hidden on narrow screens */}
+      <div className="dot-grid-left" style={{
         position: "absolute", left: "2%", top: "30%",
         display: "grid", gridTemplateColumns: "repeat(8,1fr)", gap: "14px",
         opacity: 0.25, pointerEvents: "none",
@@ -92,8 +92,7 @@ export default function InsuranceSection() {
         ))}
       </div>
 
-      {/* Dot grid right */}
-      <div style={{
+      <div className="dot-grid-right" style={{
         position: "absolute", right: "2%", bottom: "15%",
         display: "grid", gridTemplateColumns: "repeat(6,1fr)", gap: "14px",
         opacity: 0.2, pointerEvents: "none",
@@ -106,9 +105,9 @@ export default function InsuranceSection() {
       <div style={{ maxWidth: "900px", margin: "0 auto", position: "relative", zIndex: 1 }}>
 
         {/* Header */}
-        <div style={{ textAlign: "center", marginBottom: "60px" }}>
+        <div style={{ textAlign: "center", marginBottom: "clamp(48px, 8vw, 60px)" }}>
           <h2 style={{
-            fontSize: "clamp(24px,4vw,46px)", fontWeight: "900",
+            fontSize: "clamp(24px, 5vw, 46px)", fontWeight: "900",
             textTransform: "uppercase", color: "white",
             letterSpacing: "0.05em", lineHeight: 1.15,
             margin: "0 0 20px", textShadow: "0 2px 24px rgba(0,0,0,0.2)",
@@ -122,22 +121,23 @@ export default function InsuranceSection() {
             <div style={{ width: "56px", height: "3px", borderRadius: "2px", background: "rgba(255,255,255,0.9)" }} />
           </div>
 
-          <p style={{ maxWidth: "600px", margin: "0 auto", fontSize: "16px", lineHeight: "1.85", color: "rgba(255,255,255,0.82)" }}>
+          <p style={{ maxWidth: "600px", margin: "0 auto", fontSize: "clamp(14px, 2.5vw, 16px)", lineHeight: "1.85", color: "rgba(255,255,255,0.82)" }}>
             Scale your delivery capacity with intelligent cooperation models.
           </p>
         </div>
 
-        {/* Cards */}
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(3,1fr)", gap: "20px" }}>
+        {/* Cards – responsive grid */}
+        <div className="cards-grid" style={{ display: "grid", gridTemplateColumns: "repeat(3,1fr)", gap: "clamp(16px, 3vw, 20px)" }}>
           {cards.map((card, i) => {
             const isAct = active === i;
             return (
               <div
                 key={card.id}
                 onClick={() => setActive(i)}
+                className="card-item"
                 style={{
                   borderRadius: "18px",
-                  padding: "36px 28px 32px",
+                  padding: "clamp(28px, 5vw, 36px) clamp(20px, 4vw, 28px) clamp(24px, 4vw, 32px)",
                   cursor: "pointer",
                   border: isAct ? "1px solid rgba(255,255,255,0.35)" : "1px solid rgba(255,255,255,0.12)",
                   background: isAct ? "rgba(255,255,255,0.97)" : "rgba(255,255,255,0.07)",
@@ -148,13 +148,13 @@ export default function InsuranceSection() {
                   flexDirection: "column",
                   alignItems: "center",
                   textAlign: "center",
-                  gap: "20px",
+                  gap: "clamp(16px, 3vw, 20px)",
                   transform: isAct ? "translateY(-6px)" : "translateY(0)",
                 }}
               >
                 {/* Icon */}
                 <div style={{
-                  width: "68px", height: "68px", borderRadius: "18px",
+                  width: "clamp(56px, 10vw, 68px)", height: "clamp(56px, 10vw, 68px)", borderRadius: "18px",
                   display: "flex", alignItems: "center", justifyContent: "center",
                   background: isAct
                     ? "linear-gradient(135deg,rgba(29,78,216,0.12),rgba(37,99,235,0.06))"
@@ -169,7 +169,7 @@ export default function InsuranceSection() {
 
                 {/* Title */}
                 <h3 style={{
-                  margin: 0, fontSize: "16px", fontWeight: "800",
+                  margin: 0, fontSize: "clamp(15px, 3vw, 16px)", fontWeight: "800",
                   letterSpacing: "0.01em",
                   color: isAct ? "#0f172a" : "rgba(255,255,255,0.95)",
                   transition: "color 0.3s",
@@ -177,9 +177,9 @@ export default function InsuranceSection() {
                   {card.title}
                 </h3>
 
-                {/* Description */}
+                {/* Description – expands on active */}
                 <p style={{
-                  margin: 0, fontSize: "13px", lineHeight: "1.85",
+                  margin: 0, fontSize: "clamp(12px, 2.5vw, 13px)", lineHeight: "1.85",
                   color: isAct ? "#475569" : "rgba(255,255,255,0.6)",
                   transition: "all 0.3s",
                   maxHeight: isAct ? "200px" : "0",
@@ -189,10 +189,10 @@ export default function InsuranceSection() {
                   {card.description}
                 </p>
 
-                {/* Learn more */}
+                {/* Learn more link */}
                 {isAct && (
                   <div style={{ display: "flex", alignItems: "center", gap: "6px", marginTop: "4px" }}>
-                    <span style={{ fontSize: "11px", fontWeight: "700", letterSpacing: "0.12em", textTransform: "uppercase", color: "#1d4ed8" }}>
+                    <span style={{ fontSize: "clamp(10px, 2vw, 11px)", fontWeight: "700", letterSpacing: "0.12em", textTransform: "uppercase", color: "#1d4ed8" }}>
                       Learn More
                     </span>
                     <svg viewBox="0 0 24 24" fill="none" stroke="#1d4ed8" strokeWidth="2.5" width="12" height="12">
@@ -213,6 +213,38 @@ export default function InsuranceSection() {
           })}
         </div>
       </div>
+
+      {/* Responsive CSS media queries */}
+      <style>{`
+        @media (max-width: 900px) {
+          .cards-grid {
+            grid-template-columns: 1fr !important;
+            gap: 16px !important;
+          }
+          .card-item {
+            max-width: 380px;
+            margin-left: auto;
+            margin-right: auto;
+            width: 100%;
+          }
+          .wave-bg {
+            display: none !important;
+          }
+          .dot-grid-left, .dot-grid-right {
+            display: none !important;
+          }
+        }
+        @media (max-width: 640px) {
+          .card-item {
+            padding: 24px 20px !important;
+          }
+        }
+        @media (max-width: 480px) {
+          .card-item {
+            padding: 20px 16px !important;
+          }
+        }
+      `}</style>
     </section>
   );
 }
