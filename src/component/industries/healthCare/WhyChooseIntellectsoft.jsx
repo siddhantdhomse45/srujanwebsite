@@ -3,7 +3,7 @@ import { motion, useInView, useScroll, useTransform } from "framer-motion";
 
 /*
  ╔══════════════════════════════════════════════════════════════╗
- ║  WHY CHOOSE INTELLECTSOFT FOR HEALTHCARE IT SOLUTIONS?     ║
+ ║  WHY CHOOSESrujan Infotech FOR HEALTHCARE IT SOLUTIONS?     ║
  ║  Layout: heading → subtitle → 4-col cards → wide CTA btn  ║
  ║  Each card: blue circle icon + bold title + body text       ║
  ║  Color: #3b82f6 deep navy premium                           ║
@@ -442,7 +442,7 @@ export default function WhyChooseIntellectsoft() {
                   margin: 0, maxWidth: 720,
                 }}
               >
-                Why Choose Intellectsoft for{" "}
+                Why Choose Srujan Infotech for{" "}
                 <span style={{
                   background: `linear-gradient(90deg, ${BLUE_LITE} 0%, ${BLUE} 55%, #ffffff 100%)`,
                   WebkitBackgroundClip: "text",

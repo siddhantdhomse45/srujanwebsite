@@ -236,7 +236,7 @@ function MockupCard() {
               <polygon points="10,36 20,16 30,36" fill="#818cf8" opacity="0.6" />
             </svg>
           </div>
-          <div style={{ fontSize: 9, color: "rgba(148,163,184,0.4)", fontFamily: "'DM Sans',sans-serif", marginBottom: 4, letterSpacing: "0.05em" }}>an intellectsoft company</div>
+          <div style={{ fontSize: 9, color: "rgba(148,163,184,0.4)", fontFamily: "'DM Sans',sans-serif", marginBottom: 4, letterSpacing: "0.05em" }}>an Srujan Infotech company</div>
           <div style={{ fontSize: 22, fontWeight: 900, color: "white", fontFamily: "'DM Sans',sans-serif", letterSpacing: "0.12em", marginBottom: 28 }}>CONNECTOR</div>
 
           {/* Dots */}

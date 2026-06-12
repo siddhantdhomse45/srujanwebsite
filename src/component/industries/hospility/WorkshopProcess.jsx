@@ -223,7 +223,7 @@ export default function WorkshopProcess() {
               marginInline: "auto",
             }}
           >
-            For each hospitality solution, the Intellectsoft team offers a science-led,
+            For each hospitality solution, the Srujan Infotech team offers a science-led,
             scalable process dedicated to addressing the client's technology needs in the best
             possible way. As a result, we have implemented a technical design workshop to create
             the initial vision of the solution architecture.

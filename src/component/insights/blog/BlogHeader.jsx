@@ -1,15 +1,6 @@
 import { useState, useRef } from "react";
 import { motion, useScroll, useTransform, useInView } from "framer-motion";
 
-/*
- ╔══════════════════════════════════════════════════════════════╗
- ║  INTELLECTSOFT BLOG — Hero Header                           ║
- ║  Layout: full-bleed photo + dark overlay + centered         ║
- ║           heading + pill tag filters + search bar           ║
- ║  Active tag: white filled pill                              ║
- ║  Color: #3b82f6 deep navy premium                           ║
- ╚══════════════════════════════════════════════════════════════╝
-*/
 
 const BLUE      = "#3b82f6";
 const BLUE_LITE = "#60a5fa";
@@ -295,7 +286,7 @@ export default function BlogHeader() {
                 textShadow: "0 4px 32px rgba(0,0,0,0.4)",
               }}
             >
-              Intellectsoft{" "}
+              Srujan Infotech{" "}
               <span style={{
                 background: `linear-gradient(90deg, ${BLUE_LITE} 0%, ${BLUE} 60%, #ffffff 100%)`,
                 WebkitBackgroundClip: "text",

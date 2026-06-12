@@ -58,7 +58,7 @@ const INDUSTRIES = [
     number: "03",
     title: "Construction",
     short: "Built for the Field",
-    body: "Intellectsoft helps construction firms improve productivity, safety, and project management through tailored custom software services and real-time site intelligence.",
+    body: "Srujan Infotech helps construction firms improve productivity, safety, and project management through tailored custom software services and real-time site intelligence.",
     accent: "#f59e0b",
     glow: "rgba(245,158,11,0.22)",
     bg: "rgba(245,158,11,0.07)",
@@ -115,7 +115,7 @@ const INDUSTRIES = [
     number: "06",
     title: "Travel & Hospitality",
     short: "Memorable Guest Journeys",
-    body: "Intellectsoft enhances guest experiences through custom software development services, designed to streamline operations and support hospitality businesses worldwide.",
+    body: "Srujan Infotech enhances guest experiences through custom software development services, designed to streamline operations and support hospitality businesses worldwide.",
     accent: "#8b5cf6",
     glow: "rgba(139,92,246,0.22)",
     bg: "rgba(139,92,246,0.07)",
@@ -471,7 +471,7 @@ export default function IndustriesWeSupportPremium() {
                   textAlign: "right",
                 }}
               >
-                Intellectsoft offers custom software development services across a
+                Srujan Infotech offers custom software development services across a
                 variety of industries, helping businesses enhance operations and
                 customer experiences.
               </motion.p>

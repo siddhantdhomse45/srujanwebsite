@@ -455,7 +455,7 @@ export default function WhatSetsUsApartPremium() {
                 margin: 0,
               }}
             >
-              As a leading custom software development company, we at Intellectsoft
+              As a leading custom software development company, we at Srujan Infotech
               offer a comprehensive range of software development services designed
               to meet your business's unique demands. Here's what sets us apart:
             </motion.p>
