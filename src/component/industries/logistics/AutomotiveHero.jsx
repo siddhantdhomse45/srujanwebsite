@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { FiPhone, FiFolder, FiTruck, FiCpu, FiEye, FiBarChart2 } from "react-icons/fi";
 
 const stats = [
   { value: "300+", label: "Projects Delivered" },
@@ -25,7 +26,7 @@ export default function AutomotiveHero() {
         background: "linear-gradient(135deg,#020b18 0%,#041530 40%,#061d42 70%,#020e24 100%)",
       }}
     >
-      {/* ── Background layers (responsive → hidden on small screens) ── */}
+      {/* ── Background layers (unchanged) ── */}
       <div style={{ position:"absolute", inset:0, pointerEvents:"none" }}>
         {/* Ambient blobs – responsive size */}
         <div style={{ position:"absolute", top:"-100px", left:"-60px", width:"min(600px,80vw)", height:"min(600px,80vw)", borderRadius:"50%", background:"radial-gradient(circle,rgba(37,99,235,0.2),transparent 65%)" }} />
@@ -175,9 +176,7 @@ export default function AutomotiveHero() {
                 transition:"all 0.3s ease",
               }}
             >
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" width="16" height="16">
-                <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.07 11.5 19.79 19.79 0 0 1 .99 2.82 2 2 0 0 1 3 .84h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.09 8.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 21 16z" strokeLinecap="round" />
-              </svg>
+              <FiPhone size={16} strokeWidth={2.5} />
               Contact Us
             </button>
 
@@ -197,13 +196,7 @@ export default function AutomotiveHero() {
                 transition:"all 0.3s ease", backdropFilter:"blur(8px)",
               }}
             >
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" width="16" height="16">
-                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
-                <polyline points="14 2 14 8 20 8" />
-                <line x1="16" y1="13" x2="8" y2="13" />
-                <line x1="16" y1="17" x2="8" y2="17" />
-                <polyline points="10 9 9 9 8 9" />
-              </svg>
+              <FiFolder size={16} strokeWidth={2.5} />
               View Portfolio
             </button>
           </div>
@@ -242,13 +235,13 @@ export default function AutomotiveHero() {
         </div>
       </div>
 
-      {/* Right floating feature cards – hidden on tablet/mobile */}
+      {/* Right floating feature cards – hidden on tablet/mobile, with React Icons */}
       <div className="floating-cards" style={{ position:"absolute", right:"4%", top:"50%", transform:"translateY(-50%)", display:"flex", flexDirection:"column", gap:"14px", zIndex:8 }}>
         {[
-          { icon:"🚛", title:"Fleet Management", sub:"Real-time IoT tracking" },
-          { icon:"🔮", title:"Predictive AI", sub:"Zero downtime systems" },
-          { icon:"🥽", title:"AR/VR Training", sub:"Immersive onboarding" },
-          { icon:"📊", title:"Big Data Insights", sub:"Operations analytics" },
+          { icon: <FiTruck size={20} strokeWidth={1.8} />, title:"Fleet Management", sub:"Real-time IoT tracking" },
+          { icon: <FiCpu size={20} strokeWidth={1.8} />, title:"Predictive AI", sub:"Zero downtime systems" },
+          { icon: <FiEye size={20} strokeWidth={1.8} />, title:"AR/VR Training", sub:"Immersive onboarding" },
+          { icon: <FiBarChart2 size={20} strokeWidth={1.8} />, title:"Big Data Insights", sub:"Operations analytics" },
         ].map((card, i) => (
           <div key={i} style={{
             padding:"12px 16px",
@@ -260,7 +253,7 @@ export default function AutomotiveHero() {
             boxShadow:"0 8px 32px rgba(0,0,0,0.4)",
             minWidth:"clamp(180px, 20vw, 200px)",
           }}>
-            <span style={{ fontSize:"20px" }}>{card.icon}</span>
+            <span style={{ fontSize:"20px", display:"flex", alignItems:"center", justifyContent:"center" }}>{card.icon}</span>
             <div>
               <div style={{ fontSize:"12px", fontWeight:"800", color:"white", marginBottom:"2px" }}>{card.title}</div>
               <div style={{ fontSize:"10px", color:"rgba(148,163,184,0.65)" }}>{card.sub}</div>
@@ -269,7 +262,7 @@ export default function AutomotiveHero() {
         ))}
       </div>
 
-      {/* Responsive CSS (media queries) */}
+      {/* Responsive CSS (media queries) – unchanged */}
       <style>{`
         @media (max-width: 1024px) {
           .floating-cards {

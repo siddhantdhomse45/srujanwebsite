@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence, useInView, useScroll, useTransform } from "framer-motion";
+import { FiClock, FiMapPin, FiBriefcase, FiUsers, FiGlobe } from "react-icons/fi";
 
 /* ─────────────────────────────────────────
    JOB DATA
@@ -273,7 +274,6 @@ const Careerone = () => {
         @keyframes fadeSlideUp { from { opacity:0; transform:translateY(16px); } to { opacity:1; transform:translateY(0); } }
         .modal-enter { animation: fadeSlideUp 0.35s cubic-bezier(.16,1,.3,1); }
 
-        /* Filter scroll on mobile */
         .filter-scroll {
           display:flex; gap:10px; overflow-x:auto; -webkit-overflow-scrolling:touch;
           scrollbar-width:none; padding-bottom:4px;
@@ -284,7 +284,6 @@ const Careerone = () => {
         ::-webkit-scrollbar-track { background:#080c14; }
         ::-webkit-scrollbar-thumb { background:linear-gradient(#0ea5e9,#6366f1); border-radius:2px; }
 
-        /* Mobile modal full-screen */
         @media (max-width: 640px) {
           .modal-sheet {
             position:fixed !important;
@@ -349,9 +348,12 @@ const Careerone = () => {
 
             <motion.div style={{ display: "flex", gap: isMobile ? 10 : 12, flexWrap: "wrap" }}
               initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: .7, delay: .6 }}>
-              {[{ n: jobData.length, label: "Open Roles" }, { n: "14+", label: "Years Building" }, { n: "500+", label: "Clients Served" }].map((s, i) => (
+              {[{ n: jobData.length, label: "Open Roles", icon: <FiBriefcase size={14} /> }, { n: "14+", label: "Years Building", icon: <FiClock size={14} /> }, { n: "500+", label: "Clients Served", icon: <FiGlobe size={14} /> }].map((s, i) => (
                 <div key={i} className="cp-glass" style={{ borderRadius: 16, padding: isMobile ? "12px 16px" : "16px 24px", minWidth: isMobile ? 90 : 120 }}>
-                  <p className="cp-serif" style={{ fontSize: isMobile ? 22 : 28, fontWeight: 400, color: "#f8fafc", margin: 0, lineHeight: 1 }}>{s.n}</p>
+                  <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
+                    {s.icon}
+                    <p className="cp-serif" style={{ fontSize: isMobile ? 22 : 28, fontWeight: 400, color: "#f8fafc", margin: 0, lineHeight: 1 }}>{s.n}</p>
+                  </div>
                   <p className="cp-mono" style={{ fontSize: isMobile ? 8 : 10, color: "#64748b", letterSpacing: "0.12em", textTransform: "uppercase", margin: "6px 0 0" }}>{s.label}</p>
                 </div>
               ))}
@@ -465,7 +467,7 @@ const Careerone = () => {
               >
                 {/* Drag handle (mobile) */}
                 {isMobile && (
-                  <div style={{ width: 40, height: 4, borderRadius: 2, background: "rgba(255,255,255,0.15)", margin: "0 auto 24px" }} />
+                  <div className="modal-drag-handle" style={{ width: 40, height: 4, borderRadius: 2, background: "rgba(255,255,255,0.15)", margin: "0 auto 24px" }} />
                 )}
 
                 {/* Close button */}
@@ -491,7 +493,7 @@ const Careerone = () => {
 };
 
 /* ─────────────────────────────────────────
-   JOB CARD
+   JOB CARD (with React Icons)
 ───────────────────────────────────────── */
 const JobCard = ({ job, onApply, onDetails, isMobile }) => (
   <div className="cp-glass job-card" style={{ borderRadius: 20, padding: isMobile ? 20 : 28, height: "100%", display: "flex", flexDirection: "column", position: "relative", overflow: "hidden", borderTop: `1px solid ${job.color}30`, borderLeft: "1px solid rgba(255,255,255,0.06)", borderRight: "1px solid rgba(255,255,255,0.06)", borderBottom: "1px solid rgba(255,255,255,0.06)" }}>
@@ -511,11 +513,12 @@ const JobCard = ({ job, onApply, onDetails, isMobile }) => (
     <p style={{ color: "#94a3b8", fontSize: isMobile ? 13 : 14, lineHeight: 1.75, flexGrow: 1, marginBottom: 16 }}>{job.description}</p>
 
     <div style={{ display: "flex", gap: 14, marginBottom: 20, flexWrap: "wrap" }}>
-      {[{ icon: "⏱", v: job.experience }, { icon: "📍", v: job.location }].map((m, i) => (
-        <span key={i} style={{ fontSize: 12, color: "#64748b", display: "flex", alignItems: "center", gap: 5 }}>
-          <span style={{ fontSize: 12 }}>{m.icon}</span>{m.v}
-        </span>
-      ))}
+      <span style={{ fontSize: 12, color: "#64748b", display: "flex", alignItems: "center", gap: 5 }}>
+        <FiClock size={12} /> {job.experience}
+      </span>
+      <span style={{ fontSize: 12, color: "#64748b", display: "flex", alignItems: "center", gap: 5 }}>
+        <FiMapPin size={12} /> {job.location}
+      </span>
     </div>
 
     <div style={{ display: "flex", gap: 8 }}>
@@ -535,11 +538,12 @@ const DetailsPanel = ({ job, color, onApply, isMobile }) => (
     <span style={{ fontFamily: "'Space Mono',monospace", fontSize: 10, color, textTransform: "uppercase", letterSpacing: "0.25em", display: "block", marginBottom: 10 }}>{job.tag} · {job.dept}</span>
     <h2 style={{ fontFamily: "'DM Serif Display',serif", fontSize: isMobile ? 24 : 32, fontWeight: 400, color: "#f8fafc", margin: "0 0 10px", paddingRight: 40 }}>{job.title}</h2>
     <div style={{ display: "flex", gap: 16, marginBottom: 24, flexWrap: "wrap" }}>
-      {[{ icon: "⏱", v: job.experience }, { icon: "📍", v: job.location }].map((m, i) => (
-        <span key={i} style={{ fontSize: 13, color: "#64748b", display: "flex", alignItems: "center", gap: 6 }}>
-          <span>{m.icon}</span>{m.v}
-        </span>
-      ))}
+      <span style={{ fontSize: 13, color: "#64748b", display: "flex", alignItems: "center", gap: 6 }}>
+        <FiClock size={14} />{job.experience}
+      </span>
+      <span style={{ fontSize: 13, color: "#64748b", display: "flex", alignItems: "center", gap: 6 }}>
+        <FiMapPin size={14} />{job.location}
+      </span>
     </div>
     <div style={{ height: 1, background: "rgba(255,255,255,0.07)", marginBottom: 24 }} />
     <p style={{ color: "#94a3b8", fontSize: isMobile ? 14 : 15, lineHeight: 1.8, marginBottom: 24 }}>{job.description}</p>
@@ -584,7 +588,6 @@ const ApplyPanel = ({ job, form, setForm, success, onSubmit, onClose, isMobile }
       <h2 style={{ fontFamily: "'DM Serif Display',serif", fontSize: isMobile ? 22 : 28, fontWeight: 400, color: "#f8fafc", margin: "0 0 24px", paddingRight: 40 }}>{job.title}</h2>
       <div style={{ height: 1, background: "rgba(255,255,255,0.07)", marginBottom: 24 }} />
       <form onSubmit={onSubmit}>
-        {/* Name & Email — stack on mobile */}
         <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: isMobile ? 12 : 16, marginBottom: isMobile ? 12 : 16 }}>
           {[{ k: "name", ph: "Full name", label: "Full Name", type: "text" }, { k: "email", ph: "Email address", label: "Email", type: "email" }].map(f => (
             <div key={f.k}>
@@ -593,7 +596,6 @@ const ApplyPanel = ({ job, form, setForm, success, onSubmit, onClose, isMobile }
             </div>
           ))}
         </div>
-        {/* Phone & Position — stack on mobile */}
         <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: isMobile ? 12 : 16, marginBottom: isMobile ? 12 : 16 }}>
           <div>
             <label style={{ fontSize: 11, color: "#64748b", display: "block", marginBottom: 8, fontFamily: "'Space Mono',monospace", letterSpacing: "0.1em", textTransform: "uppercase" }}>Phone</label>

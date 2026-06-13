@@ -1,4 +1,5 @@
 import { useState, useRef, useEffect } from "react";
+import { FiChevronLeft, FiChevronRight, FiAlertCircle, FiCheckCircle, FiArrowRight } from "react-icons/fi";
 
 const categories = [
   {
@@ -15,7 +16,7 @@ const categories = [
     ),
     case: {
       title: "Stream Data for Hospital",
-      emoji: "🏥",
+      image: "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=600&q=80",
       gradientBg: "linear-gradient(135deg,#020b18,#041530,#061d42)",
       challenge: "Our client wants to collect data from privacy-preserving sensors to analyze clinical activity for research and patient care applications.",
       solution: "Our Solution enabler consists of a custom multi-sensor collection module, Google Cloud ingestion pipeline, 3 level fault tolerance approach for data loss prevention, secure networking layer, etc.",
@@ -37,7 +38,7 @@ const categories = [
     ),
     case: {
       title: "Healthcare Staff Management — Nurse and Hospital Management",
-      emoji: "👩‍⚕️",
+      image: "https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?w=600&q=80",
       gradientBg: "linear-gradient(135deg,#0a1628,#0d1f3c,#091525)",
       challenge: "Current healthcare and economic environments force medical experts to take extra shifts, which affects their own quality of life. The idea behind this solution was to empower medical professionals with a simple tool that gives them flexibility, control, and more.",
       solution: "We created on-demand healthcare IT solutions consisting of:\n- iOS and Android app with an Uber-like feel (for the Nurse role)\n- Web Admin Panel (for Hospital Administrator or Security Supervisor role)",
@@ -59,7 +60,7 @@ const categories = [
     ),
     case: {
       title: "Smart Medical Device Monitoring Platform",
-      emoji: "🩺",
+      image: "https://images.unsplash.com/photo-1505751172876-fa1923c5c528?w=600&q=80",
       gradientBg: "linear-gradient(135deg,#0d1b2a,#1b2a4a,#0a1628)",
       challenge: "A medical device manufacturer needed a unified platform to remotely monitor equipment performance, predict failures, and reduce costly downtime across 200+ hospital sites.",
       solution: "We built an IoT-connected monitoring dashboard with real-time alerts, predictive maintenance AI, device lifecycle tracking, and automated compliance reporting integrated with hospital CMMS systems.",
@@ -79,7 +80,7 @@ const categories = [
     ),
     case: {
       title: "AI-Powered Rehabilitation Progress Tracker",
-      emoji: "💪",
+      image: "https://images.unsplash.com/photo-1576091160550-2173dba999ef?w=600&q=80",
       gradientBg: "linear-gradient(135deg,#0f0c29,#1a1a2e,#16213e)",
       challenge: "Physical therapists lacked digital tools to objectively track patient progress, set measurable recovery milestones, and communicate outcomes to insurance providers.",
       solution: "We developed a mobile + web platform with motion-capture exercise tracking, AI-driven progress scoring, automated insurance documentation, and telehealth video sessions integrated with EHR systems.",
@@ -98,7 +99,7 @@ const categories = [
     ),
     case: {
       title: "Corporate Wellness & Mental Health Platform",
-      emoji: "🧘",
+      image: "https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?w=600&q=80",
       gradientBg: "linear-gradient(135deg,#020b18,#041530,#06244a)",
       challenge: "A Fortune 500 company needed a scalable digital wellness platform to improve employee mental health, reduce burnout, and provide anonymous access to therapy resources across 30+ countries.",
       solution: "We delivered a white-labeled wellness app with mood tracking, guided meditation, licensed therapist matching, anonymous peer support groups, and HR analytics dashboards for engagement metrics.",
@@ -116,7 +117,7 @@ const categories = [
     ),
     case: {
       title: "Digital Health Insurance Claims Automation",
-      emoji: "🛡️",
+      image: "https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=600&q=80",
       gradientBg: "linear-gradient(135deg,#0a1628,#0d1f3c,#091525)",
       challenge: "A leading health insurer processed 2M+ claims annually through manual workflows causing delays, high error rates, and poor policyholder satisfaction scores.",
       solution: "We built an AI-powered claims processing engine with OCR document ingestion, automated fraud detection, real-time eligibility verification, and a self-service policyholder portal with live claim status.",
@@ -135,7 +136,6 @@ export default function ClientSuccess() {
   const prev = () => setActiveCategory((p) => (p - 1 + categories.length) % categories.length);
   const next = () => setActiveCategory((p) => (p + 1) % categories.length);
 
-  // Scroll active tab into view on mobile
   useEffect(() => {
     if (tabsContainerRef.current) {
       const activeTab = tabsContainerRef.current.children[activeCategory];
@@ -156,7 +156,7 @@ export default function ClientSuccess() {
         overflow: "hidden",
       }}
     >
-      {/* Ambient bg */}
+      {/* Ambient bg (unchanged) */}
       <div style={{ position:"absolute", inset:0, pointerEvents:"none" }}>
         <div style={{ position:"absolute", top:"-80px", left:"20%", width:"580px", height:"380px", borderRadius:"50%", background:"radial-gradient(ellipse,rgba(37,99,235,0.18),transparent 70%)" }} />
         <div style={{ position:"absolute", bottom:"-80px", right:"15%", width:"480px", height:"360px", borderRadius:"50%", background:"radial-gradient(circle,rgba(99,102,241,0.13),transparent 70%)" }} />
@@ -200,7 +200,7 @@ export default function ClientSuccess() {
           </p>
         </div>
 
-        {/* Category Tabs – horizontally scrollable on mobile */}
+        {/* Category Tabs */}
         <div
           ref={tabsContainerRef}
           style={{
@@ -241,7 +241,6 @@ export default function ClientSuccess() {
                 <div style={{
                   position:"absolute", top:0, left:0, right:0, height:"3px",
                   background: isAct ? "linear-gradient(90deg,#1d4ed8,#6366f1)" : "transparent",
-                  transition:"all 0.3s",
                 }} />
                 <div style={{
                   color: isAct ? "#93c5fd" : "rgba(148,163,184,0.35)",
@@ -264,7 +263,7 @@ export default function ClientSuccess() {
           })}
         </div>
 
-        {/* Case Study Panel - responsive (stack on mobile) */}
+        {/* Case Study Panel */}
         <div style={{
           display:"grid",
           gridTemplateColumns: "1fr 1fr",
@@ -293,9 +292,7 @@ export default function ClientSuccess() {
             onMouseEnter={e => e.currentTarget.style.transform="translateY(-50%) scale(1.1)"}
             onMouseLeave={e => e.currentTarget.style.transform="translateY(-50%) scale(1)"}
           >
-            <svg viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2.5" width="16" height="16">
-              <path d="M19 12H5M12 5l-7 7 7 7" strokeLinecap="round" strokeLinejoin="round" />
-            </svg>
+            <FiChevronLeft size={18} strokeWidth={2.5} color="white" />
           </button>
 
           {/* Next arrow */}
@@ -314,12 +311,10 @@ export default function ClientSuccess() {
             onMouseEnter={e => e.currentTarget.style.transform="translateY(-50%) scale(1.1)"}
             onMouseLeave={e => e.currentTarget.style.transform="translateY(-50%) scale(1)"}
           >
-            <svg viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2.5" width="16" height="16">
-              <path d="M5 12h14M12 5l7 7-7 7" strokeLinecap="round" strokeLinejoin="round" />
-            </svg>
+            <FiChevronRight size={18} strokeWidth={2.5} color="white" />
           </button>
 
-          {/* Left visual side */}
+          {/* Left visual side – with properly sized image */}
           <div style={{
             position:"relative", minHeight:"clamp(380px, 60vh, 460px)",
             background: cs.gradientBg,
@@ -328,10 +323,21 @@ export default function ClientSuccess() {
           }}>
             <div style={{ position:"absolute", inset:0, backgroundImage:"linear-gradient(rgba(59,130,246,0.07) 1px,transparent 1px),linear-gradient(90deg,rgba(59,130,246,0.07) 1px,transparent 1px)", backgroundSize:"40px 40px" }} />
             <div style={{ position:"absolute", inset:0, background:"radial-gradient(ellipse at center,rgba(37,99,235,0.2),transparent 70%)" }} />
-            <div style={{ position:"relative", zIndex:2, textAlign:"center" }}>
-              <div style={{ fontSize:"clamp(64px, 15vw, 100px)", lineHeight:1, marginBottom:"28px", filter:"drop-shadow(0 0 30px rgba(59,130,246,0.5))" }}>
-                {cs.emoji}
-              </div>
+            
+            {/* Image container – adjusted for proper height */}
+            <div style={{ position:"relative", zIndex:2, textAlign:"center", width:"100%", maxWidth:"320px", margin:"0 auto", padding:"0 20px" }}>
+              <img 
+                src={cs.image} 
+                alt={cs.title}
+                style={{
+                  width:"100%",
+                  maxHeight:"260px",
+                  objectFit:"cover",
+                  borderRadius:"16px",
+                  boxShadow:"0 20px 40px rgba(0,0,0,0.4), 0 0 0 1px rgba(59,130,246,0.3)",
+                  marginBottom:"24px",
+                }}
+              />
               <div style={{
                 display:"inline-flex", alignItems:"center", gap:"8px",
                 padding:"8px 20px", borderRadius:"100px",
@@ -342,6 +348,8 @@ export default function ClientSuccess() {
                 {cat.label}
               </div>
             </div>
+            
+            {/* Corner accents */}
             <div style={{ position:"absolute", top:"16px", left:"16px", width:"32px", height:"32px", borderTop:"2px solid rgba(59,130,246,0.5)", borderLeft:"2px solid rgba(59,130,246,0.5)" }} />
             <div style={{ position:"absolute", bottom:"16px", right:"16px", width:"32px", height:"32px", borderBottom:"2px solid rgba(59,130,246,0.5)", borderRight:"2px solid rgba(59,130,246,0.5)" }} />
             <div style={{ position:"absolute", bottom:"20px", left:"24px", fontSize:"11px", fontWeight:"700", letterSpacing:"0.15em", color:"rgba(96,165,250,0.4)", textTransform:"uppercase" }}>
@@ -349,7 +357,7 @@ export default function ClientSuccess() {
             </div>
           </div>
 
-          {/* Right content side */}
+          {/* Right content side (unchanged) */}
           <div style={{
             padding:"clamp(32px, 5vw, 48px) clamp(28px, 5vw, 44px)",
             background:"linear-gradient(145deg,rgba(6,18,42,0.97),rgba(4,15,38,0.99))",
@@ -379,9 +387,7 @@ export default function ClientSuccess() {
                     display:"flex", alignItems:"center", justifyContent:"center",
                     boxShadow:"0 4px 12px rgba(239,68,68,0.35)",
                   }}>
-                    <svg viewBox="0 0 16 16" fill="none" stroke="white" strokeWidth="2" width="11" height="11">
-                      <path d="M8 2v7M8 11v2" strokeLinecap="round" />
-                    </svg>
+                    <FiAlertCircle size={14} strokeWidth={2} color="white" />
                   </div>
                   <span style={{ fontSize:"14px", fontWeight:"800", color:"#f1f5f9", letterSpacing:"0.04em" }}>Challenge</span>
                 </div>
@@ -399,9 +405,7 @@ export default function ClientSuccess() {
                     display:"flex", alignItems:"center", justifyContent:"center",
                     boxShadow:"0 4px 12px rgba(16,185,129,0.35)",
                   }}>
-                    <svg viewBox="0 0 16 16" fill="none" stroke="white" strokeWidth="2.5" width="11" height="11">
-                      <polyline points="3 8 6 11 13 4" />
-                    </svg>
+                    <FiCheckCircle size={14} strokeWidth={2} color="white" />
                   </div>
                   <span style={{ fontSize:"14px", fontWeight:"800", color:"#f1f5f9", letterSpacing:"0.04em" }}>Solution</span>
                 </div>
@@ -422,6 +426,7 @@ export default function ClientSuccess() {
               </div>
             </div>
 
+            {/* CTA Button */}
             <button style={{
               display:"inline-flex", alignItems:"center", gap:"10px",
               padding:"clamp(12px, 2vw, 14px) clamp(24px, 4vw, 28px)", borderRadius:"12px", border:"none",
@@ -435,9 +440,7 @@ export default function ClientSuccess() {
               onMouseLeave={e => { e.currentTarget.style.boxShadow="0 6px 20px -4px rgba(37,99,235,0.45)"; e.currentTarget.style.transform="translateY(0)"; }}
             >
               <span>View Full Case Study</span>
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" width="14" height="14">
-                <path d="M5 12h14M12 5l7 7-7 7" strokeLinecap="round" strokeLinejoin="round" />
-              </svg>
+              <FiArrowRight size={14} strokeWidth={2.5} />
             </button>
           </div>
         </div>
@@ -456,7 +459,7 @@ export default function ClientSuccess() {
 
       </div>
 
-      {/* Responsive CSS overrides */}
+      {/* Responsive CSS overrides (improved for image scaling) */}
       <style>{`
         @media (max-width: 900px) {
           .case-panel-grid {
@@ -475,6 +478,11 @@ export default function ClientSuccess() {
             scrollbar-width: thin;
           }
         }
+        @media (max-width: 768px) {
+          .case-panel-grid > div:first-child img {
+            max-height: 220px !important;
+          }
+        }
         @media (max-width: 640px) {
           .tabs-scroll {
             gap: 8px !important;
@@ -491,8 +499,8 @@ export default function ClientSuccess() {
           .case-panel-grid > div:first-child {
             min-height: 280px !important;
           }
-          .case-panel-grid > div:first-child .case-emoji {
-            font-size: 60px !important;
+          .case-panel-grid > div:first-child img {
+            max-height: 180px !important;
           }
           .case-panel-grid > div:last-child {
             padding: 28px 24px !important;
@@ -510,6 +518,9 @@ export default function ClientSuccess() {
           .case-arrow-left, .case-arrow-right {
             width: 32px !important;
             height: 32px !important;
+          }
+          .case-panel-grid > div:first-child img {
+            max-height: 150px !important;
           }
         }
       `}</style>

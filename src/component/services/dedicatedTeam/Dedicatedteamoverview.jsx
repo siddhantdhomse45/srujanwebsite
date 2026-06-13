@@ -1,24 +1,25 @@
 import { useRef, useState, useEffect } from "react";
 import { motion, useInView, AnimatePresence } from "framer-motion";
+import { FiZap, FiUsers, FiTrendingUp, FiRefreshCw } from "react-icons/fi";
 
 const features = [
   {
-    icon: "⚡",
+    icon: <FiZap size={20} strokeWidth={1.8} />,
     title: "Quick domain expertise acquisition",
     desc: "Quick, specific domain and technology expertise acquisition tailored to your project needs.",
   },
   {
-    icon: "👥",
+    icon: <FiUsers size={20} strokeWidth={1.8} />,
     title: "Solely allocated team",
     desc: "All employees are solely allocated to the client's engagement — full focus, zero distractions.",
   },
   {
-    icon: "📈",
+    icon: <FiTrendingUp size={20} strokeWidth={1.8} />,
     title: "Flexible fast scaling",
     desc: "Flexible, fast team scaling and system alignment with a client at every stage of growth.",
   },
   {
-    icon: "🔄",
+    icon: <FiRefreshCw size={20} strokeWidth={1.8} />,
     title: "Switchable engagement model",
     desc: "Ability to switch to a dedicated team or fixed scope depending on your evolving goals.",
   },
@@ -54,25 +55,21 @@ export default function DedicatedTeamOverview() {
           position: relative;
           overflow: hidden;
           padding: 100px 0 110px;
-          /* exact bright blue gradient from screenshot */
           background: linear-gradient(135deg,#0f0c29,#1a1a2e,#16213e);
         }
 
-        /* subtle dot pattern overlay */
         .dto-dots {
           position: absolute; inset: 0; z-index: 0; pointer-events: none;
           background-image: radial-gradient(rgba(255,255,255,0.12) 1.2px, transparent 1.2px);
           background-size: 28px 28px;
         }
 
-        /* white glow top-right */
         .dto-glow-tr {
           position: absolute; top: -180px; right: -180px;
           width: 500px; height: 500px; border-radius: 50%;
           background: radial-gradient(circle, rgba(255,255,255,0.1), transparent 70%);
           pointer-events: none; z-index: 0;
         }
-        /* white glow bottom-left */
         .dto-glow-bl {
           position: absolute; bottom: -150px; left: -120px;
           width: 420px; height: 420px; border-radius: 50%;
@@ -80,7 +77,6 @@ export default function DedicatedTeamOverview() {
           pointer-events: none; z-index: 0;
         }
 
-        /* decorative dot clusters exactly like screenshot */
         .dto-cluster {
           position: absolute; pointer-events: none; z-index: 1;
         }
@@ -128,11 +124,8 @@ export default function DedicatedTeamOverview() {
           border-radius: 12px;
           overflow: hidden;
           aspect-ratio: 4/3;
-          box-shadow:
-            0 28px 72px rgba(0,0,0,0.32),
-            0 0 0 1px rgba(255,255,255,0.15);
+          box-shadow: 0 28px 72px rgba(0,0,0,0.32), 0 0 0 1px rgba(255,255,255,0.15);
         }
-        /* keeps aspect-ratio sizing in older browsers */
         .dto-img-inner {
           position: absolute; inset: 0;
         }
@@ -141,13 +134,11 @@ export default function DedicatedTeamOverview() {
           object-fit: cover; display: block;
           position: absolute; inset: 0;
         }
-        /* very subtle blue tint at bottom */
         .dto-img-tint {
           position: absolute; inset: 0;
           background: linear-gradient(to bottom, transparent 60%, rgba(17,85,204,0.35) 100%);
         }
 
-        /* counter badge */
         .dto-img-badge {
           position: absolute; bottom: 14px; right: 14px;
           background: rgba(0,0,0,0.45);
@@ -159,7 +150,6 @@ export default function DedicatedTeamOverview() {
           z-index: 2;
         }
 
-        /* indicator dots */
         .dto-img-dots {
           position: absolute; bottom: 0; left: 0; right: 0;
           display: flex; justify-content: center; gap: 8px; align-items: center;
@@ -200,7 +190,6 @@ export default function DedicatedTeamOverview() {
           box-shadow: 0 20px 50px rgba(0,0,0,0.2);
           background: #fff;
         }
-        /* blue top accent on hover */
         .dto-feat::before {
           content: '';
           position: absolute; top: 0; left: 0; right: 0; height: 3px;
@@ -232,7 +221,6 @@ export default function DedicatedTeamOverview() {
           line-height: 1.65; margin: 0; padding: 0; font-weight: 400;
         }
 
-        /* bottom accent bar */
         .dto-feat-bar {
           height: 2px; border-radius: 2px; margin-top: 4px;
           background: linear-gradient(90deg, #1155cc, #3b8eff);
@@ -343,7 +331,7 @@ export default function DedicatedTeamOverview() {
               </div>
             </motion.div>
 
-            {/* Right — white feature tiles */}
+            {/* Right — white feature tiles with proper icons */}
             <div className="dto-features">
               {features.map((f, i) => (
                 <motion.div

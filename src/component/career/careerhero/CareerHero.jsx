@@ -44,13 +44,13 @@ const Particles = ({ isMobile }) => {
         if (p.x < 0 || p.x > W) p.vx *= -1;
         if (p.y < 0 || p.y > H) p.vy *= -1;
         ctx.beginPath(); ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
-        ctx.fillStyle = `rgba(51,214,67,${p.a})`; ctx.fill();
+        ctx.fillStyle = `rgba(56,189,248,${p.a})`; ctx.fill();
       });
       pts.forEach((a, i) => pts.slice(i + 1).forEach(b => {
         const d = Math.hypot(a.x - b.x, a.y - b.y);
         if (d < 130) {
           ctx.beginPath(); ctx.moveTo(a.x, a.y); ctx.lineTo(b.x, b.y);
-          ctx.strokeStyle = `rgba(51,214,67,${.08 * (1 - d / 130)})`;
+          ctx.strokeStyle = `rgba(56,189,248,${.08 * (1 - d / 130)})`;
           ctx.lineWidth = .5; ctx.stroke();
         }
       }));
@@ -67,7 +67,7 @@ const Particles = ({ isMobile }) => {
 /* ─── FLOATING BLOB ─── */
 const Blob = ({ color, size, top, left, delay = 0 }) => (
   <motion.div
-    style={{ position: "absolute", width: size, height: size, top, left, background: color, filter: "blur(80px)", opacity: 0.18, borderRadius: "60% 40% 30% 70%/60% 30% 70% 40%", pointerEvents: "none", zIndex: 1 }}
+    style={{ position: "absolute", width: size, height: size, top, left, background: color, filter: "blur(80px)", opacity: 0.15, borderRadius: "60% 40% 30% 70%/60% 30% 70% 40%", pointerEvents: "none", zIndex: 1 }}
     animate={{ borderRadius: ["60% 40% 30% 70%/60% 30% 70% 40%", "30% 70% 70% 30%/40% 50% 60% 50%", "60% 40% 30% 70%/60% 30% 70% 40%"], scale: [1, 1.15, 1] }}
     transition={{ duration: 12 + delay * 2, repeat: Infinity, ease: "easeInOut", delay }}
   />
@@ -138,6 +138,13 @@ const CareerHero = () => {
 
   const px = isMobile ? "20px" : isTablet ? "36px" : "clamp(24px,6vw,80px)";
 
+  // Updated color variables (blue/cyan/purple palette)
+  const primaryColor = "#3b82f6";
+  const primaryLight = "#60a5fa";
+  const primaryDark = "#2563eb";
+  const accentColor = "#38bdf8";
+  const purpleAccent = "#8b5cf6";
+
   return (
     <>
       <style>{`
@@ -155,27 +162,27 @@ const CareerHero = () => {
           -webkit-backdrop-filter: blur(20px);
           border: 1px solid rgba(255,255,255,0.1);
         }
-        .ch-glass-green {
-          background: rgba(51,214,67,0.07);
+        .ch-glass-blue {
+          background: rgba(59,130,246,0.08);
           backdrop-filter: blur(20px);
           -webkit-backdrop-filter: blur(20px);
-          border: 1px solid rgba(51,214,67,0.18);
+          border: 1px solid rgba(59,130,246,0.2);
         }
 
         .ch-btn-primary {
-          background: linear-gradient(135deg, #33d643, #16a34a);
+          background: linear-gradient(135deg, #3b82f6, #2563eb);
           border: none; cursor: pointer;
           font-family: 'Plus Jakarta Sans', sans-serif;
           font-weight: 600; color: #fff;
           border-radius: 14px;
-          box-shadow: 0 0 28px rgba(51,214,67,0.35), 0 4px 20px rgba(0,0,0,0.3);
+          box-shadow: 0 0 28px rgba(59,130,246,0.35), 0 4px 20px rgba(0,0,0,0.3);
           transition: all .3s ease;
           letter-spacing: 0.01em;
           display: inline-flex; align-items: center; gap: 8px;
         }
         .ch-btn-primary:hover {
           transform: translateY(-2px);
-          box-shadow: 0 0 48px rgba(51,214,67,0.55), 0 8px 32px rgba(0,0,0,0.3);
+          box-shadow: 0 0 48px rgba(59,130,246,0.55), 0 8px 32px rgba(0,0,0,0.3);
         }
         .ch-btn-ghost {
           background: rgba(255,255,255,0.05);
@@ -183,7 +190,7 @@ const CareerHero = () => {
           cursor: pointer;
           font-family: 'Plus Jakarta Sans', sans-serif;
           font-weight: 500; color: rgba(255,255,255,0.8);
-          border-radius: 14px;
+          borderRadius: 14px;
           transition: all .3s ease;
           display: inline-flex; align-items: center; gap: 8px;
         }
@@ -198,7 +205,7 @@ const CareerHero = () => {
         }
         .ch-stat-card:hover {
           transform: translateY(-5px);
-          box-shadow: 0 20px 60px rgba(0,0,0,0.4), 0 0 30px rgba(51,214,67,0.1);
+          box-shadow: 0 20px 60px rgba(0,0,0,0.4), 0 0 30px rgba(59,130,246,0.1);
         }
 
         .ch-chip {
@@ -215,12 +222,11 @@ const CareerHero = () => {
           display: inline-flex; align-items: center; gap: 6px;
         }
         .ch-chip:hover {
-          background: rgba(51,214,67,0.1);
-          border-color: rgba(51,214,67,0.3);
-          color: #33d643;
+          background: rgba(59,130,246,0.1);
+          border-color: rgba(59,130,246,0.3);
+          color: #60a5fa;
         }
 
-        /* Chip scroll on mobile */
         .chip-scroll {
           display: flex; gap: 10px; flex-wrap: wrap;
         }
@@ -234,8 +240,8 @@ const CareerHero = () => {
         }
 
         @keyframes badge-pulse {
-          0%, 100% { box-shadow: 0 0 0 0 rgba(51,214,67,0.4); }
-          50% { box-shadow: 0 0 0 8px rgba(51,214,67,0); }
+          0%, 100% { box-shadow: 0 0 0 0 rgba(59,130,246,0.4); }
+          50% { box-shadow: 0 0 0 8px rgba(59,130,246,0); }
         }
         .badge-pulse { animation: badge-pulse 2.5s ease-in-out infinite; }
 
@@ -251,7 +257,7 @@ const CareerHero = () => {
           100% { background-position: 200% 0; }
         }
         .shimmer-text {
-          background: linear-gradient(90deg, rgba(255,255,255,0.4) 0%, rgba(255,255,255,0.9) 40%, rgba(255,255,255,0.4) 80%);
+          background: linear-gradient(90deg, rgba(255,255,255,0.4) 0%, rgba(96,165,250,0.9) 40%, rgba(255,255,255,0.4) 80%);
           background-size: 200% 100%;
           -webkit-background-clip: text;
           -webkit-text-fill-color: transparent;
@@ -271,12 +277,12 @@ const CareerHero = () => {
 
         .divider-line {
           height: 1px;
-          background: linear-gradient(90deg, transparent, rgba(51,214,67,0.25), rgba(255,255,255,0.1), transparent);
+          background: linear-gradient(90deg, transparent, rgba(59,130,246,0.25), rgba(255,255,255,0.1), transparent);
         }
 
         ::-webkit-scrollbar { width: 4px; }
         ::-webkit-scrollbar-track { background: #060d0a; }
-        ::-webkit-scrollbar-thumb { background: linear-gradient(#33d643, #16a34a); border-radius: 2px; }
+        ::-webkit-scrollbar-thumb { background: linear-gradient(#3b82f6, #2563eb); border-radius: 2px; }
       `}</style>
 
       <div className="ch-wrap" style={{ background: "#060d0a", overflowX: "hidden" }}>
@@ -285,19 +291,19 @@ const CareerHero = () => {
           {/* BG with parallax */}
           <motion.div style={{ position: "absolute", inset: "-20px", backgroundImage: "url('../../../assets/Careerback.jpg')", backgroundSize: "cover", backgroundPosition: "center", y: bgY, zIndex: 0 }}>
             <div style={{ position: "absolute", inset: 0, background: "linear-gradient(135deg, rgba(6,13,10,0.92) 0%, rgba(6,13,10,0.78) 50%, rgba(6,13,10,0.92) 100%)" }} />
-            <div style={{ position: "absolute", inset: 0, background: "radial-gradient(ellipse at 30% 50%, rgba(51,214,67,0.06) 0%, transparent 60%)" }} />
+            <div style={{ position: "absolute", inset: 0, background: "radial-gradient(ellipse at 30% 50%, rgba(56,189,248,0.08) 0%, transparent 60%)" }} />
           </motion.div>
 
-          {/* Blobs — smaller on mobile */}
-          <Blob color="radial-gradient(circle, #33d643, #16a34a)" size={isMobile ? "300px" : "600px"} top="-10%" left="-8%" delay={0} />
-          <Blob color="radial-gradient(circle, #064e3b, #022c22)" size={isMobile ? "250px" : "500px"} top="40%" left="65%" delay={3} />
-          <Blob color="radial-gradient(circle, #33d643, #0d4422)" size={isMobile ? "180px" : "350px"} top="65%" left="5%" delay={5} />
+          {/* Blobs with new colors */}
+          <Blob color="radial-gradient(circle, #3b82f6, #1e40af)" size={isMobile ? "300px" : "600px"} top="-10%" left="-8%" delay={0} />
+          <Blob color="radial-gradient(circle, #1e3a8a, #0c1a3a)" size={isMobile ? "250px" : "500px"} top="40%" left="65%" delay={3} />
+          <Blob color="radial-gradient(circle, #38bdf8, #0ea5e9)" size={isMobile ? "180px" : "350px"} top="65%" left="5%" delay={5} />
 
           <Particles isMobile={isMobile} />
 
           {/* Watermark — hidden on mobile */}
           {!isMobile && (
-            <div className="ch-serif" style={{ position: "absolute", right: "-2%", bottom: "-2%", fontSize: "clamp(160px,22vw,320px)", fontWeight: 400, color: "rgba(51,214,67,0.025)", lineHeight: 1, userSelect: "none", pointerEvents: "none", letterSpacing: "-0.04em", zIndex: 1 }}>
+            <div className="ch-serif" style={{ position: "absolute", right: "-2%", bottom: "-2%", fontSize: "clamp(160px,22vw,320px)", fontWeight: 400, color: "rgba(59,130,246,0.025)", lineHeight: 1, userSelect: "none", pointerEvents: "none", letterSpacing: "-0.04em", zIndex: 1 }}>
               SRUJAN
             </div>
           )}
@@ -310,11 +316,11 @@ const CareerHero = () => {
               initial={{ opacity: 0, x: 40 }} animate={ready ? { opacity: 1, x: 0 } : {}}
               transition={{ duration: 0.9, delay: 1.2, ease: [0.16, 1, 0.3, 1] }}>
               <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 10 }}>
-                <div style={{ width: 10, height: 10, borderRadius: "50%", background: "#33d643", flexShrink: 0 }} className="badge-pulse" />
+                <div style={{ width: 10, height: 10, borderRadius: "50%", background: primaryLight, flexShrink: 0 }} className="badge-pulse" />
                 <span className="ch-mono" style={{ fontSize: 9, color: "rgba(255,255,255,0.5)", letterSpacing: "0.15em", textTransform: "uppercase" }}>Now Hiring</span>
               </div>
               <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
-                <IoBriefcaseOutline size={18} color="#33d643" />
+                <IoBriefcaseOutline size={18} color={primaryLight} />
                 <p className="ch-serif" style={{ fontSize: 22, fontWeight: 400, color: "#fff", margin: 0 }}>50+</p>
               </div>
               <p className="ch-mono" style={{ fontSize: 9, color: "rgba(255,255,255,0.4)", margin: "4px 0 0", textTransform: "uppercase", letterSpacing: "0.15em" }}>Open Positions</p>
@@ -324,14 +330,14 @@ const CareerHero = () => {
           {/* Floating card bottom-right — hidden on mobile */}
           {!isMobile && (
             <motion.div
-              className="ch-glass-green float-slow-2"
+              className="ch-glass-blue float-slow-2"
               style={{ position: "absolute", bottom: "18%", right: "8%", borderRadius: 16, padding: "14px 18px", zIndex: 5 }}
               initial={{ opacity: 0, x: 40 }} animate={ready ? { opacity: 1, x: 0 } : {}}
               transition={{ duration: 0.9, delay: 1.5, ease: [0.16, 1, 0.3, 1] }}>
               <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
-                <HiOutlineGlobeAlt size={22} color="#33d643" />
+                <HiOutlineGlobeAlt size={22} color={primaryLight} />
                 <div>
-                  <p className="ch-mono" style={{ fontSize: 9, color: "#33d643", margin: 0, textTransform: "uppercase", letterSpacing: "0.15em" }}>Remote Friendly</p>
+                  <p className="ch-mono" style={{ fontSize: 9, color: primaryLight, margin: 0, textTransform: "uppercase", letterSpacing: "0.15em" }}>Remote Friendly</p>
                   <p style={{ fontSize: 12, color: "rgba(255,255,255,0.7)", margin: "3px 0 0", fontWeight: 500 }}>Work from anywhere</p>
                 </div>
               </div>
@@ -345,8 +351,8 @@ const CareerHero = () => {
             {/* Eyebrow badge */}
             <motion.div initial={{ opacity: 0, y: -16 }} animate={ready ? { opacity: 1, y: 0 } : {}} transition={{ duration: 0.7 }}>
               <div className="ch-glass" style={{ borderRadius: 999, padding: "8px 18px 8px 10px", display: "inline-flex", alignItems: "center", gap: 10, marginBottom: isMobile ? 24 : 32 }}>
-                <div style={{ width: 28, height: 28, borderRadius: "50%", background: "rgba(51,214,67,0.15)", border: "1px solid rgba(51,214,67,0.3)", display: "flex", alignItems: "center", justifyContent: "center" }}>
-                  <div style={{ width: 8, height: 8, borderRadius: "50%", background: "#33d643" }} className="badge-pulse" />
+                <div style={{ width: 28, height: 28, borderRadius: "50%", background: "rgba(59,130,246,0.15)", border: "1px solid rgba(59,130,246,0.3)", display: "flex", alignItems: "center", justifyContent: "center" }}>
+                  <div style={{ width: 8, height: 8, borderRadius: "50%", background: primaryLight }} className="badge-pulse" />
                 </div>
                 <span className="ch-mono" style={{ fontSize: 10, color: "rgba(255,255,255,0.55)", letterSpacing: "0.2em", textTransform: "uppercase" }}>Srujan &nbsp;·&nbsp; Careers</span>
               </div>
@@ -355,7 +361,7 @@ const CareerHero = () => {
             {/* Headline */}
             <div style={{ overflow: "hidden", marginBottom: 6 }}>
               <motion.h1 className="ch-serif"
-                style={{ fontSize: isMobile ? "clamp(2.6rem,11vw,3.6rem)" : "clamp(3.2rem,7.5vw,7rem)", fontWeight: 400, color: "#33d643", lineHeight: 0.97, margin: 0 }}
+                style={{ fontSize: isMobile ? "clamp(2.6rem,11vw,3.6rem)" : "clamp(3.2rem,7.5vw,7rem)", fontWeight: 400, color: primaryLight, lineHeight: 0.97, margin: 0 }}
                 initial={{ y: 110, opacity: 0 }} animate={ready ? { y: 0, opacity: 1 } : {}}
                 transition={{ duration: 1.1, ease: [0.16, 1, 0.3, 1], delay: 0.1 }}>
                 {line1}
@@ -400,17 +406,17 @@ const CareerHero = () => {
                 style={{ display: "flex", gap: 10, marginBottom: 28 }}
                 initial={{ opacity: 0, y: 16 }} animate={ready ? { opacity: 1, y: 0 } : {}}
                 transition={{ duration: 0.7, delay: 0.8 }}>
-                <div className="ch-glass-green" style={{ borderRadius: 14, padding: "12px 14px", flex: 1, textAlign: "center" }}>
+                <div className="ch-glass-blue" style={{ borderRadius: 14, padding: "12px 14px", flex: 1, textAlign: "center" }}>
                   <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 6, marginBottom: 4 }}>
-                    <IoBriefcaseOutline size={13} color="#33d643" />
-                    <span className="ch-serif" style={{ fontSize: 22, color: "#33d643", lineHeight: 1 }}>50+</span>
+                    <IoBriefcaseOutline size={13} color={primaryLight} />
+                    <span className="ch-serif" style={{ fontSize: 22, color: primaryLight, lineHeight: 1 }}>50+</span>
                   </div>
                   <p className="ch-mono" style={{ fontSize: 8, color: "rgba(255,255,255,0.38)", margin: 0, textTransform: "uppercase", letterSpacing: "0.15em" }}>Openings</p>
                 </div>
-                <div className="ch-glass-green" style={{ borderRadius: 14, padding: "12px 14px", flex: 1, textAlign: "center" }}>
+                <div className="ch-glass-blue" style={{ borderRadius: 14, padding: "12px 14px", flex: 1, textAlign: "center" }}>
                   <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 6, marginBottom: 4 }}>
-                    <HiOutlineGlobeAlt size={13} color="#33d643" />
-                    <span className="ch-serif" style={{ fontSize: 22, color: "#33d643", lineHeight: 1 }}>14+</span>
+                    <HiOutlineGlobeAlt size={13} color={primaryLight} />
+                    <span className="ch-serif" style={{ fontSize: 22, color: primaryLight, lineHeight: 1 }}>14+</span>
                   </div>
                   <p className="ch-mono" style={{ fontSize: 8, color: "rgba(255,255,255,0.38)", margin: 0, textTransform: "uppercase", letterSpacing: "0.15em" }}>Yrs Growing</p>
                 </div>
@@ -450,15 +456,15 @@ const CareerHero = () => {
               initial={{ opacity: 0, y: 24 }} animate={ready ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.8, delay: 1.1 }}>
               {[
-                { n: 5, s: "+", label: "Open Roles", icon: <IoBriefcaseOutline size={14} color="#33d643" /> },
-                { n: 20, s: "+", label: "Team Members", icon: <BsStars size={13} color="#33d643" /> },
-                { n: 14, s: "+", label: "Years Growing", icon: <HiOutlineGlobeAlt size={14} color="#33d643" /> },
-                { n: 98, s: "%", label: "Retention", icon: <TbBrandReact size={14} color="#33d643" /> },
+                { n: 5, s: "+", label: "Open Roles", icon: <IoBriefcaseOutline size={14} color={primaryLight} /> },
+                { n: 20, s: "+", label: "Team Members", icon: <BsStars size={13} color={primaryLight} /> },
+                { n: 14, s: "+", label: "Years Growing", icon: <HiOutlineGlobeAlt size={14} color={primaryLight} /> },
+                { n: 98, s: "%", label: "Retention", icon: <TbBrandReact size={14} color={primaryLight} /> },
               ].map((st, i) => (
                 <div key={i} className="ch-stat-card ch-glass" style={{ borderRadius: isMobile ? 14 : 16, padding: isMobile ? "14px 12px" : "18px 16px" }}>
                   <div style={{ display: "flex", alignItems: "center", gap: 6, marginBottom: 6 }}>
                     {st.icon}
-                    <p className="ch-serif" style={{ fontSize: isMobile ? 26 : 30, fontWeight: 400, color: "#33d643", margin: 0, lineHeight: 1 }}>
+                    <p className="ch-serif" style={{ fontSize: isMobile ? 26 : 30, fontWeight: 400, color: primaryLight, margin: 0, lineHeight: 1 }}>
                       <Counter end={st.n} suffix={st.s} />
                     </p>
                   </div>
@@ -468,11 +474,7 @@ const CareerHero = () => {
             </motion.div>
           </motion.div>
 
-          {/* Scroll hint */}
-          <motion.div className="scroll-hint" initial={{ opacity: 0 }} animate={ready ? { opacity: 1 } : {}} transition={{ delay: 2 }}>
-            <span className="ch-mono" style={{ fontSize: 9, color: "rgba(255,255,255,0.25)", letterSpacing: "0.2em", textTransform: "uppercase" }}>Scroll</span>
-            <div className="scroll-dot" />
-          </motion.div>
+         
         </section>
       </div>
     </>

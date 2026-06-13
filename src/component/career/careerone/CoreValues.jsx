@@ -40,10 +40,10 @@ export default function CoreValues() {
     <section
       style={{
         position: "relative",
-        padding: "clamp(60px, 8vw, 110px) 0 clamp(60px, 8vw, 120px)",
+        padding: "clamp(60px, 8vw, 110px) 0 clamp(80px, 10vw, 130px)",
         background: "linear-gradient(160deg,#020d1e 0%,#04152d 45%,#060e20 100%)",
         overflow: "hidden",
-        fontFamily: "'DM Sans',sans-serif",
+        fontFamily: "'DM Sans', sans-serif",
       }}
     >
       <style>{`
@@ -58,7 +58,6 @@ export default function CoreValues() {
           z-index: 10;
         }
 
-        /* Two-column layout: header left, cards right */
         .cv-layout {
           display: grid;
           grid-template-columns: 1fr 1.15fr;
@@ -66,13 +65,11 @@ export default function CoreValues() {
           align-items: start;
         }
 
-        /* Left sticky column */
         .cv-left {
           position: sticky;
           top: 80px;
         }
 
-        /* Image wrapper */
         .cv-img-wrap {
           position: relative;
           border-radius: 20px;
@@ -93,7 +90,6 @@ export default function CoreValues() {
           filter: brightness(0.65) saturate(0.9);
         }
 
-        /* Value row card */
         .cv-row {
           display: flex;
           align-items: flex-start;
@@ -109,7 +105,6 @@ export default function CoreValues() {
           transform: translateX(4px);
         }
 
-        /* ── Tablet (≤1024px) ── */
         @media (max-width: 1024px) {
           .cv-inner { padding: 0 36px; }
           .cv-layout { grid-template-columns: 1fr; gap: 48px; }
@@ -117,16 +112,19 @@ export default function CoreValues() {
           .cv-img-wrap { height: 280px; margin-top: 28px; }
         }
 
-        /* ── Mobile (≤640px) ── */
         @media (max-width: 640px) {
-          .cv-inner { padding: 0 16px; }
+          .cv-inner { padding: 0 20px; }
           .cv-img-wrap { height: 220px; margin-top: 20px; }
           .cv-row { padding: 18px 16px; gap: 14px; }
+          .cv-row .icon-box { width: 44px; height: 44px; }
+          .cv-row .icon-box svg { width: 18px; height: 18px; }
         }
 
-        /* ── Small mobile (≤380px) ── */
-        @media (max-width: 380px) {
+        @media (max-width: 480px) {
+          .cv-inner { padding: 0 16px; }
           .cv-img-wrap { height: 180px; }
+          .cv-row { gap: 12px; }
+          .cv-row .icon-box { width: 40px; height: 40px; }
         }
       `}</style>
 
@@ -170,10 +168,9 @@ export default function CoreValues() {
       <div className="cv-inner">
         <div className="cv-layout">
 
-          {/* ── LEFT: header + image ── */}
+          {/* ── LEFT: sticky header + image ── */}
           <div className="cv-left">
             <Rev>
-              {/* Badge */}
               <div style={{
                 display: "inline-flex", alignItems: "center", gap: 8,
                 ...glass, borderRadius: 100, padding: "6px 18px", marginBottom: 22,
@@ -194,7 +191,7 @@ export default function CoreValues() {
 
             <Rev delay={0.1}>
               <h2 style={{
-                fontFamily: "'Syne',sans-serif",
+                fontFamily: "'Syne', sans-serif",
                 fontSize: "clamp(2rem, 4.5vw, 3.4rem)",
                 fontWeight: 800, color: "white",
                 letterSpacing: "-1px", lineHeight: 1.1,
@@ -225,7 +222,6 @@ export default function CoreValues() {
               </p>
             </Rev>
 
-            {/* Image */}
             <Rev delay={0.3}>
               <div className="cv-img-wrap">
                 <img
@@ -233,7 +229,6 @@ export default function CoreValues() {
                   alt="Team collaborating"
                   loading="lazy"
                 />
-                {/* Gradient overlay + stat */}
                 <div style={{
                   position: "absolute", inset: 0,
                   background: "linear-gradient(to top, rgba(2,13,30,0.96) 0%, rgba(2,13,30,0.2) 55%, transparent 100%)",
@@ -243,7 +238,7 @@ export default function CoreValues() {
                   position: "absolute", bottom: 24, left: 28, zIndex: 2,
                 }}>
                   <div style={{
-                    fontFamily: "'Syne',sans-serif",
+                    fontFamily: "'Syne', sans-serif",
                     fontSize: "clamp(42px, 6vw, 60px)",
                     fontWeight: 800, color: "white",
                     lineHeight: 1, marginBottom: 4,
@@ -260,7 +255,7 @@ export default function CoreValues() {
                   </div>
                 </div>
 
-                {/* Accent dots */}
+                {/* Accent dots – matching current hover */}
                 <div style={{
                   position: "absolute", bottom: 28, right: 24, zIndex: 2,
                   display: "flex", gap: 6,
@@ -281,7 +276,7 @@ export default function CoreValues() {
             </Rev>
           </div>
 
-          {/* ── RIGHT: value rows ── */}
+          {/* ── RIGHT: interactive value rows ── */}
           <div style={{ display: "flex", flexDirection: "column", gap: 4 }}>
             {values.map((val, i) => {
               const Icon = val.icon;
@@ -305,7 +300,7 @@ export default function CoreValues() {
                     borderLeftColor: active ? val.color : "transparent",
                   }}
                 >
-                  {/* Glow blob */}
+                  {/* Glow blob behind the icon */}
                   <div style={{
                     position: "absolute", top: -30, left: -20,
                     width: 140, height: 140, borderRadius: "50%",
@@ -316,8 +311,9 @@ export default function CoreValues() {
                     pointerEvents: "none",
                   }} />
 
-                  {/* Icon */}
+                  {/* Icon container */}
                   <motion.div
+                    className="icon-box"
                     animate={active ? { rotate: -6, scale: 1.12 } : { rotate: 0, scale: 1 }}
                     transition={{ duration: 0.35 }}
                     style={{
@@ -340,7 +336,7 @@ export default function CoreValues() {
                   {/* Text */}
                   <div style={{ flex: 1, minWidth: 0, position: "relative", zIndex: 1 }}>
                     <div style={{
-                      fontFamily: "'Syne',sans-serif",
+                      fontFamily: "'Syne', sans-serif",
                       fontSize: "clamp(15px, 1.5vw, 18px)",
                       fontWeight: 700,
                       color: active ? val.color : "white",
@@ -376,7 +372,7 @@ export default function CoreValues() {
                     0{i + 1}
                   </div>
 
-                  {/* Accent line */}
+                  {/* Animated bottom line */}
                   <div style={{
                     position: "absolute", bottom: 0, left: 24,
                     height: 1, borderRadius: 1,

@@ -1,74 +1,69 @@
 import React, { useRef, useState } from "react";
 import { motion, useInView } from "framer-motion";
+import {
+  FiCalendar, FiTrendingUp, FiCpu, FiUsers,
+  FiBookOpen, FiAward, FiSmile, FiServer
+} from "react-icons/fi";
 
 const cultureData = [
   {
-    icon: "/src/assets/woking day.png",
-    emoji: "🗓️",
+    icon: <FiCalendar size={32} />,
     title: "5 Days Working",
     description: "A structured 5-day week gives you the freedom to plan your personal life with confidence — clear boundaries, real downtime, consistent rhythm.",
-    color: "#22d3ee",
+    color: "#38bdf8",      // cyan
+    glow: "rgba(56,189,248,0.18)",
+  },
+  {
+    icon: <FiTrendingUp size={32} />,
+    title: "Personal Growth",
+    description: "Clear, achievable goals keep you focused and moving forward. We invest in your development as much as you do — through mentorship, feedback, and opportunity.",
+    color: "#818cf8",      // indigo
+    glow: "rgba(129,140,248,0.18)",
+  },
+  {
+    icon: <FiCpu size={32} />,
+    title: "Technology Advancement",
+    description: "Technology never stands still — and neither do we. Work with cutting-edge stacks, emerging platforms, and the tools that are shaping tomorrow.",
+    color: "#c084fc",      // purple
+    glow: "rgba(192,132,252,0.18)",
+  },
+  {
+    icon: <FiUsers size={32} />,
+    title: "Equal Opportunity",
+    description: "Fair hiring, equal pay, and an inclusive culture — regardless of gender, race, background, or identity. Every voice shapes our direction.",
+    color: "#22d3ee",      // bright cyan
     glow: "rgba(34,211,238,0.18)",
   },
   {
-    icon: "/src/assets/growth.png",
-    emoji: "🌱",
-    title: "Personal Growth",
-    description: "Clear, achievable goals keep you focused and moving forward. We invest in your development as much as you do — through mentorship, feedback, and opportunity.",
-    color: "#4ade80",
-    glow: "rgba(74,222,128,0.18)",
+    icon: <FiBookOpen size={32} />,
+    title: "Training",
+    description: "On-the-job training, workshops, seminars, and online courses — we equip you with every skill needed to excel and then push you further.",
+    color: "#60a5fa",      // light blue
+    glow: "rgba(96,165,250,0.18)",
   },
   {
-    icon: "/src/assets/technology.png",
-    emoji: "⚡",
-    title: "Technology Advancement",
-    description: "Technology never stands still — and neither do we. Work with cutting-edge stacks, emerging platforms, and the tools that are shaping tomorrow.",
-    color: "#a78bfa",
+    icon: <FiAward size={32} />,
+    title: "Rewarding Opportunity",
+    description: "Career advancement that actually means something — more responsibility, bigger challenges, real recognition. Your ambition has a home here.",
+    color: "#a78bfa",      // lavender
     glow: "rgba(167,139,250,0.18)",
   },
   {
-    icon: "/src/assets/equal.png",
-    emoji: "⚖️",
-    title: "Equal Opportunity",
-    description: "Fair hiring, equal pay, and an inclusive culture — regardless of gender, race, background, or identity. Every voice shapes our direction.",
-    color: "#f472b6",
-    glow: "rgba(244,114,182,0.18)",
-  },
-  {
-    icon: "/src/assets/training.png",
-    emoji: "🎓",
-    title: "Training",
-    description: "On-the-job training, workshops, seminars, and online courses — we equip you with every skill needed to excel and then push you further.",
-    color: "#fb923c",
-    glow: "rgba(251,146,60,0.18)",
-  },
-  {
-    icon: "/src/assets/opportunity.png",
-    emoji: "🏆",
-    title: "Rewarding Opportunity",
-    description: "Career advancement that actually means something — more responsibility, bigger challenges, real recognition. Your ambition has a home here.",
-    color: "#fbbf24",
-    glow: "rgba(251,191,36,0.18)",
-  },
-  {
-    icon: "/src/assets/satisfaction.png",
-    emoji: "💚",
+    icon: <FiSmile size={32} />,
     title: "Satisfaction",
     description: "A positive, supportive environment where you're valued by peers and leadership alike. Great work deserves to feel great to do.",
-    color: "#34d399",
-    glow: "rgba(52,211,153,0.18)",
+    color: "#2dd4bf",      // teal
+    glow: "rgba(45,212,191,0.18)",
   },
   {
-    icon: "/src/assets/infrastructure.png",
-    emoji: "🏗️",
+    icon: <FiServer size={32} />,
     title: "Infrastructure",
     description: "The tools, resources, and systems you need — no compromises. We build the infrastructure that lets you build what matters.",
-    color: "#60a5fa",
-    glow: "rgba(96,165,250,0.18)",
+    color: "#38bdf8",      // cyan (repeated for consistency)
+    glow: "rgba(56,189,248,0.18)",
   },
 ];
 
-/* ── Scroll Reveal ── */
 const Rev = ({ children, delay = 0, y = 40, className = "" }) => {
   const ref = useRef(null);
   const inView = useInView(ref, { once: true, margin: "-60px" });
@@ -82,7 +77,6 @@ const Rev = ({ children, delay = 0, y = 40, className = "" }) => {
   );
 };
 
-/* ── Single Card ── */
 const CultureCard = ({ item, index }) => {
   const [flipped, setFlipped] = useState(false);
   const ref = useRef(null);
@@ -117,29 +111,19 @@ const CultureCard = ({ item, index }) => {
           boxShadow: `0 0 0 0 ${item.glow}`,
           transition: "box-shadow .3s ease",
         }}>
-          {/* Glow accent top border */}
           <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: 2, borderRadius: "20px 20px 0 0", background: `linear-gradient(90deg, transparent, ${item.color}, transparent)` }} />
-
-          {/* Icon circle */}
           <div style={{
             width: 64, height: 64, borderRadius: "50%",
             background: `${item.color}14`,
             border: `1.5px solid ${item.color}30`,
             display: "flex", alignItems: "center", justifyContent: "center",
-            fontSize: 26,
+            color: item.color,
             boxShadow: `0 0 24px ${item.glow}`,
             flexShrink: 0,
           }}>
-            <img src={item.icon} alt={item.title}
-              style={{ width: 30, height: 30, objectFit: "contain" }}
-              onError={e => { e.target.style.display = "none"; e.target.nextSibling.style.display = "block"; }}
-            />
-            <span style={{ display: "none", fontSize: 26 }}>{item.emoji}</span>
+            {item.icon}
           </div>
-
           <p style={{ fontFamily: "'DM Serif Display', serif", fontSize: 17, fontWeight: 400, color: "#f1f5f9", margin: 0, textAlign: "center", lineHeight: 1.25 }}>{item.title}</p>
-
-          {/* Flip hint */}
           <div style={{ position: "absolute", bottom: 12, right: 14, display: "flex", alignItems: "center", gap: 5 }}>
             <span style={{ fontFamily: "'Space Mono', monospace", fontSize: 8, color: "rgba(255,255,255,0.2)", letterSpacing: "0.1em", textTransform: "uppercase" }}>hover</span>
             <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.2)" strokeWidth="2"><path d="M7 16V4m0 0L3 8m4-4l4 4M17 8v12m0 0l4-4m-4 4l-4-4" /></svg>
@@ -160,7 +144,6 @@ const CultureCard = ({ item, index }) => {
           boxShadow: `0 8px 40px ${item.glow}`,
         }}>
           <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: 2, borderRadius: "20px 20px 0 0", background: `linear-gradient(90deg, transparent, ${item.color}, transparent)` }} />
-
           <p style={{ fontFamily: "'DM Serif Display', serif", fontSize: 14, fontWeight: 400, fontStyle: "italic", color: item.color, margin: "0 0 10px", letterSpacing: "0.02em" }}>{item.title}</p>
           <p style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", fontSize: 13, color: "rgba(255,255,255,0.65)", lineHeight: 1.75, margin: 0 }}>{item.description}</p>
         </div>
@@ -169,7 +152,6 @@ const CultureCard = ({ item, index }) => {
   );
 };
 
-/* ── MAIN ── */
 const CultureGrid = () => {
   return (
     <>
@@ -184,31 +166,25 @@ const CultureGrid = () => {
 
       <section className="cg-wrap" style={{ padding: "110px 0 120px", position: "relative" }}>
 
-        {/* BG blobs */}
+        {/* Background blobs – updated to match new palette */}
         {[
-          { c: "radial-gradient(circle,#22d3ee,#0891b2)", w: 500, t: "-8%", l: "-8%", d: 0 },
-          { c: "radial-gradient(circle,#4ade80,#16a34a)", w: 400, t: "50%", l: "70%", d: 3 },
-          { c: "radial-gradient(circle,#a78bfa,#7c3aed)", w: 350, t: "75%", l: "15%", d: 6 },
+          { c: "radial-gradient(circle,#38bdf8,#0891b2)", w: 500, t: "-8%", l: "-8%", d: 0 },
+          { c: "radial-gradient(circle,#818cf8,#4f46e5)", w: 400, t: "50%", l: "70%", d: 3 },
+          { c: "radial-gradient(circle,#c084fc,#7e22ce)", w: 350, t: "75%", l: "15%", d: 6 },
         ].map((b, i) => (
           <div key={i} className="cg-blob" style={{ position: "absolute", width: b.w, height: b.w, top: b.t, left: b.l, background: b.c, filter: "blur(80px)", opacity: 0.1, pointerEvents: "none", animationDelay: `${b.d}s` }} />
         ))}
 
-        {/* Grid dots bg */}
+        {/* Grid dots background */}
         <div style={{ position: "absolute", inset: 0, backgroundImage: "linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px)", backgroundSize: "60px 60px", pointerEvents: "none" }} />
 
         <div style={{ maxWidth: 1280, margin: "0 auto", padding: "0 clamp(24px,5vw,72px)", position: "relative", zIndex: 2 }}>
-
           {/* Section header */}
           <div style={{ textAlign: "center", marginBottom: 72 }}>
-            <Rev>
-              <span style={{ fontFamily: "'Space Mono', monospace", fontSize: 10, color: "#4ade80", letterSpacing: "0.28em", textTransform: "uppercase", display: "block", marginBottom: 16 }}>
-                // our_culture
-              </span>
-            </Rev>
             <Rev delay={0.1}>
               <h2 style={{ fontFamily: "'DM Serif Display', serif", fontSize: "clamp(2.4rem, 5vw, 4rem)", fontWeight: 400, color: "#f8fafc", margin: "0 0 6px", lineHeight: 1.1 }}>
                 Life at{" "}
-                <span style={{ fontStyle: "italic", background: "linear-gradient(135deg,#4ade80,#22d3ee)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text" }}>
+                <span style={{ fontStyle: "italic", background: "linear-gradient(135deg,#38bdf8,#818cf8)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text" }}>
                   Srujan Infotech
                 </span>
               </h2>
@@ -219,9 +195,9 @@ const CultureGrid = () => {
               </p>
             </Rev>
 
-            {/* Animated divider */}
+            {/* Animated divider – new gradient */}
             <Rev delay={0.3}>
-              <div style={{ width: 64, height: 2, borderRadius: 1, background: "linear-gradient(90deg, #4ade80, #22d3ee)", margin: "32px auto 0" }} />
+              <div style={{ width: 64, height: 2, borderRadius: 1, background: "linear-gradient(90deg, #38bdf8, #818cf8)", margin: "32px auto 0" }} />
             </Rev>
           </div>
 
@@ -231,15 +207,6 @@ const CultureGrid = () => {
               <CultureCard key={i} item={item} index={i} />
             ))}
           </div>
-
-          {/* Bottom note */}
-          <Rev delay={0.2}>
-            <div style={{ textAlign: "center", marginTop: 64 }}>
-              <p style={{ fontFamily: "'Space Mono', monospace", fontSize: 11, color: "rgba(255,255,255,0.2)", letterSpacing: "0.18em", textTransform: "uppercase" }}>
-                Hover any card to learn more
-              </p>
-            </div>
-          </Rev>
         </div>
       </section>
     </>

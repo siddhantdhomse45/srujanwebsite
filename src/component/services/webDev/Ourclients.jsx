@@ -1,434 +1,430 @@
-import { useRef } from "react";
+import { useRef, useState, useEffect } from "react";
 import { motion, useInView, useScroll, useTransform } from "framer-motion";
 
-/*
- ╔══════════════════════════════════════════════════════════════╗
- ║  OUR CLIENTS — Premium Edition                              ║
- ║  Color: #3b82f6 blue accent on deep navy dark bg            ║
- ║  Layout: centered heading + subtitle + 5×2 logo grid        ║
- ║  + infinite marquee scroll strip below                      ║
- ║  Responsive: 5col → 3col → 2col                             ║
- ╚══════════════════════════════════════════════════════════════╝
-*/
-
-const BLUE      = "#3b82f6";
-const BLUE_LITE = "#60a5fa";
-const E         = [0.22, 1, 0.36, 1];
-
-/* ── Client logos — SVG text-based marks (grayscale → blue on hover) ── */
-const CLIENTS = [
-  {
-    id: "guinness",
-    label: "Guinness",
-    svg: (
-      <svg viewBox="0 0 120 48" fill="none" xmlns="http://www.w3.org/2000/svg" width="110" height="44">
-        <text x="50%" y="34" textAnchor="middle" fontFamily="'Barlow Condensed', Georgia, serif"
-          fontWeight="800" fontSize="26" fill="currentColor" letterSpacing="3">GUINNESS</text>
-        <path d="M50 12 Q60 4 70 12" stroke="currentColor" strokeWidth="1.8" fill="none" strokeLinecap="round"/>
-        <circle cx="60" cy="9" r="3" fill="currentColor"/>
-      </svg>
-    ),
-  },
-  {
-    id: "eurostar",
-    label: "Eurostar",
-    svg: (
-      <svg viewBox="0 0 120 48" fill="none" xmlns="http://www.w3.org/2000/svg" width="110" height="44">
-        <text x="12" y="36" fontFamily="'Barlow', cursive" fontWeight="300" fontSize="18"
-          fill="currentColor" letterSpacing="2" fontStyle="italic">Eurostar</text>
-        <path d="M8 20 Q14 14 10 26" stroke="currentColor" strokeWidth="2.2" fill="none" strokeLinecap="round"/>
-      </svg>
-    ),
-  },
-  {
-    id: "kjk",
-    label: "KJK",
-    svg: (
-      <svg viewBox="0 0 120 48" fill="none" xmlns="http://www.w3.org/2000/svg" width="110" height="44">
-        <text x="50%" y="30" textAnchor="middle" fontFamily="'Barlow Condensed', sans-serif"
-          fontWeight="900" fontSize="28" fill="currentColor" letterSpacing="3">KJK</text>
-        <text x="50%" y="42" textAnchor="middle" fontFamily="'Barlow', sans-serif"
-          fontWeight="400" fontSize="7" fill="currentColor" letterSpacing="2.5">KOHRMAN JACKSON KRANTZ</text>
-      </svg>
-    ),
-  },
-  {
-    id: "melco",
-    label: "Melco",
-    svg: (
-      <svg viewBox="0 0 140 48" fill="none" xmlns="http://www.w3.org/2000/svg" width="130" height="44">
-        <text x="50%" y="34" textAnchor="middle" fontFamily="'Barlow', sans-serif"
-          fontWeight="300" fontSize="22" fill="currentColor" letterSpacing="5">MELCO</text>
-      </svg>
-    ),
-  },
-  {
-    id: "audi",
-    label: "Audi",
-    svg: (
-      <svg viewBox="0 0 120 54" fill="none" xmlns="http://www.w3.org/2000/svg" width="100" height="48">
-        {/* Four rings */}
-        {[16, 36, 56, 76].map((cx, i) => (
-          <circle key={i} cx={cx} cy="24" r="12" stroke="currentColor" strokeWidth="2.5" fill="none"/>
-        ))}
-        <text x="50%" y="48" textAnchor="middle" fontFamily="'Barlow Condensed', sans-serif"
-          fontWeight="700" fontSize="13" fill="currentColor" letterSpacing="4">AUDI</text>
-      </svg>
-    ),
-  },
-  {
-    id: "jaguar",
-    label: "Jaguar",
-    svg: (
-      <svg viewBox="0 0 120 48" fill="none" xmlns="http://www.w3.org/2000/svg" width="110" height="44">
-        <text x="50%" y="38" textAnchor="middle" fontFamily="'Barlow Condensed', sans-serif"
-          fontWeight="300" fontSize="20" fill="currentColor" letterSpacing="6">JAGUAR</text>
-        <path d="M48 16 Q60 6 72 16 Q66 22 60 20 Q54 22 48 16z" stroke="currentColor" strokeWidth="1.4" fill="none"/>
-      </svg>
-    ),
-  },
-  {
-    id: "disney",
-    label: "Walt Disney",
-    svg: (
-      <svg viewBox="0 0 140 48" fill="none" xmlns="http://www.w3.org/2000/svg" width="130" height="44">
-        <text x="50%" y="35" textAnchor="middle" fontFamily="'Barlow', sans-serif"
-          fontWeight="300" fontSize="18" fill="currentColor" letterSpacing="1" fontStyle="italic">Walt Disney</text>
-      </svg>
-    ),
-  },
-  {
-    id: "guest",
-    label: "Guest Services",
-    svg: (
-      <svg viewBox="0 0 130 52" fill="none" xmlns="http://www.w3.org/2000/svg" width="120" height="48">
-        <text x="50%" y="30" textAnchor="middle" fontFamily="'Barlow Condensed', sans-serif"
-          fontWeight="700" fontSize="15" fill="currentColor" letterSpacing="3">GUEST</text>
-        <text x="50%" y="45" textAnchor="middle" fontFamily="'Barlow Condensed', sans-serif"
-          fontWeight="400" fontSize="12" fill="currentColor" letterSpacing="3">SERVICES</text>
-        {/* pineapple icon */}
-        <path d="M62 8 Q65 2 68 8 Q71 14 65 16 Q59 14 62 8z" stroke="currentColor" strokeWidth="1.2" fill="none"/>
-        <line x1="65" y1="2" x2="63" y2="0" stroke="currentColor" strokeWidth="1"/>
-        <line x1="65" y1="2" x2="65" y2="-1" stroke="currentColor" strokeWidth="1"/>
-        <line x1="65" y1="2" x2="67" y2="0" stroke="currentColor" strokeWidth="1"/>
-      </svg>
-    ),
-  },
-  {
-    id: "cirrus",
-    label: "Cirrus Insight",
-    svg: (
-      <svg viewBox="0 0 130 52" fill="none" xmlns="http://www.w3.org/2000/svg" width="120" height="48">
-        <path d="M55 20 Q55 12 62 12 Q70 12 70 20 Q70 28 62 28 Q58 28 56 24" stroke="currentColor" strokeWidth="2.8" fill="none" strokeLinecap="round"/>
-        <text x="50%" y="46" textAnchor="middle" fontFamily="'Barlow', sans-serif"
-          fontWeight="400" fontSize="11" fill="currentColor" letterSpacing="2.5">cirrus insight</text>
-      </svg>
-    ),
-  },
-  {
-    id: "griffins",
-    label: "Griffins",
-    svg: (
-      <svg viewBox="0 0 120 52" fill="none" xmlns="http://www.w3.org/2000/svg" width="110" height="48">
-        {/* Shield shape */}
-        <path d="M60 6 L80 14 L80 30 Q80 42 60 48 Q40 42 40 30 L40 14 Z"
-          stroke="currentColor" strokeWidth="1.8" fill="none"/>
-        <text x="50%" y="34" textAnchor="middle" fontFamily="'Barlow Condensed', sans-serif"
-          fontWeight="800" fontSize="11" fill="currentColor" letterSpacing="2">GRIFFINS</text>
-      </svg>
-    ),
-  },
+/* ─── CLIENT DATA (exactly the same as MeetClients) ─── */
+const clients = [
+  { name: "Universal",        img: "https://www.intellectsoft.net/blog/wp-content/uploads/universal-1.svg",         color: "#0ea5e9" },
+  { name: "NHS",              img: "https://www.intellectsoft.net/blog/wp-content/uploads/nhs.svg",                 color: "#16a34a" },
+  { name: "Guinness",         img: "https://www.intellectsoft.net/blog/wp-content/uploads/guinness-1.svg",          color: "#92400e" },
+  { name: "Eurostar",         img: "https://www.intellectsoft.net/blog/wp-content/uploads/eurostar-1.svg",          color: "#7c3aed" },
+  { name: "EY",               img: "https://www.intellectsoft.net/blog/wp-content/uploads/ey.svg",                  color: "#d97706" },
+  { name: "KJK",              img: "https://www.intellectsoft.net/blog/wp-content/uploads/kjk.svg",                 color: "#0f766e" },
+  { name: "Griffins",         img: "https://www.intellectsoft.net/blog/wp-content/uploads/griffins.svg",            color: "#be123c" },
+  { name: "Land Rover",       img: "https://www.intellectsoft.net/blog/wp-content/uploads/land-rover.svg",          color: "#1e40af" },
+  { name: "Jaguar",           img: "https://www.intellectsoft.net/blog/wp-content/uploads/jaguar-1.svg",            color: "#4f46e5" },
+  { name: "Walt Disney",      img: "https://www.intellectsoft.net/blog/wp-content/uploads/walt-disney.svg",         color: "#b45309" },
+  { name: "Guest Services",   img: "https://www.intellectsoft.net/blog/wp-content/uploads/guest-services.svg",      color: "#0891b2" },
+  { name: "Cirrus Insight",   img: "https://www.intellectsoft.net/blog/wp-content/uploads/cirrus-1.svg",            color: "#6d28d9" },
+  { name: "Hoosbaa",          img: "https://www.intellectsoft.net/blog/wp-content/uploads/hoosbaa.svg",             color: "#0f766e" },
+  { name: "AF",               img: "https://www.intellectsoft.net/blog/wp-content/uploads/af-gruppen.svg",          color: "#9f1239" },
+  { name: "Wynn",             img: "https://www.intellectsoft.net/blog/wp-content/uploads/wynn.svg",                color: "#065f46" },
+  { name: "Melco",            img: "https://www.intellectsoft.net/blog/wp-content/uploads/melco.svg",               color: "#1e3a8a" },
+  { name: "Euro Accident",    img: "https://www.intellectsoft.net/blog/wp-content/uploads/euro-accident-1.svg",     color: "#7f1d1d" },
+  { name: "Bombardier",       img: "https://www.intellectsoft.net/blog/wp-content/uploads/bombardier.svg",          color: "#1c1917" },
+  // { name: "Nestlé",           img: "https://www.intellectsoft.net/blog/wp-content/uploads/nestle.svg",              color: "#713f12" },
+  // { name: "Clinique",         img: "https://www.intellectsoft.net/blog/wp-content/uploads/clinique.svg",            color: "#831843" },
+  // { name: "Harley-Davidson",  img: "https://www.intellectsoft.net/blog/wp-content/uploads/harley-1.svg",            color: "#1c1917" },
+  // { name: "Gulls",            img: "https://www.intellectsoft.net/blog/wp-content/uploads/gulls.svg",               color: "#164e63" },
+  // { name: "Audi",             img: "https://www.intellectsoft.net/blog/wp-content/uploads/audi.svg",                color: "#374151" },
+  // { name: "Giant Bicycles",   img: "https://www.intellectsoft.net/blog/wp-content/uploads/giant.svg",               color: "#166534" },
 ];
 
-/* ── Ambient orb ── */
-function Orb({ style }) {
-  return (
-    <motion.div
-      animate={{ y: [0, -22, 0], x: [0, 10, 0] }}
-      transition={{ duration: 18, repeat: Infinity, ease: "easeInOut" }}
-      style={{ position: "absolute", borderRadius: "50%", filter: "blur(80px)", pointerEvents: "none", ...style }}
-    />
-  );
-}
+const STATS = [
+  { n: "500+", label: "Enterprise Clients" },
+  { n: "13+",  label: "Years of Partnership" },
+  { n: "98%",  label: "Client Retention" },
+  { n: "40+",  label: "Countries Served" },
+];
 
-/* ── Single logo card ── */
-function LogoCard({ client, index }) {
+/* ─── PARTICLE CANVAS (same as MeetClients) ─── */
+const Particles = () => {
   const ref = useRef(null);
-  const inV = useInView(ref, { once: true, margin: "-40px" });
+  useEffect(() => {
+    const c = ref.current; if (!c) return;
+    const ctx = c.getContext("2d");
+    let W = c.width = c.offsetWidth, H = c.height = c.offsetHeight;
+    const pts = Array.from({ length: 50 }, () => ({
+      x: Math.random() * W, y: Math.random() * H,
+      vx: (Math.random() - .5) * .3, vy: (Math.random() - .5) * .3,
+      r: Math.random() * 1.2 + .3, a: Math.random() * .3 + .06,
+    }));
+    let raf;
+    const draw = () => {
+      ctx.clearRect(0, 0, W, H);
+      pts.forEach(p => {
+        p.x += p.vx; p.y += p.vy;
+        if (p.x < 0 || p.x > W) p.vx *= -1;
+        if (p.y < 0 || p.y > H) p.vy *= -1;
+        ctx.beginPath(); ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(148,163,184,${p.a})`; ctx.fill();
+      });
+      pts.forEach((a, i) => pts.slice(i + 1).forEach(b => {
+        const d = Math.hypot(a.x - b.x, a.y - b.y);
+        if (d < 110) {
+          ctx.beginPath(); ctx.moveTo(a.x, a.y); ctx.lineTo(b.x, b.y);
+          ctx.strokeStyle = `rgba(148,163,184,${.07 * (1 - d / 110)})`;
+          ctx.lineWidth = .4; ctx.stroke();
+        }
+      }));
+      raf = requestAnimationFrame(draw);
+    };
+    draw();
+    const resize = () => { W = c.width = c.offsetWidth; H = c.height = c.offsetHeight; };
+    window.addEventListener("resize", resize);
+    return () => { cancelAnimationFrame(raf); window.removeEventListener("resize", resize); };
+  }, []);
+  return <canvas ref={ref} style={{ position: "absolute", inset: 0, width: "100%", height: "100%", pointerEvents: "none", zIndex: 0 }} />;
+};
+
+/* ─── MORPH BLOB ─── */
+const Blob = ({ color, size, top, left, delay = 0 }) => (
+  <motion.div
+    style={{ position: "absolute", width: size, height: size, top, left, background: color, filter: "blur(80px)", opacity: .1, borderRadius: "60% 40% 30% 70%/60% 30% 70% 40%", pointerEvents: "none", zIndex: 0 }}
+    animate={{ borderRadius: ["60% 40% 30% 70%/60% 30% 70% 40%", "30% 70% 70% 30%/40% 50% 60% 50%", "60% 40% 30% 70%/60% 30% 70% 40%"], scale: [1, 1.12, 1] }}
+    transition={{ duration: 14 + delay * 2, repeat: Infinity, ease: "easeInOut", delay }}
+  />
+);
+
+/* ─── SCROLL REVEAL ─── */
+const Rev = ({ children, delay = 0, y = 40 }) => {
+  const ref = useRef(null);
+  const inView = useInView(ref, { once: true, margin: "-50px" });
+  return (
+    <motion.div ref={ref}
+      initial={{ opacity: 0, y }}
+      animate={inView ? { opacity: 1, y: 0 } : {}}
+      transition={{ duration: 0.85, delay, ease: [0.16, 1, 0.3, 1] }}>
+      {children}
+    </motion.div>
+  );
+};
+
+/* ─── LOGO CARD (white box, coloured hover accents) ─── */
+const LogoCard = ({ client, index }) => {
+  const [hovered, setHovered] = useState(false);
+  const [imgError, setImgError] = useState(false);
+  const ref = useRef(null);
+  const inView = useInView(ref, { once: true, margin: "-40px" });
 
   return (
     <motion.div
       ref={ref}
-      initial={{ opacity: 0, y: 28 }}
-      animate={inV ? { opacity: 1, y: 0 } : {}}
-      transition={{ duration: 0.7, delay: index * 0.07, ease: E }}
-    >
-      <motion.div
-        whileHover={{
-          y: -5,
-          background: "rgba(59,130,246,0.07)",
-          borderColor: "rgba(59,130,246,0.35)",
-          boxShadow: "0 12px 36px rgba(59,130,246,0.18)",
-        }}
-        transition={{ duration: 0.3 }}
-        style={{
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          padding: "28px 20px",
-          borderRadius: 14,
-          background: "rgba(255,255,255,0.03)",
-          border: "1px solid rgba(255,255,255,0.07)",
-          cursor: "pointer",
-          minHeight: 96,
-        }}
-      >
-        <motion.div
-          whileHover={{ color: BLUE }}
-          transition={{ duration: 0.25 }}
-          style={{ color: "rgba(255,255,255,0.55)", lineHeight: 0 }}
-        >
-          {client.svg}
-        </motion.div>
-      </motion.div>
+      initial={{ opacity: 0, y: 30, scale: 0.92 }}
+      animate={inView ? { opacity: 1, y: 0, scale: 1 } : {}}
+      transition={{ duration: 0.6, delay: (index % 6) * 0.06, ease: [0.16, 1, 0.3, 1] }}
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}
+      style={{
+        position: "relative",
+        borderRadius: 18,
+        padding: "20px 12px 16px",
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        justifyContent: "center",
+        gap: 14,
+        cursor: "default",
+        background: hovered ? `${client.color}18` : "rgba(255,255,255,0.05)",
+        backdropFilter: "blur(20px)",
+        border: hovered ? `1px solid ${client.color}55` : "1px solid rgba(255,255,255,0.09)",
+        transition: "all .3s ease",
+        transform: hovered ? "translateY(-6px) scale(1.04)" : "translateY(0) scale(1)",
+        boxShadow: hovered ? `0 18px 52px rgba(0,0,0,0.4), 0 0 0 1px ${client.color}30` : "0 2px 8px rgba(0,0,0,0.2)",
+        minHeight: 140,
+        overflow: "hidden",
+      }}>
+      {/* Top bar */}
+      <div style={{
+        position: "absolute", top: 0, left: 0, right: 0, height: 2.5,
+        borderRadius: "18px 18px 0 0",
+        background: `linear-gradient(90deg, transparent, ${client.color}, transparent)`,
+        opacity: hovered ? 1 : 0,
+        transition: "opacity .3s ease",
+      }} />
+
+      {/* Pure white logo box – guarantees visibility for all logos */}
+      <div style={{
+        width: 130,
+        height: 72,
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        background: "#ffffff",
+        borderRadius: 12,
+        padding: "10px 14px",
+        flexShrink: 0,
+        border: hovered ? `2px solid ${client.color}55` : "2px solid rgba(255,255,255,0.12)",
+        transition: "border-color .3s ease, box-shadow .3s ease",
+        boxShadow: hovered
+          ? `0 0 0 4px ${client.color}22, 0 8px 24px rgba(0,0,0,0.25)`
+          : "0 4px 12px rgba(0,0,0,0.3)",
+        overflow: "hidden",
+      }}>
+        {!imgError ? (
+          <img
+            src={client.img}
+            alt={client.name}
+            loading="lazy"
+            style={{
+              maxWidth: "100%",
+              maxHeight: "100%",
+              objectFit: "contain",
+              display: "block",
+            }}
+            onError={() => setImgError(true)}
+          />
+        ) : (
+          <span style={{
+            fontFamily: "'Space Mono', monospace",
+            fontSize: 15,
+            fontWeight: 700,
+            color: client.color,
+            textAlign: "center",
+            letterSpacing: "0.04em",
+          }}>
+            {client.name.substring(0, 3).toUpperCase()}
+          </span>
+        )}
+      </div>
+
+      <p style={{
+        fontFamily: "'Plus Jakarta Sans', sans-serif",
+        fontSize: 11,
+        fontWeight: 600,
+        color: hovered ? "#ffffff" : "rgba(255,255,255,0.55)",
+        margin: 0,
+        textAlign: "center",
+        letterSpacing: "0.05em",
+        textTransform: "uppercase",
+        transition: "color .3s ease",
+      }}>
+        {client.name}
+      </p>
     </motion.div>
   );
-}
+};
 
-/* ── Infinite marquee strip ── */
-function MarqueeStrip() {
-  const items = [...CLIENTS, ...CLIENTS]; // duplicate for seamless loop
+/* ─── INFINITE MARQUEE STRIP (kept from original OurClients) ─── */
+const MarqueeStrip = () => {
+  // Duplicate array for seamless loop
+  const allClients = [...clients, ...clients];
   return (
     <div style={{
       overflow: "hidden",
       width: "100%",
-      borderTop: "1px solid rgba(255,255,255,0.06)",
-      borderBottom: "1px solid rgba(255,255,255,0.06)",
-      padding: "20px 0",
-      background: "rgba(255,255,255,0.015)",
+      borderTop: "1px solid rgba(255,255,255,0.08)",
+      borderBottom: "1px solid rgba(255,255,255,0.08)",
+      padding: "24px 0",
+      background: "rgba(255,255,255,0.02)",
+      marginTop: 80,
     }}>
       <motion.div
         animate={{ x: ["0%", "-50%"] }}
-        transition={{ duration: 28, repeat: Infinity, ease: "linear" }}
-        style={{ display: "flex", gap: 64, alignItems: "center", width: "max-content" }}
+        transition={{ duration: 35, repeat: Infinity, ease: "linear" }}
+        style={{ display: "flex", gap: 60, alignItems: "center", width: "max-content" }}
       >
-        {items.map((c, i) => (
-          <div key={`${c.id}-${i}`}
-            style={{ color: "rgba(255,255,255,0.22)", lineHeight: 0, flexShrink: 0 }}>
-            {c.svg}
+        {allClients.map((c, i) => (
+          <div key={`${c.name}-${i}`} style={{
+            flexShrink: 0,
+            width: 100,
+            height: 50,
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            background: "#ffffff",
+            borderRadius: 8,
+            padding: "6px 12px",
+            border: "1px solid rgba(255,255,255,0.1)",
+          }}>
+            <img
+              src={c.img}
+              alt={c.name}
+              style={{
+                maxWidth: "100%",
+                maxHeight: "100%",
+                objectFit: "contain",
+                opacity: 0.7,
+                transition: "opacity 0.2s",
+              }}
+              onMouseEnter={e => e.currentTarget.style.opacity = "1"}
+              onMouseLeave={e => e.currentTarget.style.opacity = "0.7"}
+            />
           </div>
         ))}
       </motion.div>
     </div>
   );
-}
+};
 
-/* ══════════════════════════════════════════
-   MAIN EXPORT
-══════════════════════════════════════════ */
+/* ─── MAIN ─── */
 export default function OurClients() {
   const sectionRef = useRef(null);
-  const headRef    = useRef(null);
-  const headInV    = useInView(headRef, { once: true, margin: "-60px" });
+  const headRef = useRef(null);
+  const headInV = useInView(headRef, { once: true, margin: "-60px" });
   const { scrollYProgress } = useScroll({ target: sectionRef, offset: ["start end", "end start"] });
   const gridY = useTransform(scrollYProgress, [0, 1], ["-5%", "5%"]);
 
   return (
     <>
       <link
-        href="https://fonts.googleapis.com/css2?family=Barlow:wght@300;400;500;600;700;800&family=Barlow+Condensed:wght@700;800;900&display=swap"
+        href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap"
         rel="stylesheet"
       />
 
       <style>{`
-        .oc-section {
-          position: relative;
-          background: linear-gradient(158deg, #050b18 0%, #070f22 55%, #050e1c 100%);
-          padding: 112px 72px 0;
-          overflow: hidden;
-          font-family: 'Barlow', sans-serif;
-        }
-        .oc-grid {
+        .oc-wrap  { font-family: 'Plus Jakarta Sans', sans-serif; position: relative; }
+        .oc-serif { font-family: 'DM Serif Display', serif; }
+        .oc-mono  { font-family: 'Space Mono', monospace; }
+
+        .oc-logo-grid {
           display: grid;
-          grid-template-columns: repeat(5, 1fr);
+          grid-template-columns: repeat(6, 1fr);
           gap: 16px;
+          margin-bottom: 72px;
         }
-        @media (max-width: 1100px) {
-          .oc-grid { grid-template-columns: repeat(4, 1fr); }
-          .oc-section { padding: 88px 40px 0 !important; }
+        @media (max-width: 1200px) { .oc-logo-grid { grid-template-columns: repeat(5,1fr); } }
+        @media (max-width: 960px)  { .oc-logo-grid { grid-template-columns: repeat(4,1fr); } }
+        @media (max-width: 680px)  { .oc-logo-grid { grid-template-columns: repeat(3,1fr); gap: 12px; } }
+        @media (max-width: 460px)  { .oc-logo-grid { grid-template-columns: repeat(2,1fr); gap: 10px; } }
+
+        .oc-stats-grid {
+          display: grid;
+          grid-template-columns: repeat(4, 1fr);
+          gap: 16px;
+          margin-bottom: 72px;
         }
-        @media (max-width: 800px) {
-          .oc-grid { grid-template-columns: repeat(3, 1fr); }
-          .oc-section { padding: 72px 28px 0 !important; }
-        }
-        @media (max-width: 520px) {
-          .oc-grid { grid-template-columns: repeat(2, 1fr); gap: 12px; }
-          .oc-section { padding: 56px 16px 0 !important; }
-          .oc-h2 { font-size: 26px !important; }
-          .oc-sub { font-size: 14px !important; }
-        }
+        @media (max-width: 680px) { .oc-stats-grid { grid-template-columns: repeat(2,1fr); } }
       `}</style>
 
-      <section ref={sectionRef} className="oc-section">
-        {/* ── Atmosphere ── */}
-        <Orb style={{ width: 560, height: 560, background: "rgba(59,130,246,0.07)", top: -160, left: -100 }} />
-        <Orb style={{ width: 440, height: 440, background: "rgba(96,165,250,0.05)", bottom: 0, right: -80 }} />
+      <section ref={sectionRef} className="oc-wrap" style={{
+        background: "#060b14",
+        padding: "110px 0 0",
+        position: "relative",
+        overflow: "hidden",
+      }}>
+        {/* Blobs */}
+        <Blob color="radial-gradient(circle,#0ea5e9,#6366f1)" size="600px" top="-10%" left="-8%" delay={0} />
+        <Blob color="radial-gradient(circle,#a78bfa,#ec4899)" size="500px" top="40%" left="65%" delay={3} />
+        <Blob color="radial-gradient(circle,#0ea5e9,#0f766e)" size="400px" top="75%" left="5%" delay={6} />
 
-        {/* Parallax dot grid */}
-        <motion.div style={{
-          position: "absolute", inset: "-10%",
-          backgroundImage: "radial-gradient(rgba(59,130,246,0.06) 1px, transparent 1px)",
-          backgroundSize: "44px 44px",
-          y: gridY, pointerEvents: "none",
-        }} />
-
-        {/* Vertical accent lines */}
-        {[20, 50, 80].map((l, i) => (
-          <div key={i} style={{
-            position: "absolute", top: 0, bottom: 0, left: `${l}%`, width: 1,
-            background: "linear-gradient(to bottom, transparent, rgba(59,130,246,0.06) 30%, rgba(59,130,246,0.06) 70%, transparent)",
-            pointerEvents: "none",
-          }} />
-        ))}
-
-        <div style={{ maxWidth: 1280, margin: "0 auto", position: "relative", zIndex: 10 }}>
-
-          {/* ── Header ── */}
-          <div ref={headRef} style={{ textAlign: "center", marginBottom: 72 }}>
-            {/* Eyebrow */}
-            <motion.div
-              initial={{ opacity: 0, y: -12 }}
-              animate={headInV ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.7, ease: E }}
-              style={{ display: "inline-flex", alignItems: "center", gap: 12, marginBottom: 22 }}
-            >
-              <div style={{ width: 32, height: 2, background: BLUE, borderRadius: 2 }} />
-              <span style={{
-                fontFamily: "'Barlow', sans-serif", fontWeight: 700,
-                fontSize: 11, letterSpacing: 3.5, textTransform: "uppercase", color: BLUE,
-              }}>
-                Trusted Partners
-              </span>
-              <div style={{ width: 32, height: 2, background: BLUE, borderRadius: 2 }} />
-            </motion.div>
-
-            {/* Heading */}
-            <motion.h2
-              className="oc-h2"
-              initial={{ opacity: 0, y: 28 }}
-              animate={headInV ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.85, delay: 0.1, ease: E }}
-              style={{
-                fontFamily: "'Barlow Condensed', sans-serif",
-                fontWeight: 900,
-                fontSize: "clamp(26px, 4vw, 52px)",
-                textTransform: "uppercase",
-                letterSpacing: "1px",
-                lineHeight: 1.06,
-                color: "#ffffff",
-                margin: "0 0 28px",
-              }}
-            >
-              Our{" "}
-              <span style={{
-                background: `linear-gradient(90deg, ${BLUE_LITE}, ${BLUE})`,
-                WebkitBackgroundClip: "text",
-                WebkitTextFillColor: "transparent",
-              }}>
-                Clients
-              </span>
-            </motion.h2>
-
-            {/* Subtitle */}
-            <motion.p
-              className="oc-sub"
-              initial={{ opacity: 0, y: 16 }}
-              animate={headInV ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.8, delay: 0.2, ease: E }}
-              style={{
-                fontFamily: "'Barlow', sans-serif",
-                fontSize: 16, lineHeight: 1.85,
-                color: "rgba(255,255,255,0.45)",
-                maxWidth: 760, margin: "0 auto",
-              }}
-            >
-              We've successfully partnered with clients spanning from startups to Fortune 500 companies
-              to create impactful web development solutions. Our well-defined development cycle
-              guarantees a smooth process with strong collaboration and support.
-            </motion.p>
-
-            {/* Animated gradient rule */}
-            <motion.div
-              initial={{ scaleX: 0, opacity: 0 }}
-              animate={headInV ? { scaleX: 1, opacity: 1 } : {}}
-              transition={{ duration: 1.1, delay: 0.32, ease: E }}
-              style={{
-                marginTop: 40, height: 1.5, width: "100%",
-                background: `linear-gradient(90deg, transparent, ${BLUE}, transparent)`,
-                transformOrigin: "center", borderRadius: 2,
-              }}
-            />
-          </div>
-
-          {/* ── 5×2 Logo grid ── */}
-          <div className="oc-grid" style={{ marginBottom: 72 }}>
-            {CLIENTS.map((client, i) => (
-              <LogoCard key={client.id} client={client} index={i} />
-            ))}
-          </div>
-
-          {/* ── Stats row ── */}
-          <motion.div
-            initial={{ opacity: 0, y: 24 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-40px" }}
-            transition={{ duration: 0.8, ease: E }}
-            style={{
-              display: "grid",
-              gridTemplateColumns: "repeat(4, 1fr)",
-              gap: 1,
-              marginBottom: 0,
-              background: "rgba(59,130,246,0.08)",
-              border: "1px solid rgba(59,130,246,0.15)",
-              borderRadius: 16,
-              overflow: "hidden",
-              marginBottom: 72,
-            }}
-          >
-            {[
-              { value: "10+", label: "Fortune 500 Clients" },
-              { value: "50+", label: "Industries Served"   },
-              { value: "500+",label: "Projects Delivered"  },
-              { value: "98%", label: "Client Satisfaction" },
-            ].map((s, i) => (
-              <div key={s.label} style={{
-                padding: "28px 24px",
-                textAlign: "center",
-                borderRight: i < 3 ? "1px solid rgba(59,130,246,0.12)" : "none",
-              }}>
-                <div style={{
-                  fontFamily: "'Barlow Condensed', sans-serif",
-                  fontWeight: 900, fontSize: "clamp(28px, 3vw, 40px)",
-                  color: "#ffffff", letterSpacing: "-0.5px", lineHeight: 1,
-                }}>
-                  {s.value}
-                </div>
-                <div style={{
-                  fontFamily: "'Barlow', sans-serif",
-                  fontWeight: 600, fontSize: 10,
-                  letterSpacing: 2, textTransform: "uppercase",
-                  color: "rgba(255,255,255,0.32)", marginTop: 8,
-                }}>
-                  {s.label}
-                </div>
-              </div>
-            ))}
-          </motion.div>
+        {/* Particles */}
+        <div style={{ position: "absolute", inset: 0, zIndex: 0 }}>
+          <Particles />
         </div>
 
-        {/* ── Infinite marquee strip at bottom ── */}
-        <MarqueeStrip />
+        {/* Dot grid */}
+        <div style={{
+          position: "absolute", inset: 0,
+          backgroundImage: "linear-gradient(rgba(255,255,255,0.025) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,0.025) 1px,transparent 1px)",
+          backgroundSize: "72px 72px", zIndex: 0, pointerEvents: "none",
+        }} />
 
+        <div style={{
+          maxWidth: 1380,
+          margin: "0 auto",
+          padding: "0 clamp(20px,5vw,72px)",
+          position: "relative",
+          zIndex: 2,
+        }}>
+          {/* ── HEADER ── */}
+          <div ref={headRef} style={{ textAlign: "center", marginBottom: 72 }}>
+            <Rev>
+              <span className="oc-mono" style={{
+                fontSize: 10, color: "#0ea5e9",
+                letterSpacing: "0.28em", textTransform: "uppercase",
+                display: "block", marginBottom: 16,
+              }}>
+                // meet_our_clients
+              </span>
+            </Rev>
+
+            <Rev delay={0.1}>
+              <h2 className="oc-serif" style={{
+                fontSize: "clamp(2.2rem,5vw,4rem)",
+                fontWeight: 400, color: "#f8fafc",
+                margin: "0 0 6px", lineHeight: 1.08,
+              }}>
+                Our{" "}
+                <span style={{
+                  fontStyle: "italic",
+                  background: "linear-gradient(135deg,#38bdf8,#a78bfa,#f472b6)",
+                  WebkitBackgroundClip: "text",
+                  WebkitTextFillColor: "transparent",
+                  backgroundClip: "text",
+                }}>
+                  Clients
+                </span>
+              </h2>
+            </Rev>
+
+            <Rev delay={0.2}>
+              <p style={{
+                color: "rgba(255,255,255,0.45)",
+                fontSize: 16, maxWidth: 520,
+                margin: "20px auto 0", lineHeight: 1.8,
+              }}>
+                World-class brands and established companies have chosen us as their reliable technology partner.
+              </p>
+            </Rev>
+
+            <Rev delay={0.3}>
+              <div style={{
+                width: 60, height: 2, borderRadius: 1,
+                background: "linear-gradient(90deg,#0ea5e9,#6366f1)",
+                margin: "28px auto 0",
+              }} />
+            </Rev>
+          </div>
+
+          {/* ── STATS (same as MeetClients) ── */}
+          <Rev delay={0.1}>
+            <div className="oc-stats-grid">
+              {STATS.map((s, i) => (
+                <div key={i} style={{
+                  borderRadius: 18, padding: "24px 16px",
+                  textAlign: "center",
+                  background: "rgba(255,255,255,0.04)",
+                  backdropFilter: "blur(20px)",
+                  border: "1px solid rgba(255,255,255,0.08)",
+                }}>
+                  <p className="oc-serif" style={{
+                    fontSize: 36, fontWeight: 400,
+                    color: "#38bdf8", margin: "0 0 6px", lineHeight: 1,
+                  }}>{s.n}</p>
+                  <p className="oc-mono" style={{
+                    fontSize: 9, color: "rgba(255,255,255,0.35)",
+                    margin: 0, textTransform: "uppercase", letterSpacing: "0.18em",
+                  }}>{s.label}</p>
+                </div>
+              ))}
+            </div>
+          </Rev>
+
+          {/* ── LOGO GRID (white box cards) ── */}
+          <div className="oc-logo-grid">
+            {clients.map((c, i) => (
+              <LogoCard key={i} client={c} index={i} />
+            ))}
+          </div>
+
+          {/* ── CTA (optional, from MeetClients) ── */}
+          <Rev delay={0.15}>
+            <div style={{ display: "flex", gap: 14, justifyContent: "center", flexWrap: "wrap", marginBottom: 80 }}>
+              <button className="mc-btn-primary">
+                Talk to Our Team
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                  <path d="M5 12h14M13 6l6 6-6 6" stroke="#fff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                </svg>
+              </button>
+              <button className="mc-btn-ghost">
+                View Case Studies
+              </button>
+            </div>
+          </Rev>
+        </div>
+
+        {/* ── INFINITE MARQUEE STRIP (preserved from original OurClients) ── */}
+        <MarqueeStrip />
       </section>
     </>
   );

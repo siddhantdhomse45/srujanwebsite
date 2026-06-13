@@ -70,7 +70,7 @@ export default function OurProcess() {
 
         /* bg */
         .opr-grid {
-          position: absolute; inset: 0; z-index: 0; pointer-events: none;
+          position: absolute; inset: 0; z-index: 0; pointerEvents: none;
           background-image:
             linear-gradient(rgba(59,130,246,0.035) 1px, transparent 1px),
             linear-gradient(90deg, rgba(59,130,246,0.035) 1px, transparent 1px);
@@ -208,41 +208,40 @@ export default function OurProcess() {
           100% { background-position: -200% 0; }
         }
 
-        /* ── content panel ── */
+        /* ── content panel – UPDATED: 15px gap ── */
         .opr-panel {
           display: grid;
           grid-template-columns: repeat(4, 1fr);
-          gap: 2px;
-          background: rgba(59,130,246,0.06);
-          border: 1px solid rgba(59,130,246,0.1);
+          gap: 15px;
+          background: transparent;
           border-radius: 20px;
-          overflow: hidden;
         }
 
         .opr-col {
           padding: 36px 28px;
           display: flex; flex-direction: column;
-          position: relative; overflow: hidden;
+          position: relative;
+          overflow: hidden;
           transition: background 0.3s ease;
           min-height: 360px;
+          border-radius: 20px;
+          background: rgba(7,18,38,0.6);
+          backdrop-filter: blur(12px);
+          border: 1px solid rgba(59,130,246,0.12);
         }
         .opr-col.col-active {
-          background: rgba(37,99,235,0.08);
+          background: linear-gradient(135deg, rgba(37,99,235,0.12), rgba(59,130,246,0.06));
+          border-color: rgba(59,130,246,0.35);
         }
         .opr-col.col-inactive {
           background: rgba(7,18,38,0.5);
         }
-        /* active col top border glow */
+        /* top border glow only for active column */
         .opr-col.col-active::before {
           content: '';
           position: absolute; top: 0; left: 0; right: 0; height: 2px;
           background: linear-gradient(90deg, transparent, #3b82f6, #60a5fa, transparent);
-        }
-        /* vertical separator */
-        .opr-col:not(:last-child)::after {
-          content: '';
-          position: absolute; top: 20px; right: 0; bottom: 20px; width: 1px;
-          background: rgba(59,130,246,0.08);
+          border-radius: 20px 20px 0 0;
         }
 
         /* col header */
@@ -323,9 +322,7 @@ export default function OurProcess() {
         @media (max-width: 1023px) {
           .opr { padding: 88px 0 100px; }
           .opr-inner { padding: 0 36px; }
-          .opr-panel { grid-template-columns: repeat(2, 1fr); }
-          .opr-col:nth-child(2)::after { display: none; }
-          .opr-col:nth-child(odd)::after { display: block; }
+          .opr-panel { grid-template-columns: repeat(2, 1fr); gap: 15px; }
         }
         @media (max-width: 767px) {
           .opr { padding: 64px 0 80px; }
@@ -337,9 +334,7 @@ export default function OurProcess() {
           .opr-step-circle { width: 48px; height: 48px; font-size: 17px; }
           .opr-step-label { font-size: 9px; }
           .opr-connector { max-width: 60px; }
-          .opr-panel { grid-template-columns: 1fr; border-radius: 16px; }
-          .opr-col::after { display: none !important; }
-          .opr-col { padding: 28px 20px; min-height: auto; }
+          .opr-panel { grid-template-columns: 1fr; gap: 15px; }
           .opr-col.col-inactive { display: none; }
           .opr-col.col-active { display: flex; }
         }
@@ -399,9 +394,8 @@ export default function OurProcess() {
             transition={{ duration: 0.7, delay: 0.15, ease: [0.22, 1, 0.36, 1] }}
           >
             {steps.map((step, i) => (
-              <>
+              <div key={step.number} style={{ display: 'flex', alignItems: 'center', width: '100%' }}>
                 <div
-                  key={step.number}
                   className="opr-step-wrap"
                   onClick={() => setActive(i)}
                 >
@@ -418,11 +412,11 @@ export default function OurProcess() {
                 {i < steps.length - 1 && (
                   <div key={`conn-${i}`} className="opr-connector" />
                 )}
-              </>
+              </div>
             ))}
           </motion.div>
 
-          {/* Content panel */}
+          {/* Content panel with 15px gap */}
           <motion.div
             className="opr-panel"
             initial={{ opacity: 0, y: 32 }}

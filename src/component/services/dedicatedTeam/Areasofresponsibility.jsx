@@ -1,11 +1,13 @@
 import { useRef } from "react";
 import { motion, useInView } from "framer-motion";
 import { MdCheck } from "react-icons/md";
+import { FiBriefcase, FiUser, FiInfo, FiArrowRight } from "react-icons/fi";
 
 const columns = [
   {
     label: "Our Team",
     accent: "#2563eb",
+    icon: <FiBriefcase size={20} strokeWidth={1.8} />,
     items: [
       "Resource planning, development of team formation",
       "Staff motivation and personal development plan",
@@ -18,6 +20,7 @@ const columns = [
   {
     label: "Client",
     accent: "#1d4ed8",
+    icon: <FiUser size={20} strokeWidth={1.8} />,
     items: [
       "End-to-end product ownership, including backlog management",
       "Overall product roadmap, priorities & strategy, SDLC",
@@ -329,7 +332,7 @@ export default function AreasOfResponsibility() {
                 {/* Column header */}
                 <div className="aor-col-head">
                   <div className="aor-col-icon">
-                    {ci === 0 ? "🏢" : "🤝"}
+                    {col.icon}
                   </div>
                   <p className="aor-col-label">{col.label}</p>
                   <span className="aor-col-count">{col.items.length} items</span>
@@ -367,7 +370,9 @@ export default function AreasOfResponsibility() {
             animate={inView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.65, delay: 0.55, ease: [0.22, 1, 0.36, 1] }}
           >
-            <div className="aor-strip-icon">💡</div>
+            <div className="aor-strip-icon">
+              <FiInfo size={20} strokeWidth={1.8} />
+            </div>
             <p className="aor-strip-text">
               <strong>Want to learn more about our engagement model?</strong>{" "}
               Book a free consultation and we'll walk you through how responsibilities
@@ -375,9 +380,7 @@ export default function AreasOfResponsibility() {
             </p>
             <button className="aor-strip-btn">
               Book a Consultation
-              <svg width="13" height="13" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
-                <path strokeLinecap="round" strokeLinejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" />
-              </svg>
+              <FiArrowRight size={13} strokeWidth={2.5} />
             </button>
           </motion.div>
 

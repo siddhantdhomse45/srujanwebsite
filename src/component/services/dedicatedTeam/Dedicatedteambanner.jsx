@@ -1,5 +1,6 @@
 import { useRef, useEffect, useState } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
+import { FiArrowRight, FiBriefcase, FiStar, FiUsers, FiExternalLink } from "react-icons/fi";
 
 const PARTICLES_COUNT = 40;
 
@@ -231,7 +232,7 @@ export default function DedicatedTeamBanner() {
           background: rgba(59,130,246,0.12);
           border: 1px solid rgba(59,130,246,0.22);
           display: flex; align-items: center; justify-content: center;
-          font-size: 18px;
+          font-size: 20px;
         }
         .dtb-stat-label {
           font-size: 10px; color: rgba(147,197,253,0.45);
@@ -309,7 +310,7 @@ export default function DedicatedTeamBanner() {
           animate={ready ? { opacity: 1, x: 0 } : {}}
           transition={{ duration: 0.8, delay: 1, ease: [0.22, 1, 0.36, 1] }}
         >
-          <div className="dtb-stat-icon">🚀</div>
+          <div className="dtb-stat-icon"><FiBriefcase size={20} strokeWidth={1.8} /></div>
           <div>
             <p className="dtb-stat-label">Projects Delivered</p>
             <p className="dtb-stat-val">500+</p>
@@ -323,7 +324,7 @@ export default function DedicatedTeamBanner() {
           animate={ready ? { opacity: 1, x: 0 } : {}}
           transition={{ duration: 0.8, delay: 1.2, ease: [0.22, 1, 0.36, 1] }}
         >
-          <div className="dtb-stat-icon">⭐</div>
+          <div className="dtb-stat-icon"><FiStar size={20} strokeWidth={1.8} /></div>
           <div>
             <p className="dtb-stat-label">Client Satisfaction</p>
             <p className="dtb-stat-val">98%</p>
@@ -337,7 +338,7 @@ export default function DedicatedTeamBanner() {
           animate={ready ? { opacity: 1, x: 0 } : {}}
           transition={{ duration: 0.8, delay: 1.4, ease: [0.22, 1, 0.36, 1] }}
         >
-          <div className="dtb-stat-icon">👨‍💻</div>
+          <div className="dtb-stat-icon"><FiUsers size={20} strokeWidth={1.8} /></div>
           <div>
             <p className="dtb-stat-label">Expert Engineers</p>
             <p className="dtb-stat-val">50+</p>
@@ -411,15 +412,11 @@ export default function DedicatedTeamBanner() {
           >
             <button className="dtb-btn-primary">
               Book a Free Consultation
-              <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
-                <path strokeLinecap="round" strokeLinejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" />
-              </svg>
+              <FiArrowRight size={14} strokeWidth={2.5} />
             </button>
             <button className="dtb-btn-ghost">
               View Portfolio
-              <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
-                <path strokeLinecap="round" strokeLinejoin="round" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
-              </svg>
+              <FiExternalLink size={14} strokeWidth={2.5} />
             </button>
           </motion.div>
 

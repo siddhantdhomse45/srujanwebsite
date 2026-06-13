@@ -110,11 +110,11 @@ export default function WhyChooseUs() {
         }
         .wc-stat:hover { background: rgba(255,255,255,0.05); }
 
-        /* feature cards – improved gap */
+        /* feature cards – gap set to 10px */
         .wc-feat-list {
           display: flex;
           flex-direction: column;
-          gap: 16px;
+          gap: 10px;
         }
         .wc-feat {
           display: grid;
@@ -278,7 +278,7 @@ export default function WhyChooseUs() {
             right: 5%;
           }
           .wc-feat-list {
-            gap: 14px;
+            gap: 10px; /* consistent 10px gap */
           }
         }
 
@@ -291,7 +291,7 @@ export default function WhyChooseUs() {
             margin-top: 40px;
           }
           .wc-feat-list {
-            gap: 12px;
+            gap: 10px;
           }
           .wc-feat {
             padding: 14px 16px;
@@ -391,7 +391,7 @@ export default function WhyChooseUs() {
             padding: 10px 12px;
           }
           .wc-feat-list {
-            gap: 8px;
+            gap: 10px;
           }
           .wc-phone-back {
             width: 95px;

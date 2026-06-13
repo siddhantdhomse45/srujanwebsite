@@ -6,6 +6,7 @@ const stories = [
     id: 1,
     client: "Ernst & Young",
     abbr: "EY",
+    logo: "https://www.intellectsoft.net/blog/wp-content/uploads/ey.svg",
     color: "#f5c400",
     tag: "FinTech · Analytics",
     image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=900&q=80",
@@ -17,6 +18,7 @@ const stories = [
     id: 2,
     client: "Guinness",
     abbr: "GU",
+    logo: "https://www.intellectsoft.net/blog/wp-content/uploads/guinness-1.svg",
     color: "#b7901a",
     tag: "FMCG · Mobile App",
     image: "https://images.unsplash.com/photo-1608270586620-248524c67de9?w=900&q=80",
@@ -28,6 +30,7 @@ const stories = [
     id: 3,
     client: "Jaguar",
     abbr: "JAG",
+    logo: "https://www.intellectsoft.net/blog/wp-content/uploads/jaguar-1.svg",
     color: "#4f46e5",
     tag: "Automotive · Digital",
     image: "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=900&q=80",
@@ -39,6 +42,7 @@ const stories = [
     id: 4,
     client: "Cirrus Insight",
     abbr: "CI",
+    logo: "https://www.intellectsoft.net/blog/wp-content/uploads/cirrus-1.svg",
     color: "#0891b2",
     tag: "SaaS · CRM",
     image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=900&q=80",
@@ -50,6 +54,7 @@ const stories = [
     id: 5,
     client: "Eurostar",
     abbr: "ES",
+    logo: "https://www.intellectsoft.net/blog/wp-content/uploads/eurostar-1.svg",
     color: "#16a34a",
     tag: "Transport · eCommerce",
     image: "https://images.unsplash.com/photo-1474487548417-781cb71495f3?w=900&q=80",
@@ -60,9 +65,47 @@ const stories = [
 ];
 
 const ACCENT = "#60a5fa";
-const ACCENT_DARK = "#378ADD";
 
-// ---------- Decorative circles (same as other components) ----------
+/* ─── Client Logo Component (displays the actual image) ─── */
+const ClientLogo = ({ story }) => {
+  const [imgError, setImgError] = useState(false);
+  return (
+    <div style={{
+      width: 56, height: 56, borderRadius: 12,
+      background: "rgba(0,0,0,0.45)",
+      border: `1.5px solid ${story.color}40`,
+      display: "flex", alignItems: "center", justifyContent: "center",
+      flexShrink: 0, padding: "8px",
+      transition: "all 0.3s ease",
+    }}>
+      {!imgError ? (
+        <img
+          src={story.logo}
+          alt={story.client}
+          referrerPolicy="no-referrer"
+          crossOrigin="anonymous"
+          loading="eager"
+          style={{
+            maxWidth: "100%",
+            maxHeight: "100%",
+            objectFit: "contain",
+            filter: "brightness(1.05) contrast(1.05)",
+          }}
+          onError={() => setImgError(true)}
+        />
+      ) : (
+        <span style={{
+          fontFamily: "'Space Mono', monospace",
+          fontSize: 11, fontWeight: 700,
+          color: story.color, letterSpacing: "0.06em",
+        }}>
+          {story.abbr}
+        </span>
+      )}
+    </div>
+  );
+};
+
 function DecorativeCircles() {
   return (
     <div style={{ position: "absolute", top: "50%", left: "50%", transform: "translate(-50%,-50%)", pointerEvents: "none", zIndex: 0 }}>
@@ -147,14 +190,12 @@ const ClientSuccessStories = () => {
         }
         .css-nav-btn:hover { background: ${ACCENT}; border-color: ${ACCENT}; color: #0a0f1c; }
 
-        /* ── Story panel: side-by-side on desktop ── */
         .css-story-grid {
           display: grid;
           grid-template-columns: 1fr 0.7fr;
           min-height: 420px;
         }
 
-        /* Image side */
         .css-img-side {
           position: relative;
           overflow: hidden;
@@ -162,7 +203,6 @@ const ClientSuccessStories = () => {
           min-height: 300px;
         }
 
-        /* Text side – dark card */
         .css-text-side {
           padding: 48px 44px;
           display: flex;
@@ -173,7 +213,6 @@ const ClientSuccessStories = () => {
           border-left: 1px solid rgba(59,130,246,0.2);
         }
 
-        /* ── Tabs row (dark) ── */
         .css-tabs {
           display: flex;
           border-top: 1px solid rgba(59,130,246,0.2);
@@ -230,7 +269,6 @@ const ClientSuccessStories = () => {
           animation: progress-bar 5s linear forwards;
         }
 
-        /* ── Tablet (≤900px) ── */
         @media (max-width: 900px) {
           .css-story-grid {
             grid-template-columns: 1fr 1fr;
@@ -241,7 +279,6 @@ const ClientSuccessStories = () => {
           }
         }
 
-        /* ── Mobile (≤640px): stack vertically ── */
         @media (max-width: 640px) {
           .css-story-grid {
             grid-template-columns: 1fr;
@@ -264,13 +301,11 @@ const ClientSuccessStories = () => {
           .css-tab-label-short { display: block; }
         }
 
-        /* ── Desktop: show full name, hide short ── */
         @media (min-width: 641px) {
           .css-tab-label-full { display: block; }
           .css-tab-label-short { display: none; }
         }
 
-        /* ── Small mobile (≤380px) ── */
         @media (max-width: 380px) {
           .css-img-side {
             min-height: 180px;
@@ -288,13 +323,11 @@ const ClientSuccessStories = () => {
         padding: "clamp(56px, 8vw, 96px) 0 0",
         overflow: "hidden",
       }}>
-        {/* Blueprint grid */}
         <svg style={{ position: "absolute", inset: 0, width: "100%", height: "100%", opacity: 0.05, pointerEvents: "none" }} xmlns="http://www.w3.org/2000/svg">
           <defs><pattern id="storygrid" width="60" height="60" patternUnits="userSpaceOnUse"><path d="M 60 0 L 0 0 0 60" fill="none" stroke="white" strokeWidth="0.5" /></pattern></defs>
           <rect width="100%" height="100%" fill="url(#storygrid)" />
         </svg>
 
-        {/* Animated orbs */}
         <motion.div
           animate={{ scale: [1, 1.08, 1], opacity: [0.08, 0.15, 0.08] }}
           transition={{ duration: 12, repeat: Infinity, ease: "easeInOut" }}
@@ -309,7 +342,6 @@ const ClientSuccessStories = () => {
         <DecorativeCircles />
 
         <div style={{ maxWidth: 1160, margin: "0 auto", padding: "0 clamp(16px, 4vw, 60px)", position: "relative", zIndex: 10 }}>
-          {/* ── HEADER ── */}
           <div style={{ textAlign: "center", marginBottom: "clamp(28px, 4vw, 44px)" }}>
             <motion.h2
               className="css-serif"
@@ -341,7 +373,6 @@ const ClientSuccessStories = () => {
             </motion.a>
           </div>
 
-          {/* ── STORY PANEL ── */}
           <motion.div
             initial={{ opacity: 0, y: 32 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -359,9 +390,7 @@ const ClientSuccessStories = () => {
             onTouchStart={() => setIsPaused(true)}
             onTouchEnd={() => setTimeout(() => setIsPaused(false), 1200)}
           >
-            {/* Content row */}
             <div className="css-story-grid">
-              {/* ── IMAGE SIDE ── */}
               <div className="css-img-side">
                 <AnimatePresence custom={direction} mode="wait">
                   <motion.img
@@ -383,14 +412,12 @@ const ClientSuccessStories = () => {
                   />
                 </AnimatePresence>
 
-                {/* Gradient overlay */}
                 <div style={{
                   position: "absolute", inset: 0,
                   background: "linear-gradient(to right, rgba(0,0,0,0.25) 0%, rgba(0,0,0,0.05) 100%)",
                   zIndex: 1,
                 }} />
 
-                {/* Tag badge */}
                 <AnimatePresence mode="wait">
                   <motion.div
                     key={`tag-${active}`}
@@ -411,7 +438,6 @@ const ClientSuccessStories = () => {
                   </motion.div>
                 </AnimatePresence>
 
-                {/* Nav arrows */}
                 <div style={{
                   position: "absolute", bottom: 18, right: 18, zIndex: 2,
                   display: "flex", gap: 10,
@@ -428,7 +454,6 @@ const ClientSuccessStories = () => {
                   </button>
                 </div>
 
-                {/* Slide counter */}
                 <div
                   className="css-mono"
                   style={{
@@ -440,7 +465,6 @@ const ClientSuccessStories = () => {
                 </div>
               </div>
 
-              {/* ── TEXT SIDE (dark) ── */}
               <div className="css-text-side">
                 <AnimatePresence custom={direction} mode="wait">
                   <motion.div
@@ -452,20 +476,8 @@ const ClientSuccessStories = () => {
                     exit="exit"
                     transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
                   >
-                    {/* Client name */}
                     <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 18, flexWrap: "wrap" }}>
-                      <div style={{
-                        width: 40, height: 40, borderRadius: 10,
-                        background: `${story.color}18`,
-                        border: `1.5px solid ${story.color}35`,
-                        display: "flex", alignItems: "center", justifyContent: "center",
-                        fontFamily: "'Space Mono', monospace",
-                        fontSize: 10, fontWeight: 700,
-                        color: story.color, letterSpacing: "0.06em",
-                        flexShrink: 0,
-                      }}>
-                        {story.abbr}
-                      </div>
+                      <ClientLogo story={story} />
                       <h3
                         className="css-serif"
                         style={{
@@ -478,7 +490,6 @@ const ClientSuccessStories = () => {
                       </h3>
                     </div>
 
-                    {/* Description */}
                     <p style={{
                       fontSize: "clamp(13px, 1.3vw, 15px)",
                       color: "rgba(255,255,255,0.7)", lineHeight: 1.85,
@@ -487,14 +498,12 @@ const ClientSuccessStories = () => {
                       {story.description}
                     </p>
 
-                    {/* Results chips */}
                     <div style={{ display: "flex", flexWrap: "wrap", gap: 8, marginBottom: 28 }}>
                       {story.results.map((r, i) => (
                         <span key={i} className="css-result-chip">{r}</span>
                       ))}
                     </div>
 
-                    {/* CTA */}
                     <a
                       href="#"
                       style={{
@@ -518,7 +527,6 @@ const ClientSuccessStories = () => {
               </div>
             </div>
 
-            {/* ── LOGO TABS (dark) ── */}
             <div className="css-tabs">
               {stories.map((s, i) => (
                 <button
@@ -528,13 +536,10 @@ const ClientSuccessStories = () => {
                   aria-label={s.client}
                   style={{ borderTop: `3px solid ${i === active ? ACCENT : "transparent"}` }}
                 >
-                  {/* Active progress bar */}
                   {i === active && !isPaused && (
                     <div className="css-progress css-progress-anim" key={`prog-${active}`} />
                   )}
-
                   <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 4 }}>
-                    {/* Full label (desktop) */}
                     <div
                       className="css-tab-label-full"
                       style={{
@@ -546,32 +551,22 @@ const ClientSuccessStories = () => {
                         letterSpacing: i === 0 ? "0.06em" : "0.04em",
                         textTransform: "uppercase",
                         lineHeight: 1.2,
-                        transition: "color .25s ease",
                       }}
                     >
                       {s.client.split(" ").slice(0, 2).join(" ")}
                     </div>
-
-                    {/* Short label (mobile) */}
                     <div
                       className="css-tab-label-short"
                       style={{
                         fontFamily: "'Space Mono', monospace",
-                        fontSize: 10,
-                        fontWeight: 700,
+                        fontSize: 10, fontWeight: 700,
                         color: i === active ? "#ffffff" : "rgba(255,255,255,0.5)",
-                        letterSpacing: "0.06em",
-                        textTransform: "uppercase",
-                        lineHeight: 1.2,
-                        transition: "color .25s ease",
+                        letterSpacing: "0.06em", textTransform: "uppercase",
                       }}
                     >
                       {s.abbr}
                     </div>
-
-                    {i === active && (
-                      <div style={{ width: 24, height: 1.5, background: ACCENT, borderRadius: 1, marginTop: 2 }} />
-                    )}
+                    {i === active && <div style={{ width: 24, height: 1.5, background: ACCENT, borderRadius: 1, marginTop: 2 }} />}
                   </div>
                 </button>
               ))}
