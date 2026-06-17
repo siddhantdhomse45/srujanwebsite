@@ -1,14 +1,14 @@
 import { useState } from "react";
 
 const clients = [
-  { name: "Guinness",        imageUrl: "https://www.intellectsoft.net/assets/b602fd8a/img/clients-logo/guinness.svg" },
-  { name: "Eurostar",        imageUrl: "https://www.intellectsoft.net/assets/b602fd8a/img/clients-logo/eurostar.svg" },
-  { name: "KJK",             imageUrl: "https://www.intellectsoft.net/assets/b602fd8a/img/clients-logo/kjk.svg" },
-  { name: "Audi",            imageUrl: "https://www.intellectsoft.net/assets/b602fd8a/img/clients-logo/audi.svg" },
-  { name: "Jaguar",          imageUrl: "https://www.intellectsoft.net/assets/b602fd8a/img/clients-logo/jaguar.svg" },
-  { name: "Walt Disney",     imageUrl: "https://www.intellectsoft.net/assets/b602fd8a/img/clients-logo/walt-disney.svg" },
-  { name: "Guest Services",  imageUrl: "https://www.intellectsoft.net/assets/b602fd8a/img/clients-logo/guest-services.svg" },
-  { name: "Griffins",        imageUrl: "https://www.intellectsoft.net/assets/b602fd8a/img/clients-logo/griffins.svg" },
+  { name: "Guinness",        imageUrl: "https://www.intellectsoft.net/blog/wp-content/uploads/guinness-1.svg" },
+  { name: "Eurostar",        imageUrl: "https://www.intellectsoft.net/blog/wp-content/uploads/eurostar-1.svg" },
+  { name: "KJK",             imageUrl: "https://www.intellectsoft.net/blog/wp-content/uploads/kjk.svg" },
+  { name: "Audi",            imageUrl: "https://www.intellectsoft.net/blog/wp-content/uploads/audi.svg" },
+  { name: "Jaguar",          imageUrl: "https://www.intellectsoft.net/blog/wp-content/uploads/jaguar-1.svg" },
+  { name: "Walt Disney",     imageUrl: "https://www.intellectsoft.net/blog/wp-content/uploads/walt-disney.svg" },
+  { name: "Guest Services",  imageUrl: "https://www.intellectsoft.net/blog/wp-content/uploads/guest-services.svg" },
+  { name: "Griffins",        imageUrl: "https://www.intellectsoft.net/blog/wp-content/uploads/griffins.svg" },
   { name: "Nestlé",          imageUrl: "https://www.intellectsoft.net/blog/wp-content/uploads/nestle.svg" },
 ];
 

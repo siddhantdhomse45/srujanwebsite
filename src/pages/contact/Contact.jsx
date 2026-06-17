@@ -32,8 +32,8 @@ const contactInfo = [
   {
     icon: Mail,
     label: "Email",
-    value: "info@srujaninfotech.in",
-    href: "mailto:info@srujaninfotech.in",
+    value: "info@wavestechnovisionllp.in",
+    href: "mailto:info@wavestechnovisionllp.in",
     accent: "#c084fc",
     grad: "linear-gradient(135deg, #9333ea, #c084fc)",
   },

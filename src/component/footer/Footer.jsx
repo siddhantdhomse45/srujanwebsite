@@ -330,20 +330,20 @@ const Footer = () => {
               <div className="flex gap-3">
                 <Mail size={20} className="text-cyan-400 flex-shrink-0" />
                 <a
-                  href="mailto:info@srujaninfotech.in"
+                  href="mailto:info@wavestechnovisionllp.in"
                   className="text-gray-400 hover:text-cyan-400 transition"
                 >
-                  info@srujaninfotech.in
+                  info@wavestechnovisionllp.in
                 </a>
               </div>
 
               <div className="flex gap-3">
                 <Mail size={20} className="text-cyan-400 flex-shrink-0" />
                 <a
-                  href="mailto:career@srujaninfotech.in"
+                  href="mailto:career@wavestechnovisionllp.in"
                   className="text-gray-400 hover:text-cyan-400 transition"
                 >
-                  career@srujaninfotech.in
+                  career@wavestechnovisionllp.in
                 </a>
               </div>
 
