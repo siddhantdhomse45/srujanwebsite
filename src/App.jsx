@@ -92,7 +92,7 @@ import Logistics from "./pages/logisticsPage/Logistics";
 import Hospility from "./pages/hospilityPage/Hospility";
 import News from "./pages/newsPage/News";
 import Blog from "./pages/blogPage/Blog";
-import ITConsulting from "./pages/itConsultant/ITConsulting";
+import ITConsulting from "./pages/iTConsultant/ITConsulting";
 
 function DummyPage({ title }) {
   return (
