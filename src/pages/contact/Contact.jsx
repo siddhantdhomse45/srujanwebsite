@@ -536,8 +536,8 @@ const contactInfo = [
   {
     icon: Phone,
     label: "Phone",
-    value: "+91 7249736102",
-    href: "tel:+917249736102",
+    value: "+91 7028611887",
+    href: "tel:+917028611887",
     accent: "#34d399",
     grad: "linear-gradient(135deg, #059669, #34d399)",
   },
