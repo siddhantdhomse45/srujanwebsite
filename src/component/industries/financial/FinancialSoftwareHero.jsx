@@ -348,7 +348,7 @@ export default function FinancialSoftwareHero() {
                   maxWidth: 540,
                 }}
               >
-                Accelerate innovation using the power of Srujan Infotech software
+                Accelerate innovation using the power of Waves Techno-Vision LLP software
                 development for banking and financial services. Advance your
                 efficiency, customer experience, and business performance with
                 our future-proof solutions.

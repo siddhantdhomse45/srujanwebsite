@@ -92,7 +92,7 @@ import Logistics from "./pages/logisticsPage/Logistics";
 import Hospility from "./pages/hospilityPage/Hospility";
 import News from "./pages/newsPage/News";
 import Blog from "./pages/blogPage/Blog";
-// import ITConsulting from "./pages/itConsultant/ITConsulting";
+import ITConsulting from "./pages/itConsultant/ITConsulting";
 
 function DummyPage({ title }) {
   return (
@@ -126,7 +126,7 @@ function App() {
         <Route path="/design-lab" element={<DesignLab />} />
         <Route path="/dedicated-team" element={<DedicatedTeam />} />
         <Route path="/data-lab" element={<DataLab />} />
-        {/* <Route path="/it-consulting" element={<ITConsulting />} /> */}
+        <Route path="/it-consulting" element={<ITConsulting />} />
 
         {/* INDUSTRIES Dropdown */}
         <Route path="/industries/construction" element={<ConstructionPage />} />

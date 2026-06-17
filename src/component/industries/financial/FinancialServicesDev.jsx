@@ -125,7 +125,7 @@ const SERVICES = [
     title: "Trading and Securities",
     accent: "#0ea5e9",
     glow: "rgba(14,165,233,0.22)",
-    body: "Mobile stock tracking, AI-assisted trading automation, and blockchain-based smart contracts —Srujan Infotech develops software solutions that cater to your business's individual needs.",
+    body: "Mobile stock tracking, AI-assisted trading automation, and blockchain-based smart contracts —Waves Techno-Vision LLP develops software solutions that cater to your business's individual needs.",
     bullets: [
       "Securities Trading",
       "Digital Brokerage",

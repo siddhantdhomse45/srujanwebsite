@@ -482,7 +482,7 @@ export default function WhyChooseUs() {
                 background: "linear-gradient(90deg,#38bdf8,#818cf8,#c084fc)",
                 WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent",
               }}>
-                Srujan Infotech
+                Waves Techno-Vision LLP
               </span>{" "}
               for Your Mobile App Development Project?
             </h2>

@@ -107,7 +107,7 @@ const ClientsHero = () => {
               initial={{ opacity: 0, y: 20 }}
               animate={ready ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.8, delay: 0.42, ease: [0.16, 1, 0.3, 1] }}>
-              For over 13 years, Srujan Infotech has been helping technology startups, global brands, and Fortune 500 companies create impactful software solutions. Learn why they have chosen us and how we have helped them to change people's lives.
+              For over 13 years, Waves Techno-Vision LLP has been helping technology startups, global brands, and Fortune 500 companies create impactful software solutions. Learn why they have chosen us and how we have helped them to change people's lives.
             </motion.p>
 
           </div>

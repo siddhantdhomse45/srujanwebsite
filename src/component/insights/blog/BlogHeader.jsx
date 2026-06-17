@@ -286,7 +286,7 @@ export default function BlogHeader() {
                 textShadow: "0 4px 32px rgba(0,0,0,0.4)",
               }}
             >
-              Srujan Infotech{" "}
+              Waves Techno-Vision LLP{" "}
               <span style={{
                 background: `linear-gradient(90deg, ${BLUE_LITE} 0%, ${BLUE} 60%, #ffffff 100%)`,
                 WebkitBackgroundClip: "text",

@@ -475,7 +475,7 @@ export default function SocialResponsibility() {
                       <span style={{ background: "linear-gradient(90deg,#38bdf8,#818cf8)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", fontWeight: 700 }}>
                         Ukraine persists
                       </span>{" "}
-                      in resisting the aggression. Srujan Infotech has been providing financial aid ever
+                      in resisting the aggression. Waves Techno-Vision LLP has been providing financial aid ever
                       since and encourages others to support Ukraine.
                     </p>
                   </Rev>
@@ -581,7 +581,7 @@ export default function SocialResponsibility() {
                 <div style={{ width: 40, height: 1, margin: "0 auto 28px", background: "rgba(255,255,255,0.10)" }} />
 
                 <p className="sr-who-body">
-                  Srujan Infotech is a renowned multinational software development and IT consultancy
+                  Waves Techno-Vision LLP is a renowned multinational software development and IT consultancy
                   technology partner, operating globally with offices in the{" "}
                   <span style={{ color: "white", fontWeight: 600 }}>US, UK, and Norway</span>.
                   Our exceptional team of professionals spans across{" "}

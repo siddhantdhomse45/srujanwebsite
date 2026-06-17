@@ -470,7 +470,7 @@ export default function DedicatedTeamModel() {
                 maxWidth: 680, margin: "0 auto",
               }}
             >
-              Srujan Infotech supports multiple clients in meeting their technology needs. We stick to the
+              Waves Techno-Vision LLP supports multiple clients in meeting their technology needs. We stick to the
               industry's best practices in delivery, program management, and talent acquisition. As a
               result, we have implemented a standard dedicated development team governance framework.
             </motion.p>
@@ -513,7 +513,7 @@ export default function DedicatedTeamModel() {
 
             <div /> {/* Centre spacer */}
 
-            {/* Srujan Infotech label */}
+            {/* Waves Techno-Vision LLP label */}
             <motion.div
               initial={{ opacity: 0, x: 20 }}
               whileInView={{ opacity: 1, x: 0 }}
@@ -529,7 +529,7 @@ export default function DedicatedTeamModel() {
                 display: "inline-flex", alignItems: "center", gap: 10,
               }}>
                 <div style={{ width: 24, height: 1.5, background: "rgba(255,255,255,0.18)" }} />
-                Srujan Infotech
+                Waves Techno-Vision LLP
                 <div style={{ width: 24, height: 1.5, background: "rgba(255,255,255,0.18)" }} />
               </span>
             </motion.div>
@@ -557,7 +557,7 @@ export default function DedicatedTeamModel() {
                   <Connector row={row} rowIndex={i} />
                 </div>
 
-                {/* Right — Srujan Infotech role */}
+                {/* Right — Waves Techno-Vision LLP role */}
                 <div className="dtm-right-wrap">
                   <RoleBlock data={row.is} side="right" rowIndex={i} />
                 </div>

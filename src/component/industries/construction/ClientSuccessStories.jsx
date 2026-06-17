@@ -9,7 +9,7 @@ const stories = [
     challenge:
       "The client needed to modernize legacy processes, interlink a variety of data sets, improve communication between responsible parties and eliminate data duplicates across multiple locations in the corresponding systems. This warranted a unified software solution that would serve as a single source of the important and updated data that employees can easily access and organize, avoiding data duplication.",
     solution:
-      "Srujan Infotech created an enterprise portal that eliminates significant manual efforts and builds a knowledge base collecting information from across all business units, compiling data from previous findings during customer outages. This solution increases visibility and provides employees with operational and technical information and instruction manuals to effectively operate across the units.",
+      "Waves Techno-Vision LLP created an enterprise portal that eliminates significant manual efforts and builds a knowledge base collecting information from across all business units, compiling data from previous findings during customer outages. This solution increases visibility and provides employees with operational and technical information and instruction manuals to effectively operate across the units.",
     tags: ["ERP", "Portal", "Data Unification"],
   },
   {

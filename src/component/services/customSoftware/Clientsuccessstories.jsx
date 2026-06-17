@@ -37,7 +37,7 @@ const CASES = [
     challenge:
       "The client required extra programmers to add new features to their event portal. The 10-year-old .NET platform needed modernizing and migration to Angular.",
     solution:
-      "Workshops in Norway led to enhanced functionality and UX.  Srujan Infotech's team developed solutions for registrations, payments, and feedback evaluation. Additionally, we simplified event setup for organizers and streamlined registration page models.",
+      "Workshops in Norway led to enhanced functionality and UX.  Waves Techno-Vision LLP's team developed solutions for registrations, payments, and feedback evaluation. Additionally, we simplified event setup for organizers and streamlined registration page models.",
     tech: ["Angular", ".NET Migration", "Payment APIs", "UX Workshops"],
     result: "40% faster registration flow",
   },
@@ -52,7 +52,7 @@ const CASES = [
     challenge:
       "Eurostar needed a web and mobile app to automate ERP processes and enhance customer convenience across multiple touchpoints.",
     solution:
-      " Srujan Infotech created Eurostar iTM, a cloud solution for web and iOS. Expanding on the existing app, the team improved content management, user roles, reservation handling, reporting, and added an internal chat feature.",
+      " Waves Techno-Vision LLP created Eurostar iTM, a cloud solution for web and iOS. Expanding on the existing app, the team improved content management, user roles, reservation handling, reporting, and added an internal chat feature.",
     tech: ["iOS Native", "Cloud ERP", "Real-time Chat", "Reservation Engine"],
     result: "60% reduction in manual ERP tasks",
   },

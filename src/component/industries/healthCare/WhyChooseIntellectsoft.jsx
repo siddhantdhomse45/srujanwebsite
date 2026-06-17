@@ -3,7 +3,7 @@ import { motion, useInView, useScroll, useTransform } from "framer-motion";
 
 /*
  ╔══════════════════════════════════════════════════════════════╗
- ║  WHY CHOOSESrujan Infotech FOR HEALTHCARE IT SOLUTIONS?     ║
+ ║  WHY CHOOSEWaves Techno-Vision LLP FOR HEALTHCARE IT SOLUTIONS?     ║
  ║  Layout: heading → subtitle → 4-col cards → wide CTA btn  ║
  ║  Each card: blue circle icon + bold title + body text       ║
  ║  Color: #3b82f6 deep navy premium                           ║
@@ -442,7 +442,7 @@ export default function WhyChooseIntellectsoft() {
                   margin: 0, maxWidth: 720,
                 }}
               >
-                Why Choose Srujan Infotech for{" "}
+                Why Choose Waves Techno-Vision LLP for{" "}
                 <span style={{
                   background: `linear-gradient(90deg, ${BLUE_LITE} 0%, ${BLUE} 55%, #ffffff 100%)`,
                   WebkitBackgroundClip: "text",
@@ -532,7 +532,7 @@ export default function WhyChooseIntellectsoft() {
                 cursor: "pointer",
               }}
             >
-              See What Srujan Infotech Can Do for You
+              See What Waves Techno-Vision LLP Can Do for You
               <svg width="14" height="14" viewBox="0 0 14 14" fill="none"
                 stroke="white" strokeWidth="2.2"
                 strokeLinecap="round" strokeLinejoin="round">
