@@ -544,8 +544,8 @@ const contactInfo = [
   {
     icon: Mail,
     label: "Email",
-    value: "info@wavestechnovisionllp.in",
-    href: "mailto:info@wavestechnovisionllp.in",
+    value: "info@wavestechnovision.com",
+    href: "mailto:info@wavestechnovision.com",
     accent: "#c084fc",
     grad: "linear-gradient(135deg, #9333ea, #c084fc)",
   },
