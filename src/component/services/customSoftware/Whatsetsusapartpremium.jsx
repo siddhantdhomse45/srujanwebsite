@@ -455,7 +455,7 @@ export default function WhatSetsUsApartPremium() {
                 margin: 0,
               }}
             >
-              As a leading custom software development company, we at Waves Techno-Vision LLP
+              As a leading custom software development company, we at Purple Techno-Vision LLP
               offer a comprehensive range of software development services designed
               to meet your business's unique demands. Here's what sets us apart:
             </motion.p>

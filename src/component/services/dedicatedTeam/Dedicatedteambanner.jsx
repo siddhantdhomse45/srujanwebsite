@@ -356,7 +356,7 @@ export default function DedicatedTeamBanner() {
           >
             <div className="dtb-eyebrow">
               <div className="dtb-eyebrow-dot" />
-              <span>Waves Techno-Vision LLP</span>
+              <span>Purple Techno-Vision LLP</span>
             </div>
           </motion.div>
 

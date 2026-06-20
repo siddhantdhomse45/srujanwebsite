@@ -185,7 +185,7 @@ const CultureGrid = () => {
               <h2 style={{ fontFamily: "'DM Serif Display', serif", fontSize: "clamp(2.4rem, 5vw, 4rem)", fontWeight: 400, color: "#f8fafc", margin: "0 0 6px", lineHeight: 1.1 }}>
                 Life at{" "}
                 <span style={{ fontStyle: "italic", background: "linear-gradient(135deg,#38bdf8,#818cf8)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text" }}>
-                  Waves Techno-Vision LLP
+                  Purple Techno-Vision LLP
                 </span>
               </h2>
             </Rev>

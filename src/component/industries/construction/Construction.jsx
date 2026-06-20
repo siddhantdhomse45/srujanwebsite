@@ -339,7 +339,7 @@ export default function Construction() {
                 margin: "0 0 44px",
               }}
             >
-             Waves Techno-Vision LLP delivers construction software development and green
+             Purple Techno-Vision LLP delivers construction software development and green
               building solutions to future-driven companies all over the world. Our
               team provides top-notch industry tailored services to drive operational
               efficiency and streamline business processes.

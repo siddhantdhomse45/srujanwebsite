@@ -30,7 +30,7 @@ const programs = [
   {
     icon: Shield,
     title: "Defence Fund",
-    text: "Waves Techno-Vision LLP has established a dedicated defense aid fund to support IT professionals who have been affected by the war, offering resources for rebuilding their homes and covering medical expenses. The leadership also retains jobs and pays salaries to team members who have taken up arms to defend their country.",
+    text: "Purple Techno-Vision LLP has established a dedicated defense aid fund to support IT professionals who have been affected by the war, offering resources for rebuilding their homes and covering medical expenses. The leadership also retains jobs and pays salaries to team members who have taken up arms to defend their country.",
     color: "#fb923c",
     glow: "rgba(251,146,60,0.18)",
     grad: "linear-gradient(135deg,#c2410c,#fb923c)",

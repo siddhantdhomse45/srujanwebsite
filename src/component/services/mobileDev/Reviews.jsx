@@ -12,7 +12,7 @@ const reviews = [
     flag: "🇮🇳",
     rating: 5.0,
     quote: "Their attention to detail and technical expertise is outstanding. The team delivered our fintech platform 2 weeks ahead of schedule with zero critical bugs.",
-    full: "The Waves Techno-Vision LLP team transformed our legacy banking system into a modern, scalable platform. Their proactive communication via daily standups and their ability to react quickly to our changing requirements made the entire experience seamless. We are onboard for all future versions.",
+    full: "The Purple Techno-Vision LLP team transformed our legacy banking system into a modern, scalable platform. Their proactive communication via daily standups and their ability to react quickly to our changing requirements made the entire experience seamless. We are onboard for all future versions.",
     accent: "#38bdf8",
   },
   {
@@ -23,7 +23,7 @@ const reviews = [
     location: "Pune, Maharashtra",
     flag: "🇮🇳",
     rating: 5.0,
-    quote: "Waves Techno-Vision LLP always finds time to explore new innovations for us and have demonstrated a real willingness to react quickly to change.",
+    quote: "Purple Techno-Vision LLP always finds time to explore new innovations for us and have demonstrated a real willingness to react quickly to change.",
     full: "Their work on our IoT-based farm monitoring app resulted in increased efficiency across 500+ farms in Maharashtra. The team fully built and tested every feature, pushing them live on schedule. We appreciated their project management, flexibility, and professionalism throughout.",
     accent: "#818cf8",
   },
@@ -36,7 +36,7 @@ const reviews = [
     flag: "🇮🇳",
     rating: 4.5,
     quote: "We felt like they truly were a part of our internal team, not an outsourced group.",
-    full: "Waves Techno-Vision LLP fully built and tested all e-commerce features which were pushed live to production. The team was very responsive to client requests and communicated regularly via Slack, email, and weekly video meetings. The client was impressed by their professionalism and technical depth.",
+    full: "Purple Techno-Vision LLP fully built and tested all e-commerce features which were pushed live to production. The team was very responsive to client requests and communicated regularly via Slack, email, and weekly video meetings. The client was impressed by their professionalism and technical depth.",
     accent: "#34d399",
   },
   {
@@ -60,7 +60,7 @@ const reviews = [
     flag: "🇮🇳",
     rating: 5.0,
     quote: "Our logistics app went from concept to 10,000 daily active users in under 4 months. The velocity and quality were exceptional.",
-    full: "Waves Techno-Vision LLP delivered a real-time fleet tracking and delivery management system that our ops team loves. Their use of agile sprints with bi-weekly demos kept us fully informed. The React Native app performs flawlessly on both iOS and Android with a 4.8-star store rating.",
+    full: "Purple Techno-Vision LLP delivered a real-time fleet tracking and delivery management system that our ops team loves. Their use of agile sprints with bi-weekly demos kept us fully informed. The React Native app performs flawlessly on both iOS and Android with a 4.8-star store rating.",
     accent: "#c084fc",
   },
   {
@@ -84,7 +84,7 @@ const reviews = [
     flag: "🇮🇳",
     rating: 5.0,
     quote: "The real estate discovery platform they delivered cut our customer acquisition cost by 40%. ROI was visible within the first quarter.",
-    full: "Waves Techno-Vision LLP built an AI-powered property recommendation engine with 3D virtual tours and instant loan eligibility checks. The backend handles 100,000 concurrent users without any performance degradation. Their architecture-first approach saved us from costly rewrites later.",
+    full: "Purple Techno-Vision LLP built an AI-powered property recommendation engine with 3D virtual tours and instant loan eligibility checks. The backend handles 100,000 concurrent users without any performance degradation. Their architecture-first approach saved us from costly rewrites later.",
     accent: "#fbbf24",
   },
   {
@@ -96,7 +96,7 @@ const reviews = [
     flag: "🇮🇳",
     rating: 4.0,
     quote: "Our food delivery app launched in 3 cities simultaneously with zero downtime. The CI/CD pipeline they set up is world-class.",
-    full: "From the restaurant partner portal to the customer app and delivery executive dashboard, Waves Techno-Vision LLP built all three surfaces cohesively. Real-time order tracking and dynamic pricing algorithms work flawlessly. The team's communication and transparency were top-notch throughout the project.",
+    full: "From the restaurant partner portal to the customer app and delivery executive dashboard, Purple Techno-Vision LLP built all three surfaces cohesively. Real-time order tracking and dynamic pricing algorithms work flawlessly. The team's communication and transparency were top-notch throughout the project.",
     accent: "#38bdf8",
   },
   {
@@ -108,7 +108,7 @@ const reviews = [
     flag: "🇮🇳",
     rating: 5.0,
     quote: "They passed our RBI compliance audit on the very first attempt. Their security-first mindset is exactly what fintech demands.",
-    full: "Building a payment gateway requires precision and deep regulatory knowledge. Waves Techno-Vision LLP delivered a PCI-DSS compliant system with multi-factor authentication, fraud detection ML models, and a real-time transaction dashboard. Their documentation was so thorough that our compliance team was impressed.",
+    full: "Building a payment gateway requires precision and deep regulatory knowledge. Purple Techno-Vision LLP delivered a PCI-DSS compliant system with multi-factor authentication, fraud detection ML models, and a real-time transaction dashboard. Their documentation was so thorough that our compliance team was impressed.",
     accent: "#818cf8",
   },
   {
@@ -119,7 +119,7 @@ const reviews = [
     location: "Kochi, Kerala",
     flag: "🇮🇳",
     rating: 4.5,
-    quote: "Our travel booking platform now handles 5 lakh bookings per month. Waves Techno-Vision LLP's scalable architecture made this possible.",
+    quote: "Our travel booking platform now handles 5 lakh bookings per month. Purple Techno-Vision LLP's scalable architecture made this possible.",
     full: "The team built a comprehensive travel super-app combining flights, hotels, buses, and holiday packages with a single checkout. The dynamic pricing engine and seat map integration were particularly impressive. Post-launch, they've been available around the clock for any issues — true partners.",
     accent: "#34d399",
   },

@@ -348,7 +348,7 @@ export default function FinancialSoftwareHero() {
                   maxWidth: 540,
                 }}
               >
-                Accelerate innovation using the power of Waves Techno-Vision LLP software
+                Accelerate innovation using the power of Purple Techno-Vision LLP software
                 development for banking and financial services. Advance your
                 efficiency, customer experience, and business performance with
                 our future-proof solutions.

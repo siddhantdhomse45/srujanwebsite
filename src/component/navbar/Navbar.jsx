@@ -104,11 +104,11 @@ const Navbar = () => {
             <NavLink to="/" onClick={closeMobile} className="flex items-center gap-3">
               <img
                 src="https://srujaninfotech.in/images/logo11.png"
-                alt="Waves Techno-Vision Logo"
+                alt="Purple Techno-Vision Logo"
                 className="h-11 w-auto object-contain"
               />
               <div className="text-white font-bold text-base whitespace-nowrap hidden sm:block">
-                Waves Techno-Vision 
+                Purple Techno-Vision 
               </div>
             </NavLink>
 
@@ -165,7 +165,7 @@ const Navbar = () => {
                           <img src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3" alt="" className="w-full h-full object-cover" />
                           <div className="absolute inset-0 bg-black/40" />
                           <div className="absolute inset-0 flex items-center px-10">
-                            <h3 className="text-white text-[18px] leading-8 font-medium"> Waves Techno-Vision LLP brings the latest technologies to your vertical with industry-specific solutions.</h3>
+                            <h3 className="text-white text-[18px] leading-8 font-medium"> Purple Techno-Vision LLP brings the latest technologies to your vertical with industry-specific solutions.</h3>
                           </div>
                         </div>
                         <div className="grid grid-cols-2 gap-10 p-10">
@@ -276,7 +276,7 @@ const Navbar = () => {
           <NavLink to="/" onClick={closeMobile} className="flex items-center gap-2">
             <img src="https://srujaninfotech.in/images/logo11.png" alt="Logo" className="h-8 w-auto object-contain" />
             <span className="text-white text-sm font-bold whitespace-nowrap">
-              Waves Techno-Vision <span className="text-cyan-400">LLP</span>
+              Purple Techno-Vision <span className="text-cyan-400">LLP</span>
             </span>
           </NavLink>
           <button className="text-white p-1.5 rounded hover:bg-white/10 transition" onClick={closeMobile} aria-label="Close menu">

@@ -8,10 +8,12 @@ const helpItems = [
     description:
       "The impact of war on the economy is formidable. The people of Ukraine require financial support, as the relentless drain on budgets is a significant challenge. Numerous charitable organizations are actively raising funds to address this pressing need.",
     points: [
-      "The special fund of the Ukrainian President — United 24",
-      "The National Bank of Ukraine donation initiative — Support the Armed Forces of Ukraine",
-      "The Ukrainian charity organization supporting Defense Forces — Come Back Alive",
-    ],
+  "Historical landmarks and cultural heritage sites across Pune",
+  "Educational hub known as the 'Oxford of the East'",
+  "Growing IT and business center with modern infrastructure",
+  "Popular tourist attractions including Shaniwar Wada, Aga Khan Palace, and Sinhagad Fort",
+  "Vibrant food culture, nightlife, and shopping destinations",
+],
     footer: "Even small contributions can have a significant impact on making a difference.",
     color: "#38bdf8",
     glow: "rgba(56,189,248,0.18)",

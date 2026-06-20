@@ -58,7 +58,7 @@ const INDUSTRIES = [
     number: "03",
     title: "Construction",
     short: "Built for the Field",
-    body: "Waves Techno-Vision LLP helps construction firms improve productivity, safety, and project management through tailored custom software services and real-time site intelligence.",
+    body: "Purple Techno-Vision LLP helps construction firms improve productivity, safety, and project management through tailored custom software services and real-time site intelligence.",
     accent: "#f59e0b",
     glow: "rgba(245,158,11,0.22)",
     bg: "rgba(245,158,11,0.07)",
@@ -115,7 +115,7 @@ const INDUSTRIES = [
     number: "06",
     title: "Travel & Hospitality",
     short: "Memorable Guest Journeys",
-    body: "Waves Techno-Vision LLP enhances guest experiences through custom software development services, designed to streamline operations and support hospitality businesses worldwide.",
+    body: "Purple Techno-Vision LLP enhances guest experiences through custom software development services, designed to streamline operations and support hospitality businesses worldwide.",
     accent: "#8b5cf6",
     glow: "rgba(139,92,246,0.22)",
     bg: "rgba(139,92,246,0.07)",
@@ -471,7 +471,7 @@ export default function IndustriesWeSupportPremium() {
                   textAlign: "right",
                 }}
               >
-                Waves Techno-Vision LLP offers custom software development services across a
+                Purple Techno-Vision LLP offers custom software development services across a
                 variety of industries, helping businesses enhance operations and
                 customer experiences.
               </motion.p>

@@ -21,13 +21,13 @@ const Footer = () => {
               <div className="bg-white/5 rounded-xl p-3 backdrop-blur-sm border border-white/10">
                 <img
                   src="https://srujaninfotech.in/images/logo11.png"
-                  alt="Waves Techno-Vision LLP Logo"
+                  alt="Purple Techno-Vision LLP Logo"
                   className="h-12 w-auto object-contain"
                 />
               </div>
               <div>
                 <h2 className="text-xl font-bold text-white leading-tight">
-                  Waves Techno-Vision LLP <br />
+                  Purple Techno-Vision LLP <br />
                   {/* <span className="text-cyan-400">LLP</span> */}
                 </h2>
               </div>
@@ -135,20 +135,20 @@ const Footer = () => {
               <div className="flex gap-3">
                 <Mail size={20} className="text-cyan-400 flex-shrink-0" />
                 <a
-                  href="mailto:info@wavestechnovision.com"
+                  href="mailto:info@purpletechnovision.in"
                   className="text-gray-400 hover:text-cyan-400 transition"
                 >
-                  info@wavestechnovision.com
+                  info@purpletechnovision.in
                 </a>
               </div>
 
               <div className="flex gap-3">
                 <Mail size={20} className="text-cyan-400 flex-shrink-0" />
                 <a
-                  href="mailto:career@wavestechnovision.com"
+                  href="mailto:career@purpletechnovision.in"
                   className="text-gray-400 hover:text-cyan-400 transition"
                 >
-                  career@wavestechnovision.com
+                  career@purpletechnovision.in
                 </a>
               </div>
 
@@ -162,7 +162,7 @@ const Footer = () => {
       <div className="border-t border-blue-900/20">
         <div className="max-w-7xl mx-auto px-6 py-5 flex flex-col md:flex-row justify-between items-center gap-4">
           <p className="text-gray-500 text-sm">
-            © 2026 Waves Techno-Vision LLP. All Rights Reserved.
+            © 2026 Purple Techno-Vision LLP. All Rights Reserved.
           </p>
 
           <NavLink

@@ -660,7 +660,7 @@ export default function SocialResponsibility() {
                       >
                         Pune persists
                       </span>{" "}
-                      as a technology powerhouse. Waves Techno-Vision LLP has
+                      as a technology powerhouse. Purple Techno-Vision LLP has
                       been contributing to local community initiatives and
                       encourages others to invest in Pune's bright future.
                     </p>
@@ -886,13 +886,15 @@ export default function SocialResponsibility() {
                 />
 
                 <p className="sr-who-body">
-                  Waves Techno-Vision LLP is a renowned multinational software
-                  development and IT consultancy technology partner, operating
-                  globally with offices in the{" "}
+                  Purple Techno-Vision LLP is a leading software development and
+                  IT solutions company based in{" "}
                   <span style={{ color: "white", fontWeight: 600 }}>
-                    US, UK, and Norway
+                    Pune, Maharashtra
                   </span>
-                  . Our exceptional team of professionals spans across{" "}
+                  . We specialize in delivering innovative web development,
+                  mobile application development, digital marketing, and custom
+                  software solutions for businesses of all sizes. Our
+                  experienced team is committed to providing{" "}
                   <span
                     style={{
                       background: "linear-gradient(90deg,#38bdf8,#818cf8)",
@@ -901,14 +903,14 @@ export default function SocialResponsibility() {
                       fontWeight: 700,
                     }}
                   >
-                    21 countries
+                    high-quality, scalable, and modern technology solutions
                   </span>
-                  , bringing together a diverse range of expertise and
-                  perspectives.
+                  , helping clients accelerate growth and achieve their digital
+                  transformation goals.
                 </p>
 
                 <p className="sr-who-body" style={{ marginBottom: 0 }}>
-                  For over a decade, we have maintained a dedicated team in{" "}
+                  Based in{" "}
                   <span
                     style={{
                       background: "linear-gradient(90deg,#fbbf24,#f59e0b)",
@@ -917,17 +919,19 @@ export default function SocialResponsibility() {
                       fontWeight: 700,
                     }}
                   >
-                    Ukraine
+                    Pune, Maharashtra
                   </span>
-                  , where a number of our colleagues are based. We prioritize
-                  the safety and well-being of all our team members and their
-                  loved ones, ensuring a{" "}
+                  , we have built a strong foundation of talented professionals
+                  dedicated to delivering innovative technology solutions. Our
+                  team focuses on creating exceptional digital experiences while
+                  fostering a{" "}
                   <span style={{ color: "white", fontWeight: 600 }}>
-                    conducive and secure working environment
+                    collaborative, inclusive, and growth-oriented work
+                    environment
                   </span>
-                  .
+                  . We are committed to helping businesses succeed through
+                  reliable, scalable, and future-ready technology services.
                 </p>
-
                 <motion.div
                   className="sr-tags-row"
                   initial="hidden"

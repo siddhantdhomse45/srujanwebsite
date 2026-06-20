@@ -371,7 +371,7 @@ export default function AboutPage() {
 
                 <motion.p style={{ color: "#94a3b8", fontSize: "clamp(14px,1.5vw,18px)", lineHeight: 1.7, maxWidth: 520, marginBottom: 40 }}
                   initial={{ opacity: 0, y: 30 }} animate={heroReady ? { opacity: 1, y: 0 } : {}} transition={{ duration: 0.8, delay: 0.5 }}>
-                  Waves Techno-Vision LLP engineers next-generation web software and digital transformation solutions that turn ambitious ideas into products millions love.
+                  Purple Techno-Vision LLP engineers next-generation web software and digital transformation solutions that turn ambitious ideas into products millions love.
                 </motion.p>
 
                 <motion.div className="hero-cta-row"
@@ -516,7 +516,7 @@ export default function AboutPage() {
                     Since 2011
                   </h2>
                 </Rev>
-                <Rev delay={0.2}><p style={{ color: "#94a3b8", lineHeight: 1.8, fontSize: "clamp(14px,1.5vw,17px)", marginTop: 24 }}>Waves Techno-Vision LLP is a fast-growing Web & IT Development company delivering reliable, scalable, and cost-effective solutions for businesses across India and the world.</p></Rev>
+                <Rev delay={0.2}><p style={{ color: "#94a3b8", lineHeight: 1.8, fontSize: "clamp(14px,1.5vw,17px)", marginTop: 24 }}>Purple Techno-Vision LLP is a fast-growing Web & IT Development company delivering reliable, scalable, and cost-effective solutions for businesses across India and the world.</p></Rev>
                 <Rev delay={0.3}><p style={{ color: "#64748b", lineHeight: 1.8, marginTop: 16, fontSize: "clamp(13px,1.3vw,15px)" }}>With a dedicated team of experts and a track record of 500+ clients, we help organizations achieve goals through innovative software and digital transformation.</p></Rev>
 
                 <div className="features-grid">

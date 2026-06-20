@@ -357,7 +357,7 @@ const CareerHero = () => {
                 <div style={{ width: 28, height: 28, borderRadius: "50%", background: "rgba(59,130,246,0.15)", border: "1px solid rgba(59,130,246,0.3)", display: "flex", alignItems: "center", justifyContent: "center" }}>
                   <div style={{ width: 8, height: 8, borderRadius: "50%", background: primaryLight }} className="badge-pulse" />
                 </div>
-                <span className="ch-mono" style={{ fontSize: 10, color: "rgba(255,255,255,0.55)", letterSpacing: "0.2em", textTransform: "uppercase" }}>Waves Techno-Vision LLP&nbsp;·&nbsp; Careers</span>
+                <span className="ch-mono" style={{ fontSize: 10, color: "rgba(255,255,255,0.55)", letterSpacing: "0.2em", textTransform: "uppercase" }}>Purple Techno-Vision LLP&nbsp;·&nbsp; Careers</span>
               </div>
             </motion.div>
 
@@ -384,7 +384,7 @@ const CareerHero = () => {
               style={{ color: "rgba(255,255,255,0.62)", fontSize: isMobile ? "0.95rem" : "clamp(1rem,1.6vw,1.2rem)", lineHeight: 1.85, maxWidth: 600, marginBottom: isMobile ? 32 : 44 }}
               initial={{ opacity: 0, y: 28 }} animate={ready ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.9, delay: 0.5, ease: [0.16, 1, 0.3, 1] }}>
-              At Waves Techno-Vision LLP, we believe that people are our greatest asset. Our mission is driven by passionate, curious, and forward-thinking individuals who are ready to challenge the status quo — whether you're a developer, designer, strategist, or support specialist.
+              At Purple Techno-Vision LLP, we believe that people are our greatest asset. Our mission is driven by passionate, curious, and forward-thinking individuals who are ready to challenge the status quo — whether you're a developer, designer, strategist, or support specialist.
             </motion.p>
 
             {/* CTA buttons */}
