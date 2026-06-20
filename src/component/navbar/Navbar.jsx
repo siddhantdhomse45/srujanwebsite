@@ -227,8 +227,11 @@ const Navbar = () => {
                     <div className="fixed left-1/2 -translate-x-1/2 bg-white shadow-2xl z-[200]" style={{ top: "64px", width: "min(1150px, 100vw)" }}>
                       <div className="grid grid-cols-2">
                         <div className="relative h-[260px]">
-                          <img src="https://images.unsplash.com/photo-1434030216411-0b793f4c4170" alt="Resources" className="w-full h-full object-cover" />
-                          <div className="absolute inset-0 bg-black/40" />
+<img
+  src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3"
+  alt="Technology Insights"
+  className="w-full h-full object-cover"
+/>                          <div className="absolute inset-0 bg-black/40" />
                           <div className="absolute inset-0 flex items-center px-10">
                             <h3 className="text-white text-[18px] leading-8 font-medium">Stay ahead with expert insights, industry news, and in-depth blogs from our team.</h3>
                           </div>
